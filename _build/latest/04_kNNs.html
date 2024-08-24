@@ -1,0 +1,2360 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>k-Nearest Neighbors &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="application/vnd.jupyter.widget-state+json">{"state": {"144d0c46a48047159fa4239f11875665": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_fe608bbc45f4429a966f427b85673fc3", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "   n_neighbours  mean_train_score  mean_valid_score\n0             1               1.0             0.755\n"}]}}, "155ae93adb104b8d9fa8e158e064315e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_4de7ba2d909c42fb86adb8b1696c38cb", "max": 101, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 10, "style": "IPY_MODEL_4a5642ac94d843f69c3243bc4810eb7f", "value": 1}}, "1599d3f3acab4d5d8be789febdaf3f9d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": [], "layout": "IPY_MODEL_d363e50e7e1041afbf887462ab4228c1"}}, "36bf17aa1a6141eba226abdda92f85b2": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "38e8b84c94b84b71b72fd97f90cfc115": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": [], "layout": "IPY_MODEL_72ae6938a74c41c9852b91d9779bb432"}}, "3afbfa07f507472e9036f76af7e270d3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4305c0c068b64349b6a0e9823137d003": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4a5642ac94d843f69c3243bc4810eb7f": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "4cf1c227ae7943c8bdbe03123ac7c603": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "4de7ba2d909c42fb86adb8b1696c38cb": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "56ed2dadc6344b768900813161d57760": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_fe608bbc45f4429a966f427b85673fc3", "msg_id": "", "outputs": []}}, "72ae6938a74c41c9852b91d9779bb432": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "841fd6d0b8964524b6a5c36cf9036954": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "94b09ecfcb894053be0f6b7eb670162c": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "98bc022dc07f4009bfa4758b66dff5a1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "n_neighbors", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_4de7ba2d909c42fb86adb8b1696c38cb", "max": 101, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 10, "style": "IPY_MODEL_4a5642ac94d843f69c3243bc4810eb7f", "value": 1}}, "a030cba1341a4af88c0452ab0d16604f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b1c5a21a4dec447ba1a57cb796f7b816": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_36bf17aa1a6141eba226abdda92f85b2", "msg_id": "", "outputs": []}}, "b24d965411e54eadab8f93716bb8b647": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_36bf17aa1a6141eba226abdda92f85b2", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "n_neighbors 1\n"}, {"data": {"image/png": "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\n", "text/plain": "<Figure size 640x480 with 1 Axes>"}, "metadata": {}, "output_type": "display_data"}]}}, "ba6c415acff74e248f992fe21f730814": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "n_neighbors", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_d6784cb3b9e54f7c9b062fe1915fb30c", "max": 7, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 2, "style": "IPY_MODEL_841fd6d0b8964524b6a5c36cf9036954", "value": 1}}, "bd0454bdda15497c9fd1830981e5ab1c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_ba6c415acff74e248f992fe21f730814", "IPY_MODEL_b24d965411e54eadab8f93716bb8b647"], "layout": "IPY_MODEL_72ae6938a74c41c9852b91d9779bb432"}}, "cd04ebba49bf428fa18750e12e18b34f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d363e50e7e1041afbf887462ab4228c1": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d614a7354f704d829b65e00d408f6fb4": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d6784cb3b9e54f7c9b062fe1915fb30c": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "de7b9113468742b09f6430a6a35e44ed": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "e29f21437b224975bd073310d89f9d3e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_d6784cb3b9e54f7c9b062fe1915fb30c", "max": 7, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 2, "style": "IPY_MODEL_841fd6d0b8964524b6a5c36cf9036954", "value": 1}}, "f78c681882df4de2ab42c5a84154125d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_98bc022dc07f4009bfa4758b66dff5a1", "IPY_MODEL_144d0c46a48047159fa4239f11875665"], "layout": "IPY_MODEL_d363e50e7e1041afbf887462ab4228c1"}}, "fe608bbc45f4429a966f427b85673fc3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}}, "version_major": 2, "version_minor": 0}</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@1.0.6/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '04_kNNs';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing and Pipeline" href="05_preprocessing-pipelines.html" />
+    <link rel="prev" title="Machine learning fundamentals" href="03_ml-fundamentals.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/04_kNNs.ipynb" download="04_kNNs.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>k-Nearest Neighbors</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-recap">Quick recap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-outcomes">Learning outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-distances">Motivation and distances</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogy-based-models">Analogy-based models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogy-based-algorithms-in-practice">Analogy-based algorithms in practice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-idea-of-k-nearest-neighbors-algorithm">The general idea of <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-view-of-tabular-data-and-dimensions">Geometric view of tabular data and dimensions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensions-in-ml-problems">Dimensions in ML problems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-vectors">Feature vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-between-examples">Similarity between examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-between-feature-vectors">Distance between feature vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean-distance">Euclidean distance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-nearest-neighbor">Finding the nearest neighbor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-distances-to-a-query-point">Finding the distances to a query point</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbours-k-nns"><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbours (<span class="math notranslate nohighlight">\(k\)</span>-NNs)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-n-neighbors">Choosing <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-n-neighbors">How to choose <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-on-distances-and-k-nns">Questions on distances and <span class="math notranslate nohighlight">\(k\)</span>-NNs</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Exercise</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-3">Exercise 4.3</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nn-practice-questions"><span class="math notranslate nohighlight">\(k\)</span>-NN practice questions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-k-nns">More on <span class="math notranslate nohighlight">\(k\)</span>-NNs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-useful-arguments-of-kneighborsclassifier">Other useful arguments of <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-regression-with-k-nearest-neighbours-k-nns">(Optional) Regression with <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours (<span class="math notranslate nohighlight">\(k\)</span>-NNs)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros-of-k-nns-for-supervised-learning">Pros of <span class="math notranslate nohighlight">\(k\)</span>-NNs for supervised learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cons-of-k-nns-for-supervised-learning">Cons of <span class="math notranslate nohighlight">\(k\)</span>-NNs for supervised learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-vs-non-parametric">Parametric vs non parametric</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#curse-of-dimensionality">Curse of dimensionality</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-thinking-questions">Critical thinking questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="k-nearest-neighbors">
+<h1>k-Nearest Neighbors<a class="headerlink" href="#k-nearest-neighbors" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 100 minutes</p></li>
+</ul>
+<hr><section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cmle</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="kn">import</span> <span class="nn">mglearn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interactive</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">euclidean_distances</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_colwidth&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="quick-recap">
+<h3>Quick recap<a class="headerlink" href="#quick-recap" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Why do we split the data?</p></li>
+<li><p>What are the 4 types of data we discussed last class?</p></li>
+<li><p>What are the advantages of cross-validation?</p></li>
+<li><p>What is overfitting?</p></li>
+<li><p>What’s the fundamental trade-off in supervised machine learning?</p></li>
+<li><p>What is the golden rule of machine learning?</p></li>
+</ul>
+</section>
+</section>
+<section id="learning-outcomes">
+<h2>Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permalink to this heading">#</a></h2>
+<p>From this lecture, you will be able to</p>
+<ul class="simple">
+<li><p>Explain the notion of similarity-based algorithms;</p></li>
+<li><p>Broadly describe how <span class="math notranslate nohighlight">\(k\)</span>-NNs use distances;</p></li>
+<li><p>Discuss the effect of using a small/large value of the hyperparameter <span class="math notranslate nohighlight">\(k\)</span> when using the <span class="math notranslate nohighlight">\(k\)</span>-NN algorithm;</p></li>
+</ul>
+</section>
+<section id="motivation-and-distances">
+<h2>Motivation and distances<a class="headerlink" href="#motivation-and-distances" title="Permalink to this heading">#</a></h2>
+<section id="analogy-based-models">
+<h3>Analogy-based models<a class="headerlink" href="#analogy-based-models" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Suppose you are given the following training examples with corresponding labels and are asked to label a given test example.</p></li>
+</ul>
+<!-- ![knn-motivation.png](img/knn-motivation.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/knn-motivation.png" alt="knn-motivation.png" width="60%"></center>
+<p><a class="reference external" href="https://vipl.ict.ac.cn/en/database.php">source</a></p>
+<ul class="simple">
+<li><p>An intuitive way to classify the test example is by finding the most “similar” example(s) from the training set and using that label for the test example.</p></li>
+</ul>
+</section>
+<section id="analogy-based-algorithms-in-practice">
+<h3>Analogy-based algorithms in practice<a class="headerlink" href="#analogy-based-algorithms-in-practice" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.hertasecurity.com/en">Herta’s High-tech Facial Recognition</a></p>
+<ul>
+<li><p>Feature vectors for human faces</p></li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span>-NN to identify which face is on their watch list</p></li>
+</ul>
+</li>
+<li><p>Recommendation systems</p></li>
+</ul>
+<!-- ![hetra.png](img/hetra.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/hetra.png" alt="hetra.png" width="25%"></center>
+<p><a class="reference external" href="https://hertasecurity.com/">source</a></p>
+</section>
+<section id="the-general-idea-of-k-nearest-neighbors-algorithm">
+<h3>The general idea of <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors algorithm<a class="headerlink" href="#the-general-idea-of-k-nearest-neighbors-algorithm" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Consider the following toy dataset with two classes.</p>
+<ul>
+<li><p>blue circles <span class="math notranslate nohighlight">\(\rightarrow\)</span> class 0</p></li>
+<li><p>red triangles <span class="math notranslate nohighlight">\(\rightarrow\)</span> class 1</p></li>
+<li><p>green stars <span class="math notranslate nohighlight">\(\rightarrow\)</span> test examples</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mglearn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">make_forge</span><span class="p">()</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">8.2</span><span class="p">,</span> <span class="mf">3.66214339</span><span class="p">],</span> <span class="p">[</span><span class="mf">9.9</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">11.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">cmle</span><span class="o">.</span><span class="n">plot_train_test_points</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9de74af581a47c1eb520a309159511498ec4cf730de3076a451549cd25565ae1.png" src="_images/9de74af581a47c1eb520a309159511498ec4cf730de3076a451549cd25565ae1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Given a new data point, predict the class of the data point by finding the “closest” data point in the training set, i.e., by finding its “nearest neighbor” or a majority vote of nearest neighbors.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n_neighbors</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">cmle</span><span class="o">.</span><span class="n">plot_knn_clf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interactive</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">),)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "71210f1b2a3a4371a0e2ea0ccd272e9f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="geometric-view-of-tabular-data-and-dimensions">
+<h3>Geometric view of tabular data and dimensions<a class="headerlink" href="#geometric-view-of-tabular-data-and-dimensions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>To understand analogy-based algorithms it’s useful to think of data as points in a high dimensional space.</p></li>
+<li><p>Our <code class="docutils literal notranslate"><span class="pre">X</span></code> represents the problem in terms of relevant <strong>features</strong> (<span class="math notranslate nohighlight">\(d\)</span>) with one dimension for each <strong>feature</strong> (column).</p></li>
+<li><p>Examples are <strong>points in a <span class="math notranslate nohighlight">\(d\)</span>-dimensional space</strong>.</p></li>
+</ul>
+<p>How many dimensions (features) are there in the city’s data?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/canada_usa_cities.csv&quot;</span><span class="p">)</span>
+<span class="n">cities_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/canada_usa_cities.csv&quot;</span><span class="p">)</span>
+<span class="n">X_cities</span> <span class="o">=</span> <span class="n">cities_df</span><span class="p">[[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">]]</span>
+<span class="n">y_cities</span> <span class="o">=</span> <span class="n">cities_df</span><span class="p">[</span><span class="s2">&quot;country&quot;</span><span class="p">]</span>
+<span class="n">X_cities</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_cities</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;latitude&#39;)
+</pre></div>
+</div>
+<img alt="_images/f132efefa1a5246ddc6d19e1c116d22d66b211dbe03c90543f6ea33e0686b429.png" src="_images/f132efefa1a5246ddc6d19e1c116d22d66b211dbe03c90543f6ea33e0686b429.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Recall the <a class="reference external" href="https://www.kaggle.com/geomack/spotifyclassification/home">Spotify Song Attributes</a> dataset from homework 1.</p></li>
+<li><p>How many dimensions (features) we use in the homework?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/spotify.csv&quot;</span><span class="p">)</span>
+<span class="n">spotify_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/spotify.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X_spotify</span> <span class="o">=</span> <span class="n">spotify_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="s2">&quot;song_title&quot;</span><span class="p">,</span> <span class="s2">&quot;artist&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number of features in the Spotify dataset: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">X_spotify</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">X_spotify</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of features in the Spotify dataset: 13
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>acousticness</th>
+      <th>danceability</th>
+      <th>duration_ms</th>
+      <th>energy</th>
+      <th>instrumentalness</th>
+      <th>key</th>
+      <th>liveness</th>
+      <th>loudness</th>
+      <th>mode</th>
+      <th>speechiness</th>
+      <th>tempo</th>
+      <th>time_signature</th>
+      <th>valence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0102</td>
+      <td>0.833</td>
+      <td>204600</td>
+      <td>0.434</td>
+      <td>0.021900</td>
+      <td>2</td>
+      <td>0.1650</td>
+      <td>-8.795</td>
+      <td>1</td>
+      <td>0.4310</td>
+      <td>150.062</td>
+      <td>4.0</td>
+      <td>0.286</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1990</td>
+      <td>0.743</td>
+      <td>326933</td>
+      <td>0.359</td>
+      <td>0.006110</td>
+      <td>1</td>
+      <td>0.1370</td>
+      <td>-10.401</td>
+      <td>1</td>
+      <td>0.0794</td>
+      <td>160.083</td>
+      <td>4.0</td>
+      <td>0.588</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0344</td>
+      <td>0.838</td>
+      <td>185707</td>
+      <td>0.412</td>
+      <td>0.000234</td>
+      <td>2</td>
+      <td>0.1590</td>
+      <td>-7.148</td>
+      <td>1</td>
+      <td>0.2890</td>
+      <td>75.044</td>
+      <td>4.0</td>
+      <td>0.173</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6040</td>
+      <td>0.494</td>
+      <td>199413</td>
+      <td>0.338</td>
+      <td>0.510000</td>
+      <td>5</td>
+      <td>0.0922</td>
+      <td>-15.236</td>
+      <td>1</td>
+      <td>0.0261</td>
+      <td>86.468</td>
+      <td>4.0</td>
+      <td>0.230</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.1800</td>
+      <td>0.678</td>
+      <td>392893</td>
+      <td>0.561</td>
+      <td>0.512000</td>
+      <td>5</td>
+      <td>0.4390</td>
+      <td>-11.648</td>
+      <td>0</td>
+      <td>0.0694</td>
+      <td>174.004</td>
+      <td>4.0</td>
+      <td>0.904</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="dimensions-in-ml-problems">
+<h3>Dimensions in ML problems<a class="headerlink" href="#dimensions-in-ml-problems" title="Permalink to this heading">#</a></h3>
+<p>In ML, we usually deal with high-dimensional problems where examples are hard to visualize.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d \approx 20\)</span> is considered low dimensional</p></li>
+<li><p><span class="math notranslate nohighlight">\(d \approx 1000\)</span> is considered medium dimensional</p></li>
+<li><p><span class="math notranslate nohighlight">\(d \approx 100,000\)</span> is considered high dimensional</p></li>
+</ul>
+</section>
+<section id="feature-vectors">
+<h3>Feature vectors<a class="headerlink" href="#feature-vectors" title="Permalink to this heading">#</a></h3>
+<p><strong>Feature vector</strong>: is composed of feature values associated with an example.</p>
+<p>Some example feature vectors are shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An example feature vector from the cities dataset: </span><span class="si">{</span><span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An example feature vector from the Spotify dataset: </span><span class="se">\n</span><span class="si">{</span><span class="n">X_spotify</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>An example feature vector from the cities dataset: [-130.0437   55.9773]
+An example feature vector from the Spotify dataset: 
+[ 1.02000e-02  8.33000e-01  2.04600e+05  4.34000e-01  2.19000e-02
+  2.00000e+00  1.65000e-01 -8.79500e+00  1.00000e+00  4.31000e-01
+  1.50062e+02  4.00000e+00  2.86000e-01]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="similarity-between-examples">
+<h3>Similarity between examples<a class="headerlink" href="#similarity-between-examples" title="Permalink to this heading">#</a></h3>
+<p>Let’s take 2 points (two feature vectors) from the cities dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_cities</span> <span class="o">=</span> <span class="n">X_cities</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">two_cities</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>longitude</th>
+      <th>latitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>69</th>
+      <td>-104.8253</td>
+      <td>38.8340</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>-112.0741</td>
+      <td>33.4484</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The two sampled points are shown as big black circles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_cities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">markers</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f3d08683610&gt;]
+</pre></div>
+</div>
+<img alt="_images/25e06707de443af223c4fa702780a3b8d935dbcb2f6347b1a5305c304dbc60f6.png" src="_images/25e06707de443af223c4fa702780a3b8d935dbcb2f6347b1a5305c304dbc60f6.png" />
+</div>
+</div>
+</section>
+<section id="distance-between-feature-vectors">
+<h3>Distance between feature vectors<a class="headerlink" href="#distance-between-feature-vectors" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>For the cities in the two big circles, what is the <em>distance</em> between them?</p></li>
+<li><p>A common way to calculate the distance between vectors is by calculating the <strong>Euclidean distance</strong>.</p></li>
+<li><p>The Euclidean distance between vectors <span class="math notranslate nohighlight">\(u = &lt;u_1, u_2, \dots, u_n&gt;\)</span> and <span class="math notranslate nohighlight">\(v = &lt;v_1, v_2, \dots, v_n&gt;\)</span> is defined as:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[distance(u, v) = \sqrt{\sum_{i =1}^{n} (u_i - v_i)^2}\]</div>
+</section>
+<section id="euclidean-distance">
+<h3>Euclidean distance<a class="headerlink" href="#euclidean-distance" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_cities</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>longitude</th>
+      <th>latitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>69</th>
+      <td>-104.8253</td>
+      <td>38.8340</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>-112.0741</td>
+      <td>33.4484</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Subtract the two cities</p></li>
+<li><p>Square the difference and sum them up</p></li>
+<li><p>Take the square root</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Subtract the two cities</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Subtract the cities: </span><span class="se">\n</span><span class="si">{</span><span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Squared sum of the difference</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sum of squares: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2"> 0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Take the square root</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Euclidean distance between cities: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">two_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span><span class="si">:</span><span class="s2"> 0.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Subtract the cities: 
+longitude   -7.2488
+latitude    -5.3856
+dtype: float64
+
+Sum of squares:  81.5498
+Euclidean distance between cities:  9.0305
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_cities</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>longitude</th>
+      <th>latitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>69</th>
+      <td>-104.8253</td>
+      <td>38.8340</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>-112.0741</td>
+      <td>33.4484</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Euclidean distance using sklearn</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">euclidean_distances</span>
+
+<span class="n">euclidean_distances</span><span class="p">(</span><span class="n">two_cities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.        , 9.03049217],
+       [9.03049217, 0.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> supports a number of other <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html">distance metrics</a>.</p>
+</section>
+<section id="finding-the-nearest-neighbor">
+<h3>Finding the nearest neighbor<a class="headerlink" href="#finding-the-nearest-neighbor" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Let’s look at distances from all cities to all other cities</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dists</span> <span class="o">=</span> <span class="n">euclidean_distances</span><span class="p">(</span><span class="n">X_cities</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">dists</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(209, 209)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dists</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>199</th>
+      <th>200</th>
+      <th>201</th>
+      <th>202</th>
+      <th>203</th>
+      <th>204</th>
+      <th>205</th>
+      <th>206</th>
+      <th>207</th>
+      <th>208</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>inf</td>
+      <td>4.955113</td>
+      <td>9.869531</td>
+      <td>10.106452</td>
+      <td>10.449666</td>
+      <td>19.381676</td>
+      <td>28.366626</td>
+      <td>33.283857</td>
+      <td>33.572105</td>
+      <td>36.180388</td>
+      <td>...</td>
+      <td>9.834455</td>
+      <td>58.807684</td>
+      <td>16.925593</td>
+      <td>56.951696</td>
+      <td>59.384127</td>
+      <td>58.289799</td>
+      <td>64.183423</td>
+      <td>52.426410</td>
+      <td>58.033459</td>
+      <td>51.498562</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.955113</td>
+      <td>inf</td>
+      <td>14.677579</td>
+      <td>14.935802</td>
+      <td>15.305346</td>
+      <td>24.308448</td>
+      <td>33.200978</td>
+      <td>38.082949</td>
+      <td>38.359992</td>
+      <td>40.957919</td>
+      <td>...</td>
+      <td>14.668787</td>
+      <td>63.533498</td>
+      <td>21.656349</td>
+      <td>61.691640</td>
+      <td>64.045304</td>
+      <td>63.032656</td>
+      <td>68.887343</td>
+      <td>57.253724</td>
+      <td>62.771969</td>
+      <td>56.252160</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9.869531</td>
+      <td>14.677579</td>
+      <td>inf</td>
+      <td>0.334411</td>
+      <td>0.808958</td>
+      <td>11.115406</td>
+      <td>20.528403</td>
+      <td>25.525757</td>
+      <td>25.873103</td>
+      <td>28.479109</td>
+      <td>...</td>
+      <td>0.277381</td>
+      <td>51.076798</td>
+      <td>10.783789</td>
+      <td>49.169693</td>
+      <td>51.934205</td>
+      <td>50.483751</td>
+      <td>56.512897</td>
+      <td>44.235152</td>
+      <td>50.249720</td>
+      <td>43.699224</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10.106452</td>
+      <td>14.935802</td>
+      <td>0.334411</td>
+      <td>inf</td>
+      <td>0.474552</td>
+      <td>10.781004</td>
+      <td>20.194002</td>
+      <td>25.191396</td>
+      <td>25.538702</td>
+      <td>28.144750</td>
+      <td>...</td>
+      <td>0.275352</td>
+      <td>50.743133</td>
+      <td>10.480249</td>
+      <td>48.836189</td>
+      <td>51.599860</td>
+      <td>50.150395</td>
+      <td>56.179123</td>
+      <td>43.904226</td>
+      <td>49.916254</td>
+      <td>43.365623</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10.449666</td>
+      <td>15.305346</td>
+      <td>0.808958</td>
+      <td>0.474552</td>
+      <td>inf</td>
+      <td>10.306500</td>
+      <td>19.719500</td>
+      <td>24.716985</td>
+      <td>25.064200</td>
+      <td>27.670344</td>
+      <td>...</td>
+      <td>0.675814</td>
+      <td>50.269880</td>
+      <td>10.051472</td>
+      <td>48.363192</td>
+      <td>51.125476</td>
+      <td>49.677629</td>
+      <td>55.705696</td>
+      <td>43.435186</td>
+      <td>49.443317</td>
+      <td>42.892477</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>58.289799</td>
+      <td>63.032656</td>
+      <td>50.483751</td>
+      <td>50.150395</td>
+      <td>49.677629</td>
+      <td>39.405415</td>
+      <td>30.043890</td>
+      <td>25.057003</td>
+      <td>24.746328</td>
+      <td>22.127878</td>
+      <td>...</td>
+      <td>50.333340</td>
+      <td>0.873356</td>
+      <td>41.380643</td>
+      <td>1.345136</td>
+      <td>3.373031</td>
+      <td>inf</td>
+      <td>6.102435</td>
+      <td>6.957987</td>
+      <td>0.316363</td>
+      <td>6.800190</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td>64.183423</td>
+      <td>68.887343</td>
+      <td>56.512897</td>
+      <td>56.179123</td>
+      <td>55.705696</td>
+      <td>45.418031</td>
+      <td>36.031385</td>
+      <td>31.032874</td>
+      <td>30.709185</td>
+      <td>28.088948</td>
+      <td>...</td>
+      <td>56.358333</td>
+      <td>5.442806</td>
+      <td>47.259286</td>
+      <td>7.369875</td>
+      <td>5.108681</td>
+      <td>6.102435</td>
+      <td>inf</td>
+      <td>12.950733</td>
+      <td>6.303916</td>
+      <td>12.819584</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>52.426410</td>
+      <td>57.253724</td>
+      <td>44.235152</td>
+      <td>43.904226</td>
+      <td>43.435186</td>
+      <td>33.258427</td>
+      <td>24.059863</td>
+      <td>19.187663</td>
+      <td>18.932124</td>
+      <td>16.380495</td>
+      <td>...</td>
+      <td>44.100248</td>
+      <td>7.767852</td>
+      <td>35.637982</td>
+      <td>5.930561</td>
+      <td>9.731583</td>
+      <td>6.957987</td>
+      <td>12.950733</td>
+      <td>inf</td>
+      <td>6.837848</td>
+      <td>3.322755</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>58.033459</td>
+      <td>62.771969</td>
+      <td>50.249720</td>
+      <td>49.916254</td>
+      <td>49.443317</td>
+      <td>39.167214</td>
+      <td>29.799983</td>
+      <td>24.810368</td>
+      <td>24.497386</td>
+      <td>21.878183</td>
+      <td>...</td>
+      <td>50.098326</td>
+      <td>0.930123</td>
+      <td>41.121628</td>
+      <td>1.082749</td>
+      <td>3.286821</td>
+      <td>0.316363</td>
+      <td>6.303916</td>
+      <td>6.837848</td>
+      <td>inf</td>
+      <td>6.555740</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>51.498562</td>
+      <td>56.252160</td>
+      <td>43.699224</td>
+      <td>43.365623</td>
+      <td>42.892477</td>
+      <td>32.612755</td>
+      <td>23.244592</td>
+      <td>18.256813</td>
+      <td>17.946783</td>
+      <td>15.328953</td>
+      <td>...</td>
+      <td>43.546610</td>
+      <td>7.378764</td>
+      <td>34.596810</td>
+      <td>5.473691</td>
+      <td>8.568009</td>
+      <td>6.800190</td>
+      <td>12.819584</td>
+      <td>3.322755</td>
+      <td>6.555740</td>
+      <td>inf</td>
+    </tr>
+  </tbody>
+</table>
+<p>209 rows × 209 columns</p>
+</div></div></div>
+</div>
+<p>Let’s look at the distances between City 0 and some other cities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature vector for city 0: </span><span class="se">\n</span><span class="si">{</span><span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distances from city 0 to the first 5 cities: </span><span class="si">{</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># We can find the closest city with `np.argmin`:</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The closest city from city 0 is: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> </span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with feature vector: </span><span class="se">\n</span><span class="si">{</span><span class="n">X_cities</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature vector for city 0: 
+longitude   -130.0437
+latitude      55.9773
+Name: 0, dtype: float64
+
+Distances from city 0 to the first 5 cities: [        inf  4.95511263  9.869531   10.10645223 10.44966612]
+The closest city from city 0 is: 81 
+
+
+with feature vector: 
+longitude   -129.9912
+latitude      55.9383
+Name: 81, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ok, so the closest city to City 0 is City 81.</p>
+</section>
+<section id="question">
+<h3>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Why did we set the diagonal entries to infinity before finding the closest city?</p></li>
+</ul>
+</section>
+<section id="finding-the-distances-to-a-query-point">
+<h3>Finding the distances to a query point<a class="headerlink" href="#finding-the-distances-to-a-query-point" title="Permalink to this heading">#</a></h3>
+<p>We can also find the distances to a new “test” or “query” city:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s find a city that&#39;s closest to the a query city</span>
+<span class="n">query_point</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">25</span><span class="p">]]</span>
+<span class="n">dists</span> <span class="o">=</span> <span class="n">euclidean_distances</span><span class="p">(</span><span class="n">X_cities</span><span class="p">,</span> <span class="n">query_point</span><span class="p">)</span>
+<span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[58.85545875],
+       [63.80062924],
+       [49.30530902],
+       [49.01473536],
+       [48.60495488],
+       [39.96834506],
+       [32.92852376],
+       [29.53520104],
+       [29.52881619],
+       [27.84679073]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The query point is closest to</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The query point </span><span class="si">{</span><span class="n">query_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> is </span><span class="se">\</span>
+<span class="s2">      closest to the city with index </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">      and the distance between them is: </span><span class="si">{</span><span class="n">dists</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The query point [-80, 25] is       closest to the city with index 72       and the distance between them is: [0.7981605]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span> <span class="n">query_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-80, 25]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="k-nearest-neighbours-k-nns">
+<h2><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbours (<span class="math notranslate nohighlight">\(k\)</span>-NNs)<a class="headerlink" href="#k-nearest-neighbours-k-nns" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">small_cities</span> <span class="o">=</span> <span class="n">cities_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">one_city</span> <span class="o">=</span> <span class="n">small_cities</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">44</span><span class="p">)</span>
+<span class="n">small_train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">small_cities</span><span class="p">,</span> <span class="n">one_city</span><span class="p">])</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_small_cities</span> <span class="o">=</span> <span class="n">small_train_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;country&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">y_small_cities</span> <span class="o">=</span> <span class="n">small_train_df</span><span class="p">[</span><span class="s2">&quot;country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">test_point</span> <span class="o">=</span> <span class="n">one_city</span><span class="p">[[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">plot_train_test_points</span><span class="p">(</span><span class="n">X_small_cities</span><span class="p">,</span> <span class="n">y_small_cities</span><span class="p">,</span> <span class="n">test_point</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">[</span>
+                       <span class="s2">&quot;Canada&quot;</span><span class="p">,</span> <span class="s2">&quot;USA&quot;</span><span class="p">],</span> <span class="n">test_format</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1fa019c3481c07054a0f3569998fd7eda0a524ccd1d5299fc6abc907081a5562.png" src="_images/1fa019c3481c07054a0f3569998fd7eda0a524ccd1d5299fc6abc907081a5562.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Given a new data point, predict the class of the data point by finding the “closest” data point in the training set, i.e., by finding its “nearest neighbor” or a majority vote of nearest neighbors.</p></li>
+</ul>
+<p>Suppose we want to predict the class of the black point.</p>
+<ul class="simple">
+<li><p>An intuitive way to do this is to predict the same label as the “closest” point (<span class="math notranslate nohighlight">\(k = 1\)</span>) (1-nearest neighbor)</p></li>
+<li><p>We would predict a target of <strong>USA</strong> in this case.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">plot_knn_clf</span><span class="p">(</span><span class="n">X_small_cities</span><span class="p">,</span> <span class="n">y_small_cities</span><span class="p">,</span> <span class="n">test_point</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+             <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Canada&quot;</span><span class="p">,</span> <span class="s2">&quot;USA&quot;</span><span class="p">],</span> <span class="n">test_format</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n_neighbors 1
+</pre></div>
+</div>
+<img alt="_images/5a22e0a63422db90be2cb362f39ce939c021c1b4a617de7a165c8fd12b50d287.png" src="_images/5a22e0a63422db90be2cb362f39ce939c021c1b4a617de7a165c8fd12b50d287.png" />
+</div>
+</div>
+<p>How about using <span class="math notranslate nohighlight">\(k &gt; 1\)</span> to get a more robust estimate?</p>
+<ul class="simple">
+<li><p>For example, we could also use the 3 closest points (<em>k</em> = 3) and let them <strong>vote</strong> on the correct class.</p></li>
+<li><p>The <strong>Canada</strong> class would win in this case.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">plot_knn_clf</span><span class="p">(</span><span class="n">X_small_cities</span><span class="p">,</span> <span class="n">y_small_cities</span><span class="p">,</span> <span class="n">test_point</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+             <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Canada&quot;</span><span class="p">,</span> <span class="s2">&quot;USA&quot;</span><span class="p">],</span> <span class="n">test_format</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n_neighbors 3
+</pre></div>
+</div>
+<img alt="_images/be88e901eee640817fc1e7374f94c36b1cbc7f0a82d3ad2f99917a4ae13126b3.png" src="_images/be88e901eee640817fc1e7374f94c36b1cbc7f0a82d3ad2f99917a4ae13126b3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+<span class="n">k_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_values</span><span class="p">:</span>
+    <span class="n">neigh</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">neigh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_small_cities</span><span class="p">,</span> <span class="n">y_small_cities</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Prediction of the black dot with </span><span class="si">%d</span><span class="s2"> neighbours: </span><span class="si">%s</span><span class="s2">&quot;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">neigh</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_point</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the black dot with 1 neighbours: [&#39;USA&#39;]
+Prediction of the black dot with 3 neighbours: [&#39;Canada&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="questions">
+<h3>Questions<a class="headerlink" href="#questions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Is it a good or a bad idea to consider an odd number for <span class="math notranslate nohighlight">\(k\)</span>? Why or why not?</p></li>
+<li><p>Try different values of <span class="math notranslate nohighlight">\(k\)</span> in the above code.</p></li>
+</ul>
+</section>
+<section id="choosing-n-neighbors">
+<h3>Choosing <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code><a class="headerlink" href="#choosing-n-neighbors" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The primary hyperparameter of the model is <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> (<span class="math notranslate nohighlight">\(k\)</span>) which decides how many neighbors should vote during prediction.</p></li>
+<li><p>What happens when we play around with <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>?</p></li>
+<li><p>Are we more likely to overfit with a low <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> or a high <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>?</p></li>
+<li><p>Let’s examine the effect of the hyperparameter on our cities data.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">cities_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;country&quot;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">cities_df</span><span class="p">[</span><span class="s2">&quot;country&quot;</span><span class="p">]</span>
+
+<span class="c1"># split into train and test sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">knn1</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">knn1</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fit_time</th>
+      <th>score_time</th>
+      <th>test_score</th>
+      <th>train_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.002810</td>
+      <td>0.002021</td>
+      <td>0.710526</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.001073</td>
+      <td>0.001753</td>
+      <td>0.684211</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.001076</td>
+      <td>0.001663</td>
+      <td>0.842105</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.001043</td>
+      <td>0.001749</td>
+      <td>0.702703</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.001073</td>
+      <td>0.001658</td>
+      <td>0.837838</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">knn100</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">knn100</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fit_time</th>
+      <th>score_time</th>
+      <th>test_score</th>
+      <th>train_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.001343</td>
+      <td>0.055811</td>
+      <td>0.605263</td>
+      <td>0.600000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.001059</td>
+      <td>0.003783</td>
+      <td>0.605263</td>
+      <td>0.600000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.001037</td>
+      <td>0.003710</td>
+      <td>0.605263</td>
+      <td>0.600000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.001046</td>
+      <td>0.003910</td>
+      <td>0.594595</td>
+      <td>0.602649</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.001015</td>
+      <td>0.003663</td>
+      <td>0.594595</td>
+      <td>0.602649</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;n_neighbours&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_neighbors</span><span class="p">]</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;mean_train_score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)]</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;mean_valid_score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+
+
+<span class="n">interactive</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">101</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "5633751475f64e56b9c59156cff109ca", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">plot_knn_decision_boundaries</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">k_values</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d4c67d30677164729edb707ae42138565f047bd3366f66fae852c8e3de9bda80.png" src="_images/d4c67d30677164729edb707ae42138565f047bd3366f66fae852c8e3de9bda80.png" />
+</div>
+</div>
+</section>
+<section id="how-to-choose-n-neighbors">
+<h3>How to choose <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>?<a class="headerlink" href="#how-to-choose-n-neighbors" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> is a hyperparameter</p></li>
+<li><p>We can use hyperparameter optimization to choose <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_neighbors&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;mean_train_score&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;mean_cv_score&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;std_cv_score&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;std_train_score&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="p">}</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="p">[</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">]:</span>
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">results_dict</span><span class="p">[</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="n">results_dict</span><span class="p">[</span><span class="s2">&quot;mean_cv_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]))</span>
+    <span class="n">results_dict</span><span class="p">[</span><span class="s2">&quot;mean_train_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]))</span>
+    <span class="n">results_dict</span><span class="p">[</span><span class="s2">&quot;std_cv_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+    <span class="n">results_dict</span><span class="p">[</span><span class="s2">&quot;std_train_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">)</span>
+<span class="n">results_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_train_score</th>
+      <th>mean_cv_score</th>
+      <th>std_cv_score</th>
+      <th>std_train_score</th>
+    </tr>
+    <tr>
+      <th>n_neighbors</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.000000</td>
+      <td>0.755477</td>
+      <td>0.069530</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.831135</td>
+      <td>0.792603</td>
+      <td>0.046020</td>
+      <td>0.013433</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.819152</td>
+      <td>0.802987</td>
+      <td>0.041129</td>
+      <td>0.011336</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.801863</td>
+      <td>0.782219</td>
+      <td>0.074141</td>
+      <td>0.008735</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>0.777934</td>
+      <td>0.766430</td>
+      <td>0.062792</td>
+      <td>0.016944</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>0.755364</td>
+      <td>0.723613</td>
+      <td>0.061937</td>
+      <td>0.025910</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>0.743391</td>
+      <td>0.707681</td>
+      <td>0.057646</td>
+      <td>0.030408</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>0.728777</td>
+      <td>0.707681</td>
+      <td>0.064452</td>
+      <td>0.021305</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>0.706128</td>
+      <td>0.681223</td>
+      <td>0.061241</td>
+      <td>0.018310</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>0.694155</td>
+      <td>0.660171</td>
+      <td>0.093390</td>
+      <td>0.018178</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_df</span><span class="p">[[</span><span class="s2">&quot;mean_train_score&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_cv_score&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: xlabel=&#39;n_neighbors&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/662f45c930d9e0d191158f081dea638aca55a47bb8647f3b11ea7e50ed61d67c.png" src="_images/662f45c930d9e0d191158f081dea638aca55a47bb8647f3b11ea7e50ed61d67c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_n_neighbours</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()[</span><span class="s2">&quot;mean_cv_score&quot;</span><span class="p">]</span>
+<span class="n">best_n_neighbours</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s try our best model on test data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">best_n_neighbours</span><span class="p">)</span>
+<span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test accuracy: </span><span class="si">%0.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">knn</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.905
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="questions-on-distances-and-k-nns">
+<h3>Questions on distances and <span class="math notranslate nohighlight">\(k\)</span>-NNs<a class="headerlink" href="#questions-on-distances-and-k-nns" title="Permalink to this heading">#</a></h3>
+<section id="exercise">
+<h4>Exercise<a class="headerlink" href="#exercise" title="Permalink to this heading">#</a></h4>
+<p><strong>True or False</strong></p>
+<ol class="arabic simple">
+<li><p>Analogy-based models find examples from the test set that are most similar to the query example we are predicting.</p></li>
+<li><p>A dataset with 10 dimensions is considered low dimensional.</p></li>
+<li><p>Euclidean distance will always have a positive value.</p></li>
+</ol>
+</section>
+<section id="id1">
+<h4>Exercise<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<p>What would be the Euclidean distance between the following two vectors <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-4-3">
+<h4>Exercise 4.3<a class="headerlink" href="#exercise-4-3" title="Permalink to this heading">#</a></h4>
+<p><strong>True or False</strong></p>
+<ol class="arabic simple">
+<li><p>Unlike with decision trees, with <span class="math notranslate nohighlight">\(k\)</span>-NNs most of the work is done at the <code class="docutils literal notranslate"><span class="pre">predict</span></code> stage.</p></li>
+<li><p>With <span class="math notranslate nohighlight">\(k\)</span>-NN, setting the hyperparameter <span class="math notranslate nohighlight">\(k\)</span> to larger values typically reduces training error.</p></li>
+<li><p>Similar to decision trees, <span class="math notranslate nohighlight">\(k\)</span>-NNs finds a small set of good features.</p></li>
+<li><p>In <span class="math notranslate nohighlight">\(k\)</span>-NN, the classification of the closest neighbour to the test example always contributes the most to the prediction.</p></li>
+</ol>
+</section>
+<section id="k-nn-practice-questions">
+<h4><span class="math notranslate nohighlight">\(k\)</span>-NN practice questions<a class="headerlink" href="#k-nn-practice-questions" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>When we calculated Euclidean distances from all cities to all other cities, why did we set the diagonal entries to infinity before finding the closest city?</p></li>
+<li><p>Consider this toy dataset:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split} X = \begin{bmatrix}5 &amp; 2\\4 &amp; 3\\  2 &amp; 2\\ 10 &amp; 10\\ 9 &amp; -1\\ 9&amp; 9\end{bmatrix}, \quad y = \begin{bmatrix}0\\0\\1\\1\\1\\2\end{bmatrix}.\end{split}\]</div>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(k=1\)</span>, what would you predict for <span class="math notranslate nohighlight">\(x=\begin{bmatrix} 0\\0\end{bmatrix}\)</span>?</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(k=3\)</span>, what would you predict for <span class="math notranslate nohighlight">\(x=\begin{bmatrix} 0\\0\end{bmatrix}\)</span>?</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="more-on-k-nns">
+<h2>More on <span class="math notranslate nohighlight">\(k\)</span>-NNs<a class="headerlink" href="#more-on-k-nns" title="Permalink to this heading">#</a></h2>
+<section id="other-useful-arguments-of-kneighborsclassifier">
+<h3>Other useful arguments of <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code><a class="headerlink" href="#other-useful-arguments-of-kneighborsclassifier" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">weights</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span> When predicting labels, you can assign a higher weight to the examples that are closer to the query example.</p></li>
+<li><p>Exercise for you: Play around with this argument. Do you get a better validation score?</p></li>
+</ul>
+</section>
+<section id="optional-regression-with-k-nearest-neighbours-k-nns">
+<h3>(Optional) Regression with <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours (<span class="math notranslate nohighlight">\(k\)</span>-NNs)<a class="headerlink" href="#optional-regression-with-k-nearest-neighbours-k-nns" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Can we solve regression problems with <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors algorithm?</p></li>
+<li><p>In <span class="math notranslate nohighlight">\(k\)</span>-NN regression we take the average of the <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours.</p></li>
+<li><p>We can also have weighted regression.</p></li>
+</ul>
+<p>See an example of regression in the lecture notes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_knn_regression</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/83905eafc283f6ab6225770377ce91e79cca80a420d0d1f8881f595c89d76390.png" src="_images/83905eafc283f6ab6225770377ce91e79cca80a420d0d1f8881f595c89d76390.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_knn_regression</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/67993a15ec917cd3138667a04ff36b2d02aa5173d94292dcf410c63edee75d92.png" src="_images/67993a15ec917cd3138667a04ff36b2d02aa5173d94292dcf410c63edee75d92.png" />
+</div>
+</div>
+</section>
+<section id="pros-of-k-nns-for-supervised-learning">
+<h3>Pros of <span class="math notranslate nohighlight">\(k\)</span>-NNs for supervised learning<a class="headerlink" href="#pros-of-k-nns-for-supervised-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Easy to understand, and interpret.</p></li>
+<li><p>Simple hyperparameter <span class="math notranslate nohighlight">\(k\)</span> (<code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>) controlling the fundamental tradeoff.</p></li>
+<li><p>Can learn very complex functions given enough data.</p></li>
+<li><p>Lazy learning: takes no time to <code class="docutils literal notranslate"><span class="pre">fit</span></code></p></li>
+</ul>
+</section>
+<section id="cons-of-k-nns-for-supervised-learning">
+<h3>Cons of <span class="math notranslate nohighlight">\(k\)</span>-NNs for supervised learning<a class="headerlink" href="#cons-of-k-nns-for-supervised-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Can potentially be VERY slow during prediction time, especially when the training set is very large.</p></li>
+<li><p>Often not that great test accuracy compared to the modern approaches.</p></li>
+<li><p>It does not work well on datasets with many features or where most feature values are 0 most of the time (sparse datasets).</p></li>
+</ul>
+<p>For regular <span class="math notranslate nohighlight">\(k\)</span>-NN for supervised learning (not with sparse matrices), you should <strong>standardize</strong> your features.</p>
+</section>
+<section id="parametric-vs-non-parametric">
+<h3>Parametric vs non parametric<a class="headerlink" href="#parametric-vs-non-parametric" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>You might see a lot of definitions of these terms.</p></li>
+<li><p>A simple way to think about this is:</p>
+<ul>
+<li><p>Do you need to store at least <span class="math notranslate nohighlight">\(O(n)\)</span> worth of stuff to make predictions? If so, it’s non-parametric.</p></li>
+</ul>
+</li>
+<li><p>Non-parametric example: <span class="math notranslate nohighlight">\(k\)</span>-NN is a classic example of non-parametric models.</p></li>
+<li><p>Parametric example: decision stump</p></li>
+<li><p>If you want to know more about this, find some reading material <a class="reference external" href="https://www.cs.ubc.ca/~schmidtm/Courses/340-F16/L6.pdf">here</a>, <a class="reference external" href="http://mlss.tuebingen.mpg.de/2015/slides/ghahramani/gp-neural-nets15.pdf">here</a>, and <a class="reference external" href="https://machinelearningmastery.com/parametric-and-nonparametric-machine-learning-algorithms/">here</a>.</p></li>
+<li><p>By the way, the terms “parametric” and “non-paramteric” are often used differently by statisticians, see <a class="reference external" href="https://help.xlstat.com/s/article/what-is-the-difference-between-a-parametric-and-a-nonparametric-test?language=en_US">here</a> for more…</p></li>
+</ul>
+</section>
+<section id="curse-of-dimensionality">
+<h3>Curse of dimensionality<a class="headerlink" href="#curse-of-dimensionality" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Affects all learners but is especially bad for the nearest neighbor.</p></li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span>-NN usually works well when the number of dimensions <span class="math notranslate nohighlight">\(d\)</span> is small but things fall apart quickly as <span class="math notranslate nohighlight">\(d\)</span> goes up.</p></li>
+<li><p>If there are many irrelevant attributes, <span class="math notranslate nohighlight">\(k\)</span>-NN is hopelessly confused because all of them contribute to finding similarities between examples.</p></li>
+<li><p>With enough irrelevant attributes the accidental similarity swamps out meaningful similarity and <span class="math notranslate nohighlight">\(k\)</span>-NN is no better than random guessing.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+
+<span class="n">nfeats_accuracy</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;nfeats&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                   <span class="s2">&quot;dummy_valid_accuracy&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;KNN_valid_accuracy&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">n_feats</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="n">n_feats</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span>
+    <span class="p">)</span>
+    <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+    <span class="n">dummy_scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+        <span class="n">dummy</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">nfeats_accuracy</span><span class="p">[</span><span class="s2">&quot;nfeats&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_feats</span><span class="p">)</span>
+    <span class="n">nfeats_accuracy</span><span class="p">[</span><span class="s2">&quot;KNN_valid_accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]))</span>
+    <span class="n">nfeats_accuracy</span><span class="p">[</span><span class="s2">&quot;dummy_valid_accuracy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dummy_scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nfeats_accuracy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nfeats</th>
+      <th>dummy_valid_accuracy</th>
+      <th>KNN_valid_accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4</td>
+      <td>0.505000</td>
+      <td>0.901875</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>104</td>
+      <td>0.510625</td>
+      <td>0.840000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>204</td>
+      <td>0.501250</td>
+      <td>0.675000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>304</td>
+      <td>0.504375</td>
+      <td>0.615000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>404</td>
+      <td>0.513125</td>
+      <td>0.640625</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>504</td>
+      <td>0.500625</td>
+      <td>0.678750</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>604</td>
+      <td>0.503125</td>
+      <td>0.573750</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>704</td>
+      <td>0.505625</td>
+      <td>0.622500</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>804</td>
+      <td>0.506875</td>
+      <td>0.650000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>904</td>
+      <td>0.508750</td>
+      <td>0.564375</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1004</td>
+      <td>0.501250</td>
+      <td>0.618750</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1104</td>
+      <td>0.508750</td>
+      <td>0.630000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1204</td>
+      <td>0.505625</td>
+      <td>0.598125</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1304</td>
+      <td>0.504375</td>
+      <td>0.605000</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1404</td>
+      <td>0.499375</td>
+      <td>0.610625</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1504</td>
+      <td>0.500625</td>
+      <td>0.622500</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1604</td>
+      <td>0.499375</td>
+      <td>0.575000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1704</td>
+      <td>0.499375</td>
+      <td>0.605000</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1804</td>
+      <td>0.500625</td>
+      <td>0.581875</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1904</td>
+      <td>0.506875</td>
+      <td>0.600000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We have KNNs as a new supervised learning technique in our toolbox.</p></li>
+<li><p>These are analogy-based learners and the idea is to assign nearby points the same label.</p></li>
+<li><p>Unlike decision trees, all features are equally important.</p></li>
+<li><p>Both can be used for classification or regression (much like the other methods we’ve seen).</p></li>
+</ul>
+</section>
+<section id="critical-thinking-questions">
+<h2>Critical thinking questions<a class="headerlink" href="#critical-thinking-questions" title="Permalink to this heading">#</a></h2>
+<p><strong>Q</strong>: In the kNN algorithm’s training phase, how should one handle situations where multiple neighbors have the same distance from a test point but only a subset of them is needed based on the value of k?</p>
+<p>Strategies to resolve this include:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Random selection of neighbors.
+- Weighted voting or perturbing distances.
+- Choosing neighbors based on their sequential order in the dataset.
+- Temporarily increasing kk to include all tied neighbors.
+- Introducing additional distance metrics.
+- Using a hierarchical or multi-level kNN approach.
+- Pre-processing data to minimize tie occurrences.
+</pre></div>
+</div>
+</section>
+<section id="recommendation-reading-materials">
+<h2>Recommendation reading materials<a class="headerlink" href="#recommendation-reading-materials" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://youtu.be/HVXime0nQeI">StatQuest: K-nearest neighbors, Clearly Explained</a></p></li>
+</ul>
+<hr></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_ml-fundamentals.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Machine learning fundamentals</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_preprocessing-pipelines.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-recap">Quick recap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-outcomes">Learning outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-distances">Motivation and distances</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogy-based-models">Analogy-based models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analogy-based-algorithms-in-practice">Analogy-based algorithms in practice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-idea-of-k-nearest-neighbors-algorithm">The general idea of <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-view-of-tabular-data-and-dimensions">Geometric view of tabular data and dimensions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensions-in-ml-problems">Dimensions in ML problems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-vectors">Feature vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#similarity-between-examples">Similarity between examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-between-feature-vectors">Distance between feature vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean-distance">Euclidean distance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-nearest-neighbor">Finding the nearest neighbor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-distances-to-a-query-point">Finding the distances to a query point</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbours-k-nns"><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbours (<span class="math notranslate nohighlight">\(k\)</span>-NNs)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions">Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-n-neighbors">Choosing <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-choose-n-neighbors">How to choose <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-on-distances-and-k-nns">Questions on distances and <span class="math notranslate nohighlight">\(k\)</span>-NNs</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise">Exercise</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Exercise</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-3">Exercise 4.3</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nn-practice-questions"><span class="math notranslate nohighlight">\(k\)</span>-NN practice questions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-on-k-nns">More on <span class="math notranslate nohighlight">\(k\)</span>-NNs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-useful-arguments-of-kneighborsclassifier">Other useful arguments of <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-regression-with-k-nearest-neighbours-k-nns">(Optional) Regression with <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours (<span class="math notranslate nohighlight">\(k\)</span>-NNs)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pros-of-k-nns-for-supervised-learning">Pros of <span class="math notranslate nohighlight">\(k\)</span>-NNs for supervised learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cons-of-k-nns-for-supervised-learning">Cons of <span class="math notranslate nohighlight">\(k\)</span>-NNs for supervised learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-vs-non-parametric">Parametric vs non parametric</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#curse-of-dimensionality">Curse of dimensionality</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-thinking-questions">Critical thinking questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Course review &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '30_course-review';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Syllabus" href="a01_syllabus.html" />
+    <link rel="prev" title="ML explainability" href="23_feat-importances-xai.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/30_course-review.ipynb" download="30_course-review.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Course review</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reminder">Reminder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-review">Quick review</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-workflow">Machine learning workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-did-we-cover">What did we cover?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-key-takeaways">Some key takeaways</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recipe-to-approach-a-supervised-learning-problem-with-tabular-data">Recipe to approach a supervised learning problem with tabular data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-resources">Extra resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-the-right-estimator">Choose the right estimator</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-would-the-instructor-do-better">What would the instructor do better?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-step">Next step</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-machine-learning-to-your-research">Applying machine learning to your research</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-minoconda-and-anaconda">conda, minoconda, and anaconda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simple-way-anaconda">The simple way - Anaconda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geek-way-miniconda">The geek way - miniconda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-virtual-environment-from-anaconda-or-miniconda">Create a virtual environment from <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> or <code class="docutils literal notranslate"><span class="pre">Miniconda</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cmle"><code class="docutils literal notranslate"><span class="pre">cmle</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dive-into-deep-learning">Dive into deep learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-career-pathway">AI career pathway</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jobs-and-responsibilities">Jobs and responsibilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="course-review">
+<h1>Course review<a class="headerlink" href="#course-review" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 45 minutes</p></li>
+</ul>
+<hr><section id="reminder">
+<h2>Reminder<a class="headerlink" href="#reminder" title="Permalink to this heading">#</a></h2>
+<p><strong>Completion of Coursework</strong>:</p>
+<ul class="simple">
+<li><p>As we approach the end of the semester, remember that all quizzes, homework, reports, including any make-up work or extensions, must be completed and submitted before the last lecture day.</p></li>
+</ul>
+<p><strong>Final Exam Format</strong>:</p>
+<ul class="simple">
+<li><p>The final exam will consist of 50 multiple-choice questions.</p></li>
+<li><p>Approximately 25 questions will be based on past quizzes, and 25 will be new.</p></li>
+</ul>
+<p><strong>In-Person Final Exam</strong>:</p>
+<ul class="simple">
+<li><p>The final exam must be taken in-person. It is not permissible to take this exam at home or in any other room.</p></li>
+<li><p>The date and location of the exam will be announced later.</p></li>
+</ul>
+<p><strong>Exam Tools</strong>:</p>
+<ul class="simple">
+<li><p>The final exam will be conducted using Canvas and Lockdown Browser.</p></li>
+<li><p>Ensure you have both set up and ready before the exam day.</p></li>
+</ul>
+<p><strong>Exam Regulations</strong>:</p>
+<ul class="simple">
+<li><p>The exam is closed-book: no textbooks, notes, or other materials are allowed.</p></li>
+<li><p>Students are not permitted to discuss any questions or seek external help during the exam.</p></li>
+</ul>
+</section>
+<section id="quick-review">
+<h2>Quick review<a class="headerlink" href="#quick-review" title="Permalink to this heading">#</a></h2>
+<section id="machine-learning-workflow">
+<h3>Machine learning workflow<a class="headerlink" href="#machine-learning-workflow" title="Permalink to this heading">#</a></h3>
+<!-- ![ml-workflow.png](img/ml-workflow.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ml-workflow.png" alt="ml-workflow.png" width="80%"></center></section>
+<section id="learning-objectives">
+<h3>Learning objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h3>
+<p>Here are the course learning outcomes:</p>
+<ol class="arabic simple">
+<li><p>Identify problems that may be addressed with machine learning.</p></li>
+<li><p>Select the appropriate machine learning tool for a task/problem.</p></li>
+<li><p>Transform data of various types into usable features.</p></li>
+<li><p>Apply standard tools implementing supervised and unsupervised learning techniques.</p></li>
+<li><p>Describe core differences between training, validation, and testing regimes.</p></li>
+<li><p>Be realistic about the limitations of specific approaches and machine learning.</p></li>
+<li><p>Identify and avoid scenarios where training and testing data are accidentally mixed (the “Golden Rule”).</p></li>
+<li><p>Employ good habits for applying ML, such as starting an analysis with a baseline estimator.</p></li>
+<li><p>Create responsible machine-learning solutions and products.</p></li>
+</ol>
+</section>
+<section id="what-did-we-cover">
+<h3>What did we cover?<a class="headerlink" href="#what-did-we-cover" title="Permalink to this heading">#</a></h3>
+<p>This course is roughly organized like this (not in order):</p>
+<p>Part 1: Supervised learning on tabular data</p>
+<ul class="simple">
+<li><p>Overfitting, train/validation/test/deployment, cross-validation</p></li>
+<li><p>Feature preprocessing, pipelines, imputation, OHE, etc</p></li>
+<li><p>The Golden Rule, various ways to accidentally violate it</p></li>
+<li><p>Classification metrics: confusion matrix, precision/recall, ROC, AUC</p></li>
+<li><p>Regression metrics: MSE, MAPE</p></li>
+<li><p>Hyperparameter optimization</p></li>
+</ul>
+<ul class="simple">
+<li><p>A bunch of models:</p>
+<ul>
+<li><p>Baselines</p></li>
+<li><p>Linear models (ridge, logistic regression)</p></li>
+<li><p>KNNs and RBF SVMs</p></li>
+<li><p>Tree-based models (random forest, gradient-boosted trees)</p></li>
+<li><p>Ensembles</p></li>
+</ul>
+</li>
+</ul>
+<p>Part 2: Other tasks</p>
+<ul class="simple">
+<li><p>Unsupervised learning</p>
+<ul>
+<li><p>Dimension reduction: PCA</p></li>
+<li><p>Clustering: K-Means, DBSCAN</p></li>
+</ul>
+</li>
+<li><p>Recommender systems</p></li>
+<li><p>Trustworthy machine learning</p></li>
+</ul>
+</section>
+<section id="some-key-takeaways">
+<h3>Some key takeaways<a class="headerlink" href="#some-key-takeaways" title="Permalink to this heading">#</a></h3>
+<p>Some useful guidelines:</p>
+<ul class="simple">
+<li><p>Do a train-test split right away and only once</p></li>
+<li><p>Don’t look at the test set until the end</p></li>
+<li><p>Don’t call <code class="docutils literal notranslate"><span class="pre">fit</span></code> on test/validation data</p></li>
+<li><p>Use transformers and pipelines</p></li>
+<li><p>Use baselines</p></li>
+</ul>
+</section>
+<section id="recipe-to-approach-a-supervised-learning-problem-with-tabular-data">
+<h3>Recipe to approach a supervised learning problem with tabular data<a class="headerlink" href="#recipe-to-approach-a-supervised-learning-problem-with-tabular-data" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Have a long conversation with the stakeholder(s) who will be using your pipeline.</p></li>
+<li><p>Have a long conversation with the person(s) who collected the data.</p></li>
+<li><p>Think about the ethical implications - are you sure you want to do this project? If so, should ethics guide your approach?</p></li>
+<li><p>Random train-test split with fixed random seed; do not touch the test data until final evaluation.</p></li>
+<li><p>Exploratory data analysis, outlier detection.</p></li>
+<li><p>Choose a scoring metric –&gt; higher values should make you and your stakeholders happier.</p></li>
+<li><p>Fit a baseline model, e.g., <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> or <code class="docutils literal notranslate"><span class="pre">DummyRegressor</span></code>.</p></li>
+<li><p>Create a pre-porcessing pipeline. This may involve feature engineering. (This is usually a time-consuming step.)</p></li>
+<li><p>Try a linear model. For example, <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> or <code class="docutils literal notranslate"><span class="pre">Ridge</span></code>; tune hyperparameters with CV.</p></li>
+</ol>
+<ol class="arabic simple" start="10">
+<li><p>Try other sensible models(s), e.g., <code class="docutils literal notranslate"><span class="pre">LightGBM</span></code>; tune hyperparameters with CV.</p></li>
+<li><p>For each model, look at sub-scores from the folds of cross-validation to get a sense of “error bars” on the scores.</p></li>
+<li><p>Pick a promising model. The best CV score is a reasonable metric, though you may choose to favor simpler models.</p></li>
+<li><p>Look at feature importances.</p></li>
+<li><p>(optional) Perform some more diagnostics like a confusion matrix for classification or “predicted vs. true” scatterplots for regression.</p></li>
+<li><p>(optional) Try to calibrate the uncertainty or confidence outputted by your model.</p></li>
+<li><p>Test set evaluation.</p></li>
+<li><p>Question everything again: validity of results, bias/fairness of trained model, etc.</p></li>
+<li><p>Discuss your results with stakeholders.</p></li>
+<li><p>(optional) Retrain models on all your data.</p></li>
+<li><p>Deployment and integration.</p></li>
+<li><p>Profit?</p></li>
+</ol>
+</section>
+</section>
+<section id="extra-resources">
+<h2>Extra resources<a class="headerlink" href="#extra-resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/tutorial/">scikit-learn Tutorials</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/auto_examples/index.html">Examples</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html">API Reference</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/user_guide.html">User guide</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/getting_started.html">Getting Started</a></p></li>
+</ul>
+<section id="choose-the-right-estimator">
+<h3>Choose the right estimator<a class="headerlink" href="#choose-the-right-estimator" title="Permalink to this heading">#</a></h3>
+<!-- ![ml_map.png](img/ml_map.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ml_map.png" alt="ml_map.png" width="80%"></center></section>
+</section>
+<section id="what-would-the-instructor-do-better">
+<h2>What would the instructor do better?<a class="headerlink" href="#what-would-the-instructor-do-better" title="Permalink to this heading">#</a></h2>
+<p>I’m sure you have many other suggestions - <strong>feel free to drop them in the course evaluations or email to me</strong>.</p>
+</section>
+<section id="next-step">
+<h2>Next step<a class="headerlink" href="#next-step" title="Permalink to this heading">#</a></h2>
+<section id="applying-machine-learning-to-your-research">
+<h3>Applying machine learning to your research<a class="headerlink" href="#applying-machine-learning-to-your-research" title="Permalink to this heading">#</a></h3>
+<section id="conda-minoconda-and-anaconda">
+<h4>conda, minoconda, and anaconda<a class="headerlink" href="#conda-minoconda-and-anaconda" title="Permalink to this heading">#</a></h4>
+<p>Conda is an excellent tool for organizing your Python programming environment.
+It efficiently manages packages and creates virtual environments for your projects, ensuring they do not interfere with one another.
+By using Conda, you can establish separate environments, each equipped with the necessary packages for a specific project, simplifying management and enhancing organization.</p>
+<p>Building upon the capabilities of Conda, there are two notable Python distributions: Miniconda and Anaconda.</p>
+<!-- ![conda.png](img/conda.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/conda.png" alt="conda.png" width="70%"></center></section>
+<section id="the-simple-way-anaconda">
+<h4>The simple way - Anaconda<a class="headerlink" href="#the-simple-way-anaconda" title="Permalink to this heading">#</a></h4>
+<p>Please follow the <a class="reference external" href="https://docs.anaconda.com/free/anaconda/install/index.html">instructions</a> to install <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> on your computer.</p>
+<p><strong><a class="reference external" href="https://docs.anaconda.com/free/anaconda/getting-started/what-is-distro/">What is Anaconda Distribution?</a></strong></p>
+<p>conda + Anaconda Navigator + additional packages for machine learning and data science.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.conda.io/en/latest/">conda</a>: a package manager</p></li>
+<li><p><a class="reference external" href="https://docs.anaconda.com/free/navigator/">Anaconda Navigator</a>: GUI for managing conda packages, environments, and channels</p></li>
+<li><p><a class="reference external" href="https://docs.anaconda.com/free/anaconda/reference/packages/pkg-docs/">packages</a>: ready to use for common tasks</p></li>
+</ul>
+<p>You can install 8000 extra packages.</p>
+<p>BTW: Clemson’s Palmetto Cluster has Anaconda installed by default. You can use it whenever you are affiliated with Clemson.</p>
+</section>
+<section id="the-geek-way-miniconda">
+<h4>The geek way - miniconda<a class="headerlink" href="#the-geek-way-miniconda" title="Permalink to this heading">#</a></h4>
+<p>Please follow the <a class="reference external" href="https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html">instructions</a> to install <code class="docutils literal notranslate"><span class="pre">miniconda</span></code> on your computer.</p>
+<p>miniconda is a free minimal installer for conda.
+It is a small bootstrap version of Anaconda that includes only conda, Python, the packages they both depend on, and a small number of other useful packages (like pip, zlib, and a few others).</p>
+</section>
+<section id="create-a-virtual-environment-from-anaconda-or-miniconda">
+<h4>Create a virtual environment from <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> or <code class="docutils literal notranslate"><span class="pre">Miniconda</span></code><a class="headerlink" href="#create-a-virtual-environment-from-anaconda-or-miniconda" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>A virtual environment is a named, isolated, working copy of Python that maintains its own files, directories, and paths so that you can work with specific versions of libraries or Python itself without affecting other Python projects.</p></li>
+<li><p>Virtual environments make it easy to separate different projects and avoid problems with various dependencies and version requirements across components.</p></li>
+<li><p>The conda command is the preferred interface for managing installations and virtual environments with the <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> or <code class="docutils literal notranslate"><span class="pre">miniconda</span></code> Python distribution.</p></li>
+</ul>
+<p>You can</p>
+<ul class="simple">
+<li><p>Create an environment from scratch with commands. <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands">Instructions</a></p></li>
+<li><p>Create an environment from a yml file. <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file">Instructions</a></p>
+<ul>
+<li><p>A yml file includes channels, packages, and versions. (no platform information)</p></li>
+<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#create-env-file-manually">An example of a yml file.</a></p></li>
+</ul>
+</li>
+<li><p>Build an identical environment from a txt file. <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#building-identical-conda-environments">Instructions</a></p>
+<ul>
+<li><p>You can use explicit specification files to build an identical conda environment on the same operating system platform, either on the same machine or on a different machine.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="cmle">
+<h4><code class="docutils literal notranslate"><span class="pre">cmle</span></code><a class="headerlink" href="#cmle" title="Permalink to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">cmle</span></code> (Clemson Machine Learning Environment) is a specialized class package designed to download datasets and create various plots that are used in these lectures.
+However, it is important to note that <code class="docutils literal notranslate"><span class="pre">cmle</span></code> is not a fundamental or necessary component for the broader field of machine learning.</p>
+</section>
+</section>
+<section id="dive-into-deep-learning">
+<h3>Dive into deep learning<a class="headerlink" href="#dive-into-deep-learning" title="Permalink to this heading">#</a></h3>
+<p>I teach deep learning (ECE 8550 Artificial Intelligence) every spring.</p>
+<p>This course is designed for beginners:</p>
+<ul class="simple">
+<li><p>deep neural networks</p>
+<ul>
+<li><p>fully connect neural network</p></li>
+<li><p>convolutional neural network</p></li>
+<li><p>recurrent neural network</p></li>
+</ul>
+</li>
+<li><p>PyTorch programming</p></li>
+<li><p>Training and tuning deep neural network</p></li>
+<li><p>AI security/privacy/fairness/explainability</p></li>
+</ul>
+<p>Past materials are available on <a class="reference external" href="https://www.yongkaiwu.com/course/ece8550.html">my website</a>.</p>
+</section>
+<section id="ai-career-pathway">
+<h3>AI career pathway<a class="headerlink" href="#ai-career-pathway" title="Permalink to this heading">#</a></h3>
+<p>Developing an AI project development life cycle involves five distinct tasks:</p>
+<ul class="simple">
+<li><p><strong>Data engineering</strong>: People responsible for data engineering prepare data and transform data into formats that other team members can use.</p></li>
+<li><p><strong>Modeling</strong>: People assigned to modeling look for patterns in data that can help a company predict outcomes of various decisions, identify business risks and opportunities, or determine cause-and-effect relationships.</p></li>
+<li><p><strong>Deployment</strong>: People in charge of deployment take a stream of data, combine it with a model, and test the integration before putting the model into production.</p></li>
+<li><p><strong>Business analysis</strong>: Team members responsible for business analysis evaluate a deployed model’s performance and business value and adjust accordingly to maximize benefit or abandon unproductive models.</p></li>
+<li><p><strong>AI infrastructure</strong>: People who work in AI infrastructure build and maintain reliable, fast, secure, and scalable software systems to help people working in data engineering, modeling, deployment and business analysis.</p></li>
+</ul>
+<section id="jobs-and-responsibilities">
+<h4>Jobs and responsibilities<a class="headerlink" href="#jobs-and-responsibilities" title="Permalink to this heading">#</a></h4>
+<!-- ![ai_career.png](img/ai_career.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ai_career.png" alt="ai_career.png" width="90%"></center>
+<p><a class="reference external" href="https://skills.workera.ai/resource_downloads/ai_career_pathways">Complete version</a></p>
+<hr></section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="23_feat-importances-xai.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ML explainability</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="a01_syllabus.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Syllabus</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reminder">Reminder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-review">Quick review</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-workflow">Machine learning workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-did-we-cover">What did we cover?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-key-takeaways">Some key takeaways</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recipe-to-approach-a-supervised-learning-problem-with-tabular-data">Recipe to approach a supervised learning problem with tabular data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-resources">Extra resources</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-the-right-estimator">Choose the right estimator</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-would-the-instructor-do-better">What would the instructor do better?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-step">Next step</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-machine-learning-to-your-research">Applying machine learning to your research</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-minoconda-and-anaconda">conda, minoconda, and anaconda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simple-way-anaconda">The simple way - Anaconda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geek-way-miniconda">The geek way - miniconda</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-virtual-environment-from-anaconda-or-miniconda">Create a virtual environment from <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code> or <code class="docutils literal notranslate"><span class="pre">Miniconda</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cmle"><code class="docutils literal notranslate"><span class="pre">cmle</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dive-into-deep-learning">Dive into deep learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-career-pathway">AI career pathway</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jobs-and-responsibilities">Jobs and responsibilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

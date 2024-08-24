@@ -1,0 +1,2567 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Machine learning fairness &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '22_ethics';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ML explainability" href="23_feat-importances-xai.html" />
+    <link rel="prev" title="Recommender systems" href="17_recommender-systems.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/22_ethics.ipynb" download="22_ethics.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Machine learning fairness</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-fairness">ML fairness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-problem">What is the problem?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-systems-go-wrong">ML systems go wrong</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-facial-recognition">Example of facial recognition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-biased-outcomes">Why biased outcomes?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-deeper-thought-on-bias">A deeper thought on bias</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#historical-bias">Historical Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-bias">Representation Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#measurement-bias">Measurement Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-bias">Learning bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregation-bias">Aggregation Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-bias">Evaluation Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-bias">Deployment Bias</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-measurement-and-notions">Bias measurement and notions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identify-harms">Identify harms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identify-the-groups-that-might-be-harmed">Identify the groups that might be harmed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantify-harms">Quantify harms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-quantified-harms-across-the-groups">Compare quantified harms across the groups</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-parity">Statistical Parity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more">More</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-mitigation">Bias mitigation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing-massaging">Pre-processing: massaging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-processing-fair-regularization">In-processing: fair regularization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-flipping-with-probability">Post-processing: flipping with probability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice">Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-machine-learning-fairness">Tools for machine learning fairness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fairlearn">Fairlearn</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mitigating-fairness-related-harms-in-ml-models">Mitigating fairness-related harms in ML models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#in-processing">In-processing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-with-thresholdoptimizer">Post-processing with ThresholdOptimizer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="machine-learning-fairness">
+<h1>Machine learning fairness<a class="headerlink" href="#machine-learning-fairness" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 75 minutes</p></li>
+</ul>
+<hr><section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cmle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_transformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_colwidth&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ml-fairness">
+<h2>ML fairness<a class="headerlink" href="#ml-fairness" title="Permalink to this heading">#</a></h2>
+<section id="what-is-the-problem">
+<h3>What is the problem?<a class="headerlink" href="#what-is-the-problem" title="Permalink to this heading">#</a></h3>
+<p>The machine learning fairness problem refers to the challenge of ensuring that AI and machine learning systems operate fairly, without bias or discrimination.</p>
+</section>
+<section id="ml-systems-go-wrong">
+<h3>ML systems go wrong<a class="headerlink" href="#ml-systems-go-wrong" title="Permalink to this heading">#</a></h3>
+<!-- ![img/ml-bias.png](img/ml-bias.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ml-bias.png" alt="img/ml-bias.png" width="65%"></center></section>
+<section id="example-of-facial-recognition">
+<h3>Example of facial recognition<a class="headerlink" href="#example-of-facial-recognition" title="Permalink to this heading">#</a></h3>
+<!-- ![img/facial-bias.png](img/facial-bias.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/facial-bias.png" alt="img/facial-bias.png" width="70%"></center></section>
+<section id="why-biased-outcomes">
+<h3>Why biased outcomes?<a class="headerlink" href="#why-biased-outcomes" title="Permalink to this heading">#</a></h3>
+<p>Probably not the case that someone explicitly coded the model to be biased against a particular race. In fact, race was not even a question that was on the survey inmates took!</p>
+<p>More often than not, biased outcomes from a model come from the data it learns from rather than some explicit choice from the modeler.</p>
+<ul class="simple">
+<li><p>“Garbage in -&gt; Garbage out”</p></li>
+<li><p>“Bias in -&gt; Bias out”</p></li>
+</ul>
+</section>
+<section id="a-deeper-thought-on-bias">
+<h3>A deeper thought on bias<a class="headerlink" href="#a-deeper-thought-on-bias" title="Permalink to this heading">#</a></h3>
+<p><strong>An overview of data generation and collection</strong></p>
+<!-- ![img/data-pipeline.png](img/data-pipeline.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/data-pipeline.png" alt="img/data-pipeline.png" width="70%"></center>
+<ul class="simple">
+<li><p>Historical bias arises even if data is perfectly measured and sampled, if the world as it is or was leads to a model that produces harmful outcomes.</p></li>
+<li><p>Representation bias occurs when the development sample underrepresents some part of the population, and subsequently fails to generalize well for a subset of the use population.</p></li>
+<li><p>Measurement bias occurs when choosing, collecting, or computing features and labels to use in a prediction problem. Typically, a feature or label is a proxy (a concrete measurement) chosen to approximate some construct (an idea or concept) that is not directly encoded or observable.</p></li>
+</ul>
+<p><strong>Modeling pipeline</strong></p>
+<!-- ![img/model-pipeline.png](img/model-pipeline.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/model-pipeline.png" alt="img/model-pipeline.png" width="70%"></center>
+<ul class="simple">
+<li><p>Learning bias arises when modeling choices amplify performance disparities across different examples in the data.</p></li>
+<li><p>Aggregation bias arises when a one-size-fits-all model is used for data in which there are underlying groups or types of examples that should be considered differently.</p></li>
+<li><p>Evaluation bias occurs when the benchmark data used for a particular task does not represent the use population.</p></li>
+<li><p>Deployment bias arises when there is a mismatch between the problem a model is intended to solve and the way in which it is actually used.</p></li>
+</ul>
+<section id="historical-bias">
+<h4>Historical Bias<a class="headerlink" href="#historical-bias" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The world we lived in is one that contains biases for/against certain demographics. Even ‘accurate’ data could still be harmful.</p></li>
+<li><p>Historical bias exists even with perfect sampling or feature measurement (other sources of bias are possible)!</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>In 2018, 5% of Fortune 500 CEOs were women. Should search results for “CEO” match this statistic? Could reflecting the world (even if accurately) perpetuate more harm?</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="representation-bias">
+<h4>Representation Bias<a class="headerlink" href="#representation-bias" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>When the training data we collect does <strong>not contain representative samples</strong> of the true distribution.</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>If we use data gathered from smart phones, we would likely be underestimating senior populations.</p></li>
+<li><p>ImageNet (a very popular image dataset) with 1.2 million images. About 45% of these images were taken in the US and the majority of the rest in North America and Western Europe. Only about 1% and 2.1% of the images come from China and India respectively.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="measurement-bias">
+<h4>Measurement Bias<a class="headerlink" href="#measurement-bias" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Often we are gathering data that contains (noisy) proxies of characteristics of interest.</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>Financial responsibility -&gt; Credit Score</p></li>
+<li><p>Crime Rate -&gt; Arrest Rate</p></li>
+<li><p>Intelligence -&gt; SAT Score</p></li>
+</ul>
+</li>
+</ul>
+<p>If these measurements are not measured equally across groups or places (or are not relevant to the task at hand), this can be another source of bias.</p>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p>The feature we measure is a poor representation of the quality of interest (e.g., SAT score does not actually measure intelligence)</p></li>
+</ul>
+</section>
+<section id="learning-bias">
+<h4>Learning bias<a class="headerlink" href="#learning-bias" title="Permalink to this heading">#</a></h4>
+<p>Learning bias arises when modeling choices amplify performance disparities across different examples in the data.</p>
+<p>For example, minimizing cross-entropy loss when building a classifier might inadvertently lead to a model with more false positives than might be desirable in many contexts.</p>
+</section>
+<section id="aggregation-bias">
+<h4>Aggregation Bias<a class="headerlink" href="#aggregation-bias" title="Permalink to this heading">#</a></h4>
+<p>When we use a “one-sized fits all” model that does not accurately serve every group equally.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>HbA1c levels (used to monitor and diagnose diabetes) differ in very complex ways across ethnicities and sexes. One model for everyone might not be the right choice, even if everyone is represented well in the training data.</p></li>
+</ul>
+</section>
+<section id="evaluation-bias">
+<h4>Evaluation Bias<a class="headerlink" href="#evaluation-bias" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Similar to representation bias, but focused more on the data we evaluate or test ourselves against. If the evaluation dataset or benchmark does not represent the world well, we have evaluation bias.</p></li>
+<li><p>Benchmarks are common datasets used to evaluate models from different researchers.</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>If it is common to report accuracy on a benchmark, this might hide disparate performance on subgroups.</p></li>
+<li><p>Drastically worse performance for facial recognition software when used on faces of darker-skinned females. Common evaluation datasets for facial recognition only had 5-7% had faces of darker-skinned women.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="deployment-bias">
+<h4>Deployment Bias<a class="headerlink" href="#deployment-bias" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>When how a model was intended to be used and how it is actually used when deployed in the real-world.</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>Crime risk prediction models might be evaluated to achieve good calibration, but the model designers might not have evaluated the model’s use in the context of determining prison sentence lengths.</p></li>
+<li><p>People are complex and when using models to aid their decisions, might make incorrect assumptions about what a model says.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="bias-measurement-and-notions">
+<h2>Bias measurement and notions<a class="headerlink" href="#bias-measurement-and-notions" title="Permalink to this heading">#</a></h2>
+<p>What does it mean for a model to be fair or unfair? Can we come up with a numeric way of measuring fairness?</p>
+<p>Lots of work in the field of ML and fairness is looking into mathematical definitions of fairness to help us spot when something might be unfair.</p>
+<p>The goal of fairness assessment is to answer the question: Which groups of people may be disproportionately negatively impacted by an AI system and in what ways?</p>
+<p>The steps of the assessment are as follows:</p>
+<ol class="arabic simple">
+<li><p>Identify harms</p></li>
+<li><p>Identify the groups that might be harmed</p></li>
+<li><p>Quantify harms</p></li>
+<li><p>Compare quantified harms across the groups</p></li>
+</ol>
+<section id="identify-harms">
+<h3>Identify harms<a class="headerlink" href="#identify-harms" title="Permalink to this heading">#</a></h3>
+<p>For example, in a system for screening job applications, qualified candidates that are automatically rejected experience an allocation harm. In a speech-to-text transcription system, high error rates constitute harm in the quality of service.</p>
+</section>
+<section id="identify-the-groups-that-might-be-harmed">
+<h3>Identify the groups that might be harmed<a class="headerlink" href="#identify-the-groups-that-might-be-harmed" title="Permalink to this heading">#</a></h3>
+<p>In most applications, we consider demographic groups including historically marginalized groups (e.g., based on gender, race, ethnicity). We should also consider groups that are relevant to a particular application. For example, for speech-to-text transcription, groups based on the regional dialect or being a native or a non-native speaker.</p>
+<p>It is also important to consider group intersections, for example, in addition to considering groups according to gender and groups according to race, it is also important to consider their intersections (e.g., Black women, Latinx nonbinary people, etc.).</p>
+</section>
+<section id="quantify-harms">
+<h3>Quantify harms<a class="headerlink" href="#quantify-harms" title="Permalink to this heading">#</a></h3>
+<p>Define metrics that quantify harms or benefits:</p>
+<ul class="simple">
+<li><p>In job screening scenario, we need to quantify the number of candidates that are classified as “negative” (not recommended for the job), but whose true label is “positive” (they are qualified). One possible metric is the false negative rate: fraction of qualified candidates that are screened out.</p></li>
+<li><p>In speech-to-text scenario, the harm could be measured by word error rate, number of mistakes in a transcript divided by the overall number of words.</p></li>
+<li><p>In the health care scenario, we could consider two metrics for quantifying harms / benefits:</p>
+<ul>
+<li><p>false negative rate: fraction of patients that are readmitted within 30 days, but that are not recommended for the care management program; this quantifies harm</p></li>
+<li><p>selection rate: overall fraction of patients that are recommended for the care management program (regardless of whether they are readmittted with 30 days or no); this quantifies benefit; here the assumption is that all patients benefit similarly from the extra care.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="compare-quantified-harms-across-the-groups">
+<h3>Compare quantified harms across the groups<a class="headerlink" href="#compare-quantified-harms-across-the-groups" title="Permalink to this heading">#</a></h3>
+<p>The workhorse of fairness assessment are disaggregated metrics, which are metrics evaluated on slices of data. For example, to measure harms due to errors, we would begin by evaluating the errors on each slice of the data that corresponds to a group we identified in Step 2. If some of the groups are seeing much larger errors than other groups, we would flag this as a fairness harm.</p>
+<p>To summarize the disparities in errors (or other metrics), we may want to report quantities such as the difference or ratio of the metric values between the best and the worst slice. In settings where the goal is to guarantee certain minimum quality of service (such as speech recognition), it is also meaningful to report the worst performance across all considered groups.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X\)</span>: features about a person for prediction.</p></li>
+<li><p><span class="math notranslate nohighlight">\(S\)</span>: variable indicating which group <span class="math notranslate nohighlight">\(X\)</span> belongs in.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y\)</span>: the “true label”</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{Y}\)</span> is our prediction for <span class="math notranslate nohighlight">\(Y\)</span> using a learned model</p></li>
+</ul>
+</section>
+<section id="statistical-parity">
+<h3>Statistical Parity<a class="headerlink" href="#statistical-parity" title="Permalink to this heading">#</a></h3>
+<!-- ![img/statistical-parity.png](img/statistical-parity.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/statistical-parity.png" alt="img/statistical-parity.png" width="60%"></center></section>
+<section id="more">
+<h3>More<a class="headerlink" href="#more" title="Permalink to this heading">#</a></h3>
+<!-- ![img/more-sp.png](img/more-sp.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/more-sp.png" alt="img/more-sp.png" width="70%"></center></section>
+</section>
+<section id="bias-mitigation">
+<h2>Bias mitigation<a class="headerlink" href="#bias-mitigation" title="Permalink to this heading">#</a></h2>
+<!-- ![img/fair-pipeline.png](img/fair-pipeline.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/fair-pipeline.png" alt="img/fair-pipeline.png" width="80%"></center><section id="pre-processing-massaging">
+<h3>Pre-processing: massaging<a class="headerlink" href="#pre-processing-massaging" title="Permalink to this heading">#</a></h3>
+<!-- ![img/massage.png](img/massage.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/massage.png" alt="img/massage.png" width="60%"></center></section>
+<section id="in-processing-fair-regularization">
+<h3>In-processing: fair regularization<a class="headerlink" href="#in-processing-fair-regularization" title="Permalink to this heading">#</a></h3>
+<!-- ![img/regularization.png](img/regularization.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/regularization.png" alt="img/regularization.png" width="70%"></center></section>
+<section id="post-processing-flipping-with-probability">
+<h3>Post-processing: flipping with probability<a class="headerlink" href="#post-processing-flipping-with-probability" title="Permalink to this heading">#</a></h3>
+<!-- ![img/flip.png](img/flip.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/flip.png" alt="img/flip.png" width="70%"></center></section>
+</section>
+<section id="practice">
+<h2>Practice<a class="headerlink" href="#practice" title="Permalink to this heading">#</a></h2>
+<p>Let’s examine this on <a class="reference external" href="https://www.kaggle.com/uciml/adult-census-income">the adult census data set</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/adult.csv&quot;</span><span class="p">)</span>
+<span class="n">census_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/adult.csv&quot;</span><span class="p">)</span>
+<span class="n">census_df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(32561, 15)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will resample the data set, so that it has the same number of positive and negative examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">census_df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;=50K    0.75919
+&gt;50K     0.24081
+Name: income, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">negative_ids</span> <span class="o">=</span> <span class="n">census_df</span><span class="p">[</span><span class="n">census_df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&lt;=50K&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">positive_ids</span> <span class="o">=</span> <span class="n">census_df</span><span class="p">[</span><span class="n">census_df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&gt;50K&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">balanced_ids</span> <span class="o">=</span> <span class="n">positive_ids</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">negative_ids</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">positive_ids</span><span class="p">)))</span>
+
+<span class="n">census_df</span> <span class="o">=</span> <span class="n">census_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">balanced_ids</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">census_df</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;=50K    0.5
+&gt;50K     0.5
+Name: income, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">census_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>fnlwgt</th>
+      <th>education</th>
+      <th>education.num</th>
+      <th>marital.status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital.gain</th>
+      <th>capital.loss</th>
+      <th>hours.per.week</th>
+      <th>native.country</th>
+      <th>income</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7614</th>
+      <td>49</td>
+      <td>Private</td>
+      <td>182752</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Adm-clerical</td>
+      <td>Wife</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>10676</th>
+      <td>32</td>
+      <td>Self-emp-not-inc</td>
+      <td>129497</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Craft-repair</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>55</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>7405</th>
+      <td>22</td>
+      <td>?</td>
+      <td>186452</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>36</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+    <tr>
+      <th>664</th>
+      <td>35</td>
+      <td>Private</td>
+      <td>401930</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Adm-clerical</td>
+      <td>Wife</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>1887</td>
+      <td>42</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>10821</th>
+      <td>48</td>
+      <td>Federal-gov</td>
+      <td>215389</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Transport-moving</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5191</th>
+      <td>30</td>
+      <td>Private</td>
+      <td>213722</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>Sales</td>
+      <td>Not-in-family</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>13418</th>
+      <td>73</td>
+      <td>?</td>
+      <td>139049</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Widowed</td>
+      <td>?</td>
+      <td>Not-in-family</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>22</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>5390</th>
+      <td>33</td>
+      <td>Private</td>
+      <td>204042</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>Transport-moving</td>
+      <td>Not-in-family</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>55</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+    <tr>
+      <th>860</th>
+      <td>21</td>
+      <td>Private</td>
+      <td>257781</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>Craft-repair</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>1719</td>
+      <td>30</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+    <tr>
+      <th>7270</th>
+      <td>36</td>
+      <td>Private</td>
+      <td>89202</td>
+      <td>Bachelors</td>
+      <td>13</td>
+      <td>Never-married</td>
+      <td>Prof-specialty</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+  </tbody>
+</table>
+<p>9409 rows × 15 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_df_nan</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">test_df_nan</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">train_df_nan</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9409, 15)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s identify numeric and categorical features</span>
+
+<span class="n">numeric_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capital.gain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capital.loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hours.per.week&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">categorical_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;workclass&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;marital.status&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;occupation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relationship&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;race&quot;,</span>
+    <span class="s2">&quot;native.country&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">ordinal_features</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">]</span>
+<span class="n">binary_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;sex&quot;</span>
+<span class="p">]</span>  <span class="c1"># Not binary in general but in this particular dataset it seems to have only two possible values</span>
+<span class="n">drop_features</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;education.num&quot;</span><span class="p">]</span>
+<span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;income&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Some-college&#39;, &#39;HS-grad&#39;, &#39;Bachelors&#39;, &#39;Masters&#39;, &#39;Prof-school&#39;,
+       &#39;10th&#39;, &#39;Assoc-acdm&#39;, &#39;9th&#39;, &#39;12th&#39;, &#39;7th-8th&#39;, &#39;Assoc-voc&#39;,
+       &#39;5th-6th&#39;, &#39;Doctorate&#39;, &#39;11th&#39;, &#39;1st-4th&#39;, &#39;Preschool&#39;],
+      dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">education_levels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Preschool&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1st-4th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;5th-6th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;7th-8th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;9th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;10th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;11th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;12th&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HS-grad&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Prof-school&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Assoc-voc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Assoc-acdm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Some-college&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Bachelors&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Masters&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Doctorate&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">education_levels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">train_df_nan</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target</span><span class="p">])</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df_nan</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test_df_nan</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target</span><span class="p">])</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df_nan</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span><span class="p">,</span> <span class="n">make_column_transformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+
+<span class="n">numeric_transformer</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">())</span>
+
+<span class="n">ordinal_transformer</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="n">education_levels</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">categorical_transformer</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s2">&quot;missing&quot;</span><span class="p">),</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">sparse_output</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">binary_transformer</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s2">&quot;missing&quot;</span><span class="p">),</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">numeric_transformer</span><span class="p">,</span> <span class="n">numeric_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">ordinal_transformer</span><span class="p">,</span> <span class="n">ordinal_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">binary_transformer</span><span class="p">,</span> <span class="n">binary_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">categorical_transformer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span> <span class="n">drop_features</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt;50K     4737
+&lt;=50K    4672
+Name: income, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ConfusionMatrixDisplay</span>  <span class="c1"># Recommended method in sklearn 1.0</span>
+
+<span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span><span class="n">pipe_lr</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x7f8688ca2740&gt;
+</pre></div>
+</div>
+<img alt="_images/66fd992fb1db3691b58acdf58a87f9dbaefa51c39c7642b47c6ab9bb3b71aa24.png" src="_images/66fd992fb1db3691b58acdf58a87f9dbaefa51c39c7642b47c6ab9bb3b71aa24.png" />
+</div>
+</div>
+<p>Let’s examine the confusion matrix separately for the two genders we have in the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_enc</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">&quot;pipeline-2&quot;</span><span class="p">][</span>
+    <span class="s2">&quot;onehotencoder&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;x0_Male&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>fnlwgt</th>
+      <th>education</th>
+      <th>education.num</th>
+      <th>marital.status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital.gain</th>
+      <th>capital.loss</th>
+      <th>hours.per.week</th>
+      <th>native.country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9246</th>
+      <td>31</td>
+      <td>Private</td>
+      <td>236599</td>
+      <td>Bachelors</td>
+      <td>13</td>
+      <td>Married-civ-spouse</td>
+      <td>Exec-managerial</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>45</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>6237</th>
+      <td>51</td>
+      <td>Private</td>
+      <td>146767</td>
+      <td>Bachelors</td>
+      <td>13</td>
+      <td>Married-civ-spouse</td>
+      <td>Prof-specialty</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>2084</th>
+      <td>40</td>
+      <td>Federal-gov</td>
+      <td>75313</td>
+      <td>Bachelors</td>
+      <td>13</td>
+      <td>Married-civ-spouse</td>
+      <td>Prof-specialty</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>66</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>9969</th>
+      <td>36</td>
+      <td>Private</td>
+      <td>199947</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Divorced</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>12691</th>
+      <td>29</td>
+      <td>Self-emp-not-inc</td>
+      <td>184710</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Craft-repair</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_female</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;sex==&#39;Female&#39;&quot;</span><span class="p">)</span>
+<span class="n">X_male</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;sex==&#39;Male&#39;&quot;</span><span class="p">)</span>
+
+<span class="n">y_female</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[</span><span class="n">X_female</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="n">y_male</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[</span><span class="n">X_male</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="n">female_preds</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_female</span><span class="p">)</span>
+<span class="n">male_preds</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_male</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span><span class="n">pipe_lr</span><span class="p">,</span>
+                                      <span class="n">X_female</span><span class="p">,</span>
+                                      <span class="n">y_female</span><span class="p">,</span>
+                                      <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x7f8688ca19c0&gt;
+</pre></div>
+</div>
+<img alt="_images/668ae412bde2a98c57b585ebd7553d7362b7f7926f31ee77ab856f137479e671.png" src="_images/668ae412bde2a98c57b585ebd7553d7362b7f7926f31ee77ab856f137479e671.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span><span class="n">pipe_lr</span><span class="p">,</span>
+                                      <span class="n">X_male</span><span class="p">,</span>
+                                      <span class="n">y_male</span><span class="p">,</span>
+                                      <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x7f8688a39f00&gt;
+</pre></div>
+</div>
+<img alt="_images/9ca39b698364da8a11ae8719c38463b24fd3c8208a683ca58e0f8eda149195e5.png" src="_images/9ca39b698364da8a11ae8719c38463b24fd3c8208a683ca58e0f8eda149195e5.png" />
+</div>
+</div>
+<p>What’s the accuracy of this model?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;male&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;female&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="n">f_TN</span><span class="p">,</span> <span class="n">f_FP</span><span class="p">,</span> <span class="n">f_FN</span><span class="p">,</span> <span class="n">f_TP</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_female</span><span class="p">,</span> <span class="n">female_preds</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">m_TN</span><span class="p">,</span> <span class="n">m_FP</span><span class="p">,</span> <span class="n">m_FN</span><span class="p">,</span> <span class="n">m_TP</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_male</span><span class="p">,</span> <span class="n">male_preds</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy_male</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_male</span><span class="p">,</span> <span class="n">male_preds</span><span class="p">)</span>
+<span class="n">accuracy_female</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_female</span><span class="p">,</span> <span class="n">female_preds</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;male&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_male</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;female&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy_female</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy male: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_male</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy female: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_female</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy male: 0.806
+Accuracy female: 0.869
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can explore more…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_female</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;=50K    0.725964
+&gt;50K     0.274036
+Name: income, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_male</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt;50K     0.579365
+&lt;=50K    0.420635
+Name: income, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is more class imbalance for females!</p>
+<p>Calculate the precision for males and females. Based on your results, do you think this income classifier is fair?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">precision_male</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_male</span><span class="p">,</span> <span class="n">male_preds</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;&gt;50K&quot;</span><span class="p">)</span>
+<span class="n">precision_female</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_female</span><span class="p">,</span> <span class="n">female_preds</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;&gt;50K&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;male&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">precision_male</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;female&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">precision_female</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision male: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">precision_male</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision female: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">precision_female</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision male: 0.811
+Precision female: 0.807
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Equal opportunity</strong> suggests that each group should get a positive outcome at equal rates, assuming that people in this group qualify for it. For example, if a man and a woman have both a certain level of income, we want them to have the same chance of getting the loan. In other words, the true positive rate (TPR or recall) of both groups should be equal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recall_male</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_male</span><span class="p">,</span> <span class="n">male_preds</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;&gt;50K&quot;</span><span class="p">)</span>
+<span class="n">recall_female</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_female</span><span class="p">,</span> <span class="n">female_preds</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;&gt;50K&quot;</span><span class="p">)</span>
+
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;male&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recall_male</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;female&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">recall_female</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recall male: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">recall_male</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recall female: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">recall_female</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Recall male: 0.868
+Recall female: 0.687
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is usually a tradeoff between rationality (adopting effective means to achieve your desired outcome) and bias. The desired outcome of banks, for example, is to maximize their profit. So in many circumstances, they not only care about approving as many qualified applications as possible (true positive), but also to avoid approving unqualified applications (false postive) because default loans could have detrimental effects on them.</p>
+<p>Let’s examine the false positive rate (FPR) of both groups.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr_male</span> <span class="o">=</span> <span class="n">m_FP</span> <span class="o">/</span> <span class="p">(</span><span class="n">m_FP</span> <span class="o">+</span> <span class="n">m_TN</span><span class="p">)</span>
+<span class="n">fpr_female</span> <span class="o">=</span> <span class="n">f_FP</span> <span class="o">/</span> <span class="p">(</span><span class="n">f_FP</span> <span class="o">+</span> <span class="n">f_TN</span><span class="p">)</span>
+
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;male&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fpr_male</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;female&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fpr_female</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FPR male: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fpr_male</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FPR female: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fpr_female</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FPR male: 0.278
+FPR female: 0.062
+</pre></div>
+</div>
+</div>
+</div>
+<p>In a nutshell,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;precision&quot;</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">,</span> <span class="s2">&quot;FPR&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>male</th>
+      <th>female</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>accuracy</th>
+      <td>0.806437</td>
+      <td>0.869315</td>
+    </tr>
+    <tr>
+      <th>precision</th>
+      <td>0.811388</td>
+      <td>0.807407</td>
+    </tr>
+    <tr>
+      <th>recall</th>
+      <td>0.867580</td>
+      <td>0.686975</td>
+    </tr>
+    <tr>
+      <th>FPR</th>
+      <td>0.277778</td>
+      <td>0.061856</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="tools-for-machine-learning-fairness">
+<h3>Tools for machine learning fairness<a class="headerlink" href="#tools-for-machine-learning-fairness" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>IBM’s</strong> <a class="reference external" href="https://github.com/Trusted-AI/AIF360">AI Fairness 360</a><strong>:</strong> A Python toolkit of technical solutions on fairness metrics and algorithms that helps users and researchers share and evaluate discrimination and bias in machine learning models.</p></li>
+<li><p><strong>Google’s</strong> <a class="reference external" href="https://pair-code.github.io/what-if-tool/">What-If Tool</a><strong>:</strong> A visualization tool that explores a model’s performance on a data set, assessing against preset definitions of fairness constraints. It supports binary classification, multi-class classification, and regression tasks.</p></li>
+<li><p><strong>Google’s</strong> <a class="reference external" href="https://modelcards.withgoogle.com/about">Model Cards</a> <strong>and</strong> <a class="reference external" href="https://github.com/tensorflow/model-card-toolkit">Toolkit</a><strong>:</strong> This tool confirms that a given model’s intent matches its use case and helps users understand the conditions in which their model is safe and appropriate to move forward with.</p></li>
+<li><p><strong>Microsoft’s</strong> <a class="reference external" href="https://www.microsoft.com/en-us/research/publication/fairlearn-a-toolkit-for-assessing-and-improving-fairness-in-ai/">fairlearn.py</a><strong>:</strong> An open-source Python toolkit that assesses and improves fairness in machine learning. With an interactive visualization dashboard and unfairness mitigation algorithms, this tool helps users analyze the trade-offs between fairness and model performance.</p></li>
+<li><p><a class="reference external" href="https://deon.drivendata.org/">Deon</a><strong>:</strong> An ethics checklist that facilitates responsible data science by evaluating and systematically reviewing applications for potential ethical implications, from the early stages of data collection to implementation.</p></li>
+</ul>
+</section>
+<section id="fairlearn">
+<h3>Fairlearn<a class="headerlink" href="#fairlearn" title="Permalink to this heading">#</a></h3>
+<p>Fairlearn provides the data structure called <code class="docutils literal notranslate"><span class="pre">MetricFrame</span></code> to enable evaluation of disaggregated metrics.
+We will show how to use a <code class="docutils literal notranslate"><span class="pre">MetricFrame</span></code> object to assess the trained <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> classifier for potential fairness-related harms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MetricFrame only support labels like {-1, 1} or {0, 1} where 1 is the positive label</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_hat</span><span class="o">==</span><span class="s1">&#39;&gt;50K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_test</span><span class="o">==</span><span class="s1">&#39;&gt;50K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span><span class="o">==</span><span class="s1">&#39;&gt;50K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fairlearn.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">MetricFrame</span><span class="p">,</span> <span class="n">true_positive_rate</span><span class="p">,</span>
+                               <span class="n">false_positive_rate</span><span class="p">,</span> <span class="n">false_negative_rate</span><span class="p">,</span>
+                               <span class="n">selection_rate</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span>
+                               <span class="n">false_negative_rate_difference</span><span class="p">)</span>
+
+
+<span class="c1"># In its simplest form MetricFrame takes four arguments:</span>
+<span class="c1">#    metric_function with signature metric_function(y_true, y_pred)</span>
+<span class="c1">#    y_true: array of labels</span>
+<span class="c1">#    y_pred: array of predictions</span>
+<span class="c1">#    sensitive_features: array of sensitive feature values</span>
+
+<span class="n">metricframe</span> <span class="o">=</span> <span class="n">MetricFrame</span><span class="p">(</span><span class="n">metrics</span><span class="o">=</span><span class="n">false_negative_rate</span><span class="p">,</span>
+                  <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+                  <span class="n">y_pred</span><span class="o">=</span><span class="n">y_hat</span><span class="p">,</span>
+                  <span class="n">sensitive_features</span><span class="o">=</span><span class="n">test_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]])</span>
+<span class="n">metricframe</span><span class="o">.</span><span class="n">by_group</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sex
+Female    0.313025
+Male      0.132420
+Name: false_negative_rate, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also evaluate multiple metrics by providing a dictionary</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">balanced_accuracy_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span>
+                             <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span>
+                             <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">)</span>
+
+<span class="n">metrics_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;selection_rate&quot;</span><span class="p">:</span> <span class="n">selection_rate</span><span class="p">,</span>
+    <span class="s2">&quot;false_negative_rate&quot;</span><span class="p">:</span> <span class="n">false_negative_rate</span><span class="p">,</span>
+    <span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">:</span> <span class="n">balanced_accuracy_score</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">metricframe_unmitigated</span> <span class="o">=</span> <span class="n">MetricFrame</span><span class="p">(</span><span class="n">metrics</span><span class="o">=</span><span class="n">metrics_dict</span><span class="p">,</span>
+                                      <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+                                      <span class="n">y_pred</span><span class="o">=</span><span class="n">y_hat</span><span class="p">,</span>
+                                      <span class="n">sensitive_features</span><span class="o">=</span><span class="n">test_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]])</span>
+
+<span class="c1"># The disaggregated metrics are then stored in a pandas DataFrame:</span>
+
+<span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">by_group</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Female</th>
+      <td>0.233161</td>
+      <td>0.313025</td>
+      <td>0.812560</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>0.619489</td>
+      <td>0.132420</td>
+      <td>0.794901</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can view them transposed:</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;difference&#39;</span><span class="p">:</span> <span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">difference</span><span class="p">(),</span>
+              <span class="s1">&#39;ratio&#39;</span><span class="p">:</span> <span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">ratio</span><span class="p">(),</span>
+              <span class="s1">&#39;group_min&#39;</span><span class="p">:</span> <span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">group_min</span><span class="p">(),</span>
+              <span class="s1">&#39;group_max&#39;</span><span class="p">:</span> <span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">group_max</span><span class="p">()})</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>difference</th>
+      <td>0.386328</td>
+      <td>0.180605</td>
+      <td>0.017658</td>
+    </tr>
+    <tr>
+      <th>ratio</th>
+      <td>0.376376</td>
+      <td>0.423033</td>
+      <td>0.978268</td>
+    </tr>
+    <tr>
+      <th>group_min</th>
+      <td>0.233161</td>
+      <td>0.13242</td>
+      <td>0.794901</td>
+    </tr>
+    <tr>
+      <th>group_max</th>
+      <td>0.619489</td>
+      <td>0.313025</td>
+      <td>0.81256</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="mitigating-fairness-related-harms-in-ml-models">
+<h3>Mitigating fairness-related harms in ML models<a class="headerlink" href="#mitigating-fairness-related-harms-in-ml-models" title="Permalink to this heading">#</a></h3>
+<p>We have found that the logistic regression predictor leads to a large difference in false negative rates between the groups. We next look at algorithmic mitigation strategies of this fairness issue (and similar ones).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_tr</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_tr</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="pre-processing">
+<h4>Pre-processing<a class="headerlink" href="#pre-processing" title="Permalink to this heading">#</a></h4>
+<p>Preprocessing algorithms transform the dataset to mitigate possible unfairness present in the data.</p>
+<p>Preprocessing algorithms in Fairlearn follow the <code class="docutils literal notranslate"><span class="pre">sklearn.base.TransformerMixin</span></code> class, meaning that they can <code class="docutils literal notranslate"><span class="pre">fit</span></code> to the dataset and <code class="docutils literal notranslate"><span class="pre">transform</span></code> it (or <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> to fit and transform in one go).</p>
+<p>Sensitive features can be correlated with non-sensitive features in the dataset.
+By applying the <code class="docutils literal notranslate"><span class="pre">CorrelationRemover</span></code>, these correlations are projected away while details from the original data are retained as much as possible (as measured by the least-squares error). The user can control the level of projection via the
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter. In mathematical terms, assume we have the original dataset <span class="math notranslate nohighlight">\(X\)</span> which contains a set of sensitive attributes <span class="math notranslate nohighlight">\(S\)</span> and a set of non-sensitive attributes <span class="math notranslate nohighlight">\(Z\)</span>. The removal of correlation is then described as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} 
+        \min _{\mathbf{z}_{1}, \ldots, \mathbf{z}_{n}} \sum_{i=1}^{n}\left\|\mathbf{z}_{i}
+        -\mathbf{x}_{i}\right\|^{2} \\
+        \text{subject to} \\
+        \frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{i}\left(\mathbf{s}_{i}-\overline{\mathbf{s}}
+        \right)^{T}=\mathbf{0}
+        \end{split}\]</div>
+<p>The solution to this problem is found by centering sensitive features, fitting a linear regression model to the non-sensitive features and reporting the residual.
+The columns in <span class="math notranslate nohighlight">\(S\)</span> will be dropped from the dataset <span class="math notranslate nohighlight">\(X\)</span>. The amount of correlation that is removed can be controlled using the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter.
+This is described as follows:</p>
+<div class="math notranslate nohighlight">
+\[X_{\text{tfm}} = \alpha X_{\text{filtered}} + (1-\alpha) X_{\text{orig}}\]</div>
+<p>Note that the lack of correlation does not imply anything about statistical dependence.
+In particular, since correlation measures linear relationships, it might still be possible that non-linear relationships exist in the data. Therefore, we expect this to be most appropriate as a preprocessing step for (generalized) linear models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train_tr</span><span class="p">,</span> <span class="n">train_df</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9409, 86)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fairlearn.preprocessing</span> <span class="kn">import</span> <span class="n">CorrelationRemover</span>
+<span class="n">cr</span> <span class="o">=</span> <span class="n">CorrelationRemover</span><span class="p">(</span><span class="n">sensitive_feature_ids</span><span class="o">=</span><span class="p">[</span><span class="mi">85</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_transform</span> <span class="o">=</span> <span class="n">cr</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_transform</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LogisticRegression(max_iter=1000)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000)</pre></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_cr</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_tr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metricframe_cr</span> <span class="o">=</span> <span class="n">MetricFrame</span><span class="p">(</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="n">metrics_dict</span><span class="p">,</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred_cr</span><span class="p">,</span>
+    <span class="n">sensitive_features</span><span class="o">=</span><span class="n">test_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">by_group</span><span class="p">,</span>
+           <span class="n">metricframe_cr</span><span class="o">.</span><span class="n">by_group</span><span class="p">],</span>
+           <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Unmitigated&#39;</span><span class="p">,</span> <span class="s1">&#39;CorrelationRemover&#39;</span><span class="p">],</span>
+           <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">Unmitigated</th>
+      <th colspan="3" halign="left">CorrelationRemover</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Female</th>
+      <td>0.233161</td>
+      <td>0.313025</td>
+      <td>0.812560</td>
+      <td>0.290731</td>
+      <td>0.207983</td>
+      <td>0.845255</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>0.619489</td>
+      <td>0.132420</td>
+      <td>0.794901</td>
+      <td>0.613095</td>
+      <td>0.139269</td>
+      <td>0.794359</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">difference</span><span class="p">(),</span>
+           <span class="n">metricframe_cr</span><span class="o">.</span><span class="n">difference</span><span class="p">()],</span>
+          <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Unmitigated: difference&#39;</span><span class="p">,</span> <span class="s1">&#39;CorrelationRemover: difference&#39;</span><span class="p">],</span>
+          <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Unmitigated: difference</th>
+      <td>0.386328</td>
+      <td>0.180605</td>
+      <td>0.017658</td>
+    </tr>
+    <tr>
+      <th>CorrelationRemover: difference</th>
+      <td>0.322364</td>
+      <td>0.068714</td>
+      <td>0.050896</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Limitations</strong></p>
+<p>The pre-processing methods are able to reduce bias but cannot guarantee a fair prediction.</p>
+</section>
+<section id="in-processing">
+<h4>In-processing<a class="headerlink" href="#in-processing" title="Permalink to this heading">#</a></h4>
+<p>We will show how to use the <em>reductions</em> approach of <a class="reference external" href="https://arxiv.org/abs/1803.02453">Agarwal et. al (2018)</a> to obtain a model that satisfies the fairness constraints.</p>
+<p>Terminology “reductions” refers to another kind of a wrapper approach, which instead of wrapping an already trained model, wraps any standard classification or regression algorithm, such as
+<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>. In other words, an input to a reduction algorithm is an object that supports training on any provided (weighted) dataset. In addition, a reduction algorithm receives a data set that includes sensitive features. The goal, like with post-processing, is to optimize a performance metric (such as classification accuracy) subject to fairness constraints (such as an upper bound on differences between false negative rates).</p>
+<p>The main reduction algorithm algorithm in Fairlearn is <code class="docutils literal notranslate"><span class="pre">ExponentiatedGradient</span></code>. It creates a sequence of reweighted datasets and retrains the wrapped model on each of them. The
+retraining process is guaranteed to find a model that satisfies the fairness constraints while optimizing the performance metric.</p>
+<p>The model returned by <code class="docutils literal notranslate"><span class="pre">ExponentiatedGradient</span></code> consists of several inner models, returned by the wrapped estimator. At deployment time, <code class="docutils literal notranslate"><span class="pre">ExponentiatedGradient</span></code> randomizes among these models according to a specific probability weights.</p>
+<p>To instantiate an <code class="docutils literal notranslate"><span class="pre">ExponentiatedGradient</span></code> model, we pass in two parameters:</p>
+<ul class="simple">
+<li><p>A base <code class="docutils literal notranslate"><span class="pre">estimator</span></code> (an object that supports training)</p></li>
+<li><p>Fairness <code class="docutils literal notranslate"><span class="pre">constraints</span></code> (an object of type <code class="docutils literal notranslate"><span class="pre">Moment</span></code>).</p></li>
+</ul>
+<p>The constraints supported by <code class="docutils literal notranslate"><span class="pre">ExponentiatedGradient</span></code> are more general than those supported by <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code>. For example, rather than requiring that false negative rates be equal, it is possible to specify the maxium allowed difference or ratio between the largest and the smallest value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fairlearn.reductions</span> <span class="kn">import</span> <span class="n">ExponentiatedGradient</span><span class="p">,</span> <span class="n">EqualizedOdds</span><span class="p">,</span> <span class="n">TruePositiveRateParity</span>
+
+<span class="n">expgrad_est</span> <span class="o">=</span> <span class="n">ExponentiatedGradient</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">),</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="n">TruePositiveRateParity</span><span class="p">(</span><span class="n">difference_bound</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The constraints above are expressed for the true positive parity, they require that the difference between the largest and the smallest true positive rate (TPR) across all groups be at most 0.02. Since false negative rate (FNR) is equal to 1-TPR, this is equivalent to requiring that the difference between the largest and smallest FNR be at most 0.02.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit the exponentiated gradient model</span>
+<span class="n">expgrad_est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_tr</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">sensitive_features</span><span class="o">=</span><span class="n">train_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>ExponentiatedGradient(constraints=&lt;fairlearn.reductions._moments.utility_parity.TruePositiveRateParity object at 0x7f8688bf56f0&gt;,
+                      estimator=LogisticRegression(max_iter=1000,
+                                                   random_state=12345),
+                      nu=0.0019991184091181138)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">ExponentiatedGradient</label><div class="sk-toggleable__content"><pre>ExponentiatedGradient(constraints=&lt;fairlearn.reductions._moments.utility_parity.TruePositiveRateParity object at 0x7f8688bf56f0&gt;,
+                      estimator=LogisticRegression(max_iter=1000,
+                                                   random_state=12345),
+                      nu=0.0019991184091181138)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000, random_state=12345)</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000, random_state=12345)</pre></div></div></div></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_reductions</span> <span class="o">=</span> <span class="n">expgrad_est</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_tr</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">metricframe_reductions</span> <span class="o">=</span> <span class="n">MetricFrame</span><span class="p">(</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="n">metrics_dict</span><span class="p">,</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred_reductions</span><span class="p">,</span>
+    <span class="n">sensitive_features</span><span class="o">=</span><span class="n">test_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">by_group</span><span class="p">,</span>
+           <span class="n">metricframe_reductions</span><span class="o">.</span><span class="n">by_group</span><span class="p">],</span>
+           <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Unmitigated&#39;</span><span class="p">,</span> <span class="s1">&#39;ExponentiatedGradient&#39;</span><span class="p">],</span>
+           <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">Unmitigated</th>
+      <th colspan="3" halign="left">ExponentiatedGradient</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Female</th>
+      <td>0.233161</td>
+      <td>0.313025</td>
+      <td>0.812560</td>
+      <td>0.293610</td>
+      <td>0.201681</td>
+      <td>0.847613</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>0.619489</td>
+      <td>0.132420</td>
+      <td>0.794901</td>
+      <td>0.585538</td>
+      <td>0.161339</td>
+      <td>0.800882</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">difference</span><span class="p">(),</span>
+           <span class="n">metricframe_reductions</span><span class="o">.</span><span class="n">difference</span><span class="p">()],</span>
+          <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Unmitigated: difference&#39;</span><span class="p">,</span> <span class="s1">&#39;ExponentiatedGradient: difference&#39;</span><span class="p">],</span>
+          <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Unmitigated: difference</th>
+      <td>0.386328</td>
+      <td>0.180605</td>
+      <td>0.017658</td>
+    </tr>
+    <tr>
+      <th>ExponentiatedGradient: difference</th>
+      <td>0.291928</td>
+      <td>0.040341</td>
+      <td>0.046732</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>While there is a decrease in the false negative rate difference from the unmitigated model, this decrease is not as substantial as with <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code>. Note, however, that <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code> was able to use the sensitive feature (i.e., race) at deployment time.</p>
+</section>
+<section id="post-processing-with-thresholdoptimizer">
+<h4>Post-processing with ThresholdOptimizer<a class="headerlink" href="#post-processing-with-thresholdoptimizer" title="Permalink to this heading">#</a></h4>
+<p><strong>Postprocessing</strong> techniques are a class of unfairness-mitigation algorithms that take an already trained model and a dataset as an input and seek to fit a transformation function to model’s outputs to satisfy some (group) fairness constraint(s). They might be the only feasible unfairness mitigation approach when developers cannot influence training of the model, due to practical reasons or due to security or privacy.</p>
+<p>Here we use the <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code> algorithm from Fairlearn, which follows the approach of <a class="reference external" href="https://arxiv.org/abs/1610.02413">Hardt, Price, and Srebro (2016)</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code> takes in an exisiting (possibly pre-fit) machine learning model whose predictions act as a scoring function and identifies a separate thrceshold for each group in order to optimize some specified objective metric (such as <strong>balanced accuracy</strong>) subject to specified fairness constraints (such as <strong>false negative rate parity</strong>). Thus, the resulting classifier is just a suitably thresholded version of the underlying machinelearning model.</p>
+<p>The constraint <strong>false negative rate parity</strong> requires that all the groups have equal values of false negative rate.</p>
+<p>To instatiate our <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code>, we pass in:</p>
+<ul class="simple">
+<li><p>An existing <code class="docutils literal notranslate"><span class="pre">estimator</span></code> that we wish to threshold.</p></li>
+<li><p>The fairness <code class="docutils literal notranslate"><span class="pre">constraints</span></code> we want to satisfy.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">objective</span></code> metric we want to maximize.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now we instantite ThresholdOptimizer with the logistic regression estimator</span>
+<span class="kn">from</span> <span class="nn">fairlearn.postprocessing</span> <span class="kn">import</span> <span class="n">ThresholdOptimizer</span><span class="p">,</span> <span class="n">plot_threshold_optimizer</span>
+<span class="n">postprocess_est</span> <span class="o">=</span> <span class="n">ThresholdOptimizer</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">pipe_lr</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="s2">&quot;false_negative_rate_parity&quot;</span><span class="p">,</span>
+    <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;balanced_accuracy_score&quot;</span><span class="p">,</span>
+    <span class="n">prefit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">predict_method</span><span class="o">=</span><span class="s1">&#39;predict_proba&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to use the ThresholdOptimizer, we need access to the sensitive features both during training time and once it’s deployed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">postprocess_est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">sensitive_features</span><span class="o">=</span><span class="n">train_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-3 {color: black;background-color: white;}#sk-container-id-3 pre{padding: 0;}#sk-container-id-3 div.sk-toggleable {background-color: white;}#sk-container-id-3 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-3 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-3 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-3 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-3 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-3 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-3 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-3 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-3 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-3 div.sk-item {position: relative;z-index: 1;}#sk-container-id-3 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-3 div.sk-item::before, #sk-container-id-3 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-3 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-3 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-3 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-3 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-3 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-3 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-3 div.sk-label-container {text-align: center;}#sk-container-id-3 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-3 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>ThresholdOptimizer(constraints=&#x27;false_negative_rate_parity&#x27;,
+                   estimator=Pipeline(steps=[(&#x27;columntransformer&#x27;,
+                                              ColumnTransformer(transformers=[(&#x27;pipeline-1&#x27;,
+                                                                               Pipeline(steps=[(&#x27;standardscaler&#x27;,
+                                                                                                StandardScaler())]),
+                                                                               [&#x27;age&#x27;,
+                                                                                &#x27;fnlwgt&#x27;,
+                                                                                &#x27;capital.gain&#x27;,
+                                                                                &#x27;capital.loss&#x27;,
+                                                                                &#x27;hours.per.week&#x27;]),
+                                                                              (&#x27;ordinalencoder&#x27;,
+                                                                               OrdinalEncoder(categories=[[&#x27;Preschool&#x27;,
+                                                                                                           &#x27;1st-4th&#x27;,
+                                                                                                           &#x27;5th-6th&#x27;,...
+                                                                                                              strategy=&#x27;constant&#x27;)),
+                                                                                               (&#x27;onehotencoder&#x27;,
+                                                                                                OneHotEncoder(handle_unknown=&#x27;ignore&#x27;,
+                                                                                                              sparse_output=False))]),
+                                                                               [&#x27;workclass&#x27;,
+                                                                                &#x27;marital.status&#x27;,
+                                                                                &#x27;occupation&#x27;,
+                                                                                &#x27;relationship&#x27;,
+                                                                                &#x27;native.country&#x27;]),
+                                                                              (&#x27;drop&#x27;,
+                                                                               &#x27;drop&#x27;,
+                                                                               [&#x27;education.num&#x27;])])),
+                                             (&#x27;logisticregression&#x27;,
+                                              LogisticRegression(max_iter=1000))]),
+                   objective=&#x27;balanced_accuracy_score&#x27;,
+                   predict_method=&#x27;predict_proba&#x27;, prefit=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">ThresholdOptimizer</label><div class="sk-toggleable__content"><pre>ThresholdOptimizer(constraints=&#x27;false_negative_rate_parity&#x27;,
+                   estimator=Pipeline(steps=[(&#x27;columntransformer&#x27;,
+                                              ColumnTransformer(transformers=[(&#x27;pipeline-1&#x27;,
+                                                                               Pipeline(steps=[(&#x27;standardscaler&#x27;,
+                                                                                                StandardScaler())]),
+                                                                               [&#x27;age&#x27;,
+                                                                                &#x27;fnlwgt&#x27;,
+                                                                                &#x27;capital.gain&#x27;,
+                                                                                &#x27;capital.loss&#x27;,
+                                                                                &#x27;hours.per.week&#x27;]),
+                                                                              (&#x27;ordinalencoder&#x27;,
+                                                                               OrdinalEncoder(categories=[[&#x27;Preschool&#x27;,
+                                                                                                           &#x27;1st-4th&#x27;,
+                                                                                                           &#x27;5th-6th&#x27;,...
+                                                                                                              strategy=&#x27;constant&#x27;)),
+                                                                                               (&#x27;onehotencoder&#x27;,
+                                                                                                OneHotEncoder(handle_unknown=&#x27;ignore&#x27;,
+                                                                                                              sparse_output=False))]),
+                                                                               [&#x27;workclass&#x27;,
+                                                                                &#x27;marital.status&#x27;,
+                                                                                &#x27;occupation&#x27;,
+                                                                                &#x27;relationship&#x27;,
+                                                                                &#x27;native.country&#x27;]),
+                                                                              (&#x27;drop&#x27;,
+                                                                               &#x27;drop&#x27;,
+                                                                               [&#x27;education.num&#x27;])])),
+                                             (&#x27;logisticregression&#x27;,
+                                              LogisticRegression(max_iter=1000))]),
+                   objective=&#x27;balanced_accuracy_score&#x27;,
+                   predict_method=&#x27;predict_proba&#x27;, prefit=True)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;columntransformer&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;pipeline-1&#x27;,
+                                                  Pipeline(steps=[(&#x27;standardscaler&#x27;,
+                                                                   StandardScaler())]),
+                                                  [&#x27;age&#x27;, &#x27;fnlwgt&#x27;,
+                                                   &#x27;capital.gain&#x27;,
+                                                   &#x27;capital.loss&#x27;,
+                                                   &#x27;hours.per.week&#x27;]),
+                                                 (&#x27;ordinalencoder&#x27;,
+                                                  OrdinalEncoder(categories=[[&#x27;Preschool&#x27;,
+                                                                              &#x27;1st-4th&#x27;,
+                                                                              &#x27;5th-6th&#x27;,
+                                                                              &#x27;7th-8th&#x27;,
+                                                                              &#x27;9th&#x27;,
+                                                                              &#x27;10th&#x27;,
+                                                                              &#x27;11th&#x27;,
+                                                                              &#x27;12th&#x27;,
+                                                                              &#x27;HS-grad&#x27;,
+                                                                              &#x27;Prof-school&#x27;,
+                                                                              &#x27;Assoc-vo...
+                                                 (&#x27;pipeline-3&#x27;,
+                                                  Pipeline(steps=[(&#x27;simpleimputer&#x27;,
+                                                                   SimpleImputer(fill_value=&#x27;missing&#x27;,
+                                                                                 strategy=&#x27;constant&#x27;)),
+                                                                  (&#x27;onehotencoder&#x27;,
+                                                                   OneHotEncoder(handle_unknown=&#x27;ignore&#x27;,
+                                                                                 sparse_output=False))]),
+                                                  [&#x27;workclass&#x27;,
+                                                   &#x27;marital.status&#x27;,
+                                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;,
+                                                   &#x27;native.country&#x27;]),
+                                                 (&#x27;drop&#x27;, &#x27;drop&#x27;,
+                                                  [&#x27;education.num&#x27;])])),
+                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=1000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label sk-toggleable__label-arrow">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[(&#x27;pipeline-1&#x27;,
+                                 Pipeline(steps=[(&#x27;standardscaler&#x27;,
+                                                  StandardScaler())]),
+                                 [&#x27;age&#x27;, &#x27;fnlwgt&#x27;, &#x27;capital.gain&#x27;,
+                                  &#x27;capital.loss&#x27;, &#x27;hours.per.week&#x27;]),
+                                (&#x27;ordinalencoder&#x27;,
+                                 OrdinalEncoder(categories=[[&#x27;Preschool&#x27;,
+                                                             &#x27;1st-4th&#x27;,
+                                                             &#x27;5th-6th&#x27;,
+                                                             &#x27;7th-8th&#x27;, &#x27;9th&#x27;,
+                                                             &#x27;10th&#x27;, &#x27;11th&#x27;,
+                                                             &#x27;12th&#x27;, &#x27;HS-grad&#x27;,
+                                                             &#x27;Prof-school&#x27;,
+                                                             &#x27;Assoc-voc&#x27;,
+                                                             &#x27;Assoc-acdm&#x27;,
+                                                             &#x27;Some-college&#x27;,
+                                                             &#x27;Bache...
+                                                  OneHotEncoder(drop=&#x27;if_binary&#x27;,
+                                                                dtype=&lt;class &#x27;int&#x27;&gt;))]),
+                                 [&#x27;sex&#x27;]),
+                                (&#x27;pipeline-3&#x27;,
+                                 Pipeline(steps=[(&#x27;simpleimputer&#x27;,
+                                                  SimpleImputer(fill_value=&#x27;missing&#x27;,
+                                                                strategy=&#x27;constant&#x27;)),
+                                                 (&#x27;onehotencoder&#x27;,
+                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;,
+                                                                sparse_output=False))]),
+                                 [&#x27;workclass&#x27;, &#x27;marital.status&#x27;, &#x27;occupation&#x27;,
+                                  &#x27;relationship&#x27;, &#x27;native.country&#x27;]),
+                                (&#x27;drop&#x27;, &#x27;drop&#x27;, [&#x27;education.num&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline-1</label><div class="sk-toggleable__content"><pre>[&#x27;age&#x27;, &#x27;fnlwgt&#x27;, &#x27;capital.gain&#x27;, &#x27;capital.loss&#x27;, &#x27;hours.per.week&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label sk-toggleable__label-arrow">ordinalencoder</label><div class="sk-toggleable__content"><pre>[&#x27;education&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(categories=[[&#x27;Preschool&#x27;, &#x27;1st-4th&#x27;, &#x27;5th-6th&#x27;, &#x27;7th-8th&#x27;, &#x27;9th&#x27;,
+                            &#x27;10th&#x27;, &#x27;11th&#x27;, &#x27;12th&#x27;, &#x27;HS-grad&#x27;, &#x27;Prof-school&#x27;,
+                            &#x27;Assoc-voc&#x27;, &#x27;Assoc-acdm&#x27;, &#x27;Some-college&#x27;,
+                            &#x27;Bachelors&#x27;, &#x27;Masters&#x27;, &#x27;Doctorate&#x27;]],
+               dtype=&lt;class &#x27;int&#x27;&gt;)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline-2</label><div class="sk-toggleable__content"><pre>[&#x27;sex&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label sk-toggleable__label-arrow">SimpleImputer</label><div class="sk-toggleable__content"><pre>SimpleImputer(fill_value=&#x27;missing&#x27;, strategy=&#x27;constant&#x27;)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label sk-toggleable__label-arrow">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(drop=&#x27;if_binary&#x27;, dtype=&lt;class &#x27;int&#x27;&gt;)</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline-3</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;marital.status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;native.country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-16" type="checkbox" ><label for="sk-estimator-id-16" class="sk-toggleable__label sk-toggleable__label-arrow">SimpleImputer</label><div class="sk-toggleable__content"><pre>SimpleImputer(fill_value=&#x27;missing&#x27;, strategy=&#x27;constant&#x27;)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-17" type="checkbox" ><label for="sk-estimator-id-17" class="sk-toggleable__label sk-toggleable__label-arrow">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;, sparse_output=False)</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-18" type="checkbox" ><label for="sk-estimator-id-18" class="sk-toggleable__label sk-toggleable__label-arrow">drop</label><div class="sk-toggleable__content"><pre>[&#x27;education.num&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label sk-toggleable__label-arrow">drop</label><div class="sk-toggleable__content"><pre>drop</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-20" type="checkbox" ><label for="sk-estimator-id-20" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat_postprocess</span> <span class="o">=</span> <span class="n">postprocess_est</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">sensitive_features</span><span class="o">=</span><span class="n">test_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]])</span>
+
+<span class="n">metricframe_postprocess</span> <span class="o">=</span> <span class="n">MetricFrame</span><span class="p">(</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="n">metrics_dict</span><span class="p">,</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">y_hat_postprocess</span><span class="p">,</span>
+    <span class="n">sensitive_features</span><span class="o">=</span><span class="n">test_df</span><span class="p">[[</span><span class="s1">&#39;sex&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now inspect how the metric values differ between the postprocessed model and the unmitigated model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">by_group</span><span class="p">,</span>
+           <span class="n">metricframe_postprocess</span><span class="o">.</span><span class="n">by_group</span><span class="p">],</span>
+           <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Unmitigated&#39;</span><span class="p">,</span> <span class="s1">&#39;ThresholdOptimizer&#39;</span><span class="p">],</span>
+           <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">Unmitigated</th>
+      <th colspan="3" halign="left">ThresholdOptimizer</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+    <tr>
+      <th>sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Female</th>
+      <td>0.233161</td>
+      <td>0.313025</td>
+      <td>0.812560</td>
+      <td>0.298215</td>
+      <td>0.193277</td>
+      <td>0.850229</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>0.619489</td>
+      <td>0.132420</td>
+      <td>0.794901</td>
+      <td>0.566578</td>
+      <td>0.179985</td>
+      <td>0.801255</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We next zoom in on differences between the largest and the smallest metric values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">metricframe_unmitigated</span><span class="o">.</span><span class="n">difference</span><span class="p">(),</span>
+           <span class="n">metricframe_postprocess</span><span class="o">.</span><span class="n">difference</span><span class="p">()],</span>
+          <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Unmitigated: difference&#39;</span><span class="p">,</span> <span class="s1">&#39;ThresholdOptimizer: difference&#39;</span><span class="p">],</span>
+          <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>selection_rate</th>
+      <th>false_negative_rate</th>
+      <th>balanced_accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Unmitigated: difference</th>
+      <td>0.386328</td>
+      <td>0.180605</td>
+      <td>0.017658</td>
+    </tr>
+    <tr>
+      <th>ThresholdOptimizer: difference</th>
+      <td>0.268363</td>
+      <td>0.013293</td>
+      <td>0.048974</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>As we see, <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code> was able to substantially decrease the difference between the values of false negative rate.</p>
+<p><strong>Limitations</strong></p>
+<p>With the <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code>, we took a fairness-unaware model and transformed the model’s decision boundary to satisfy our fairness constraints. One limitation of <code class="docutils literal notranslate"><span class="pre">ThresholdOptimizer</span></code> is that it needs access to the sensitive features at deployment time.</p>
+</section>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Addressing these challenges involves a combination of technical solutions, such as developing more robust and unbiased algorithms, and broader societal efforts, including regulatory frameworks and ethical guidelines.</p></li>
+<li><p>It also requires the involvement of diverse stakeholders to ensure that multiple perspectives are considered in the development and deployment of machine learning systems.</p></li>
+</ul>
+<p><strong>What we can to do for combating bias in ML</strong></p>
+<!-- ![img/action.png](img/action.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/action.png" alt="img/action.png" width="80%"></center></section>
+<section id="recommendation-reading-materials">
+<h2>Recommendation reading materials<a class="headerlink" href="#recommendation-reading-materials" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dl.acm.org/doi/10.1145/3465416.3483305">A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle</a></p></li>
+<li><p><a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">Machine Bias — ProPublica</a></p></li>
+<li><p><a class="reference external" href="https://www.borealisai.com/research-blogs/tutorial1-bias-and-fairness-ai/">Tutorial #1: bias and fairness in AI - Borealis AI</a></p></li>
+<li><p><a class="reference external" href="https://www.kaggle.com/code/goodwanghan/fairlearn">FairLearn | Kaggle</a></p></li>
+<li><p><a class="reference external" href="https://fairlearn.org/v0.9/api_reference/index.html">API Docs — Fairlearn 0.9.0 documentation</a></p></li>
+</ul>
+<hr></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="17_recommender-systems.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Recommender systems</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="23_feat-importances-xai.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">ML explainability</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-fairness">ML fairness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-problem">What is the problem?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ml-systems-go-wrong">ML systems go wrong</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-facial-recognition">Example of facial recognition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-biased-outcomes">Why biased outcomes?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-deeper-thought-on-bias">A deeper thought on bias</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#historical-bias">Historical Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#representation-bias">Representation Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#measurement-bias">Measurement Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-bias">Learning bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregation-bias">Aggregation Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-bias">Evaluation Bias</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-bias">Deployment Bias</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-measurement-and-notions">Bias measurement and notions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identify-harms">Identify harms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identify-the-groups-that-might-be-harmed">Identify the groups that might be harmed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantify-harms">Quantify harms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-quantified-harms-across-the-groups">Compare quantified harms across the groups</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-parity">Statistical Parity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more">More</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-mitigation">Bias mitigation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing-massaging">Pre-processing: massaging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-processing-fair-regularization">In-processing: fair regularization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-flipping-with-probability">Post-processing: flipping with probability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice">Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-for-machine-learning-fairness">Tools for machine learning fairness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fairlearn">Fairlearn</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mitigating-fairness-related-harms-in-ml-models">Mitigating fairness-related harms in ML models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-processing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#in-processing">In-processing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-with-thresholdoptimizer">Post-processing with ThresholdOptimizer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

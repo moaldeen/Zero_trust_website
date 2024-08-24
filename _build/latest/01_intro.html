@@ -1,0 +1,1609 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to machine learning &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '01_intro';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Machine learning concepts" href="02_decision-trees.html" />
+    <link rel="prev" title="ECE 4420/6420 Machine Learning in Engineering" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/01_intro.ipynb" download="01_intro.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to machine learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning">Machine learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prevalence-of-ml">Prevalence of ML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-ml-prevalent">Why is ML prevalent?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-spam-emails">Examples of spam emails</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-machine-learning">Supervised machine learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-machine-learning">Types of machine learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-supervised-machine-learning-ml">What is supervised machine learning (ML)?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-predict-whether-a-message-is-spam-or-not">Example: Predict whether a message is spam or not</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#input-features-x-and-target-y">Input features <span class="math notranslate nohighlight">\(X\)</span> and target <span class="math notranslate nohighlight">\(y\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-supervised-machine-learning-model-with-x-and-y">Training a supervised machine learning model with <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(y\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-labels-for-unseen-data-using-the-trained-model">Predicting labels for unseen data using the trained model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-machine-learning-a-popular-definition">(Supervised) Machine learning: a popular definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-predicting-whether-a-patient-has-a-liver-disease-or-not">Example 1: Predicting whether a patient has a liver disease or not</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#input-data">Input data</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-supervised-machine-learning-model">Building a supervised machine learning model</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#model-predictions-on-unseen-data">Model predictions on unseen data</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-predicting-the-label-of-a-given-image">Example 2: Predicting the label of a given image</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-predicting-sentiment-expressed-in-a-movie-review">Example 3: Predicting sentiment expressed in a movie review</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-predicting-housing-prices">Example 4: Predicting housing prices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-workflow">Machine learning workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-machine-learning">
+<h1>Introduction to machine learning<a class="headerlink" href="#introduction-to-machine-learning" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 75 minutes</p></li>
+</ul>
+<hr><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cmle</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">lightgbm.sklearn</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBRegressor</span>
+
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_colwidth&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="machine-learning">
+<h2>Machine learning<a class="headerlink" href="#machine-learning" title="Permalink to this heading">#</a></h2>
+<section id="prevalence-of-ml">
+<h3>Prevalence of ML<a class="headerlink" href="#prevalence-of-ml" title="Permalink to this heading">#</a></h3>
+<p>Let’s look at some examples.</p>
+<!-- ![ml-examples.png](img/ml-examples.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ml-examples.png" alt="ml-examples.png" width="75%"></center></section>
+<section id="why-is-ml-prevalent">
+<h3>Why is ML prevalent?<a class="headerlink" href="#why-is-ml-prevalent" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Learn without experts.</p></li>
+<li><p>Saving time and scaling products.</p></li>
+<li><p>Able to learn rich information.</p></li>
+</ul>
+<section id="examples-of-spam-emails">
+<h4>Examples of spam emails<a class="headerlink" href="#examples-of-spam-emails" title="Permalink to this heading">#</a></h4>
+<p>Traditional method:</p>
+<ul class="simple">
+<li><p>Imagine writing a program for <strong>spam</strong> identification, i.e., whether an email is spam or non-spam.</p></li>
+<li><p>Programming</p>
+<ul>
+<li><p>Come up with <strong>rules</strong> using human understanding of spam messages.</p></li>
+<li><p>Time-consuming and hard to come up with a robust set of rules.</p></li>
+</ul>
+</li>
+</ul>
+<!-- ![email-spam-example.png](img/email-spam-example.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/email-spam-example.png" alt="email-spam-example.png" width="75%"></center><p>Machine learning method:</p>
+<ul class="simple">
+<li><p>Collect large amounts of <strong>data</strong> for spam and non-spam emails.</p></li>
+<li><p>Let the machine learning algorithm figure out the rules.</p></li>
+</ul>
+<p>With machine learning, you’re likely to</p>
+<ul class="simple">
+<li><p>Build a ML product without expertise.</p></li>
+<li><p>Save time.</p></li>
+<li><p>Customize and scale products.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="supervised-machine-learning">
+<h2>Supervised machine learning<a class="headerlink" href="#supervised-machine-learning" title="Permalink to this heading">#</a></h2>
+<section id="types-of-machine-learning">
+<h3>Types of machine learning<a class="headerlink" href="#types-of-machine-learning" title="Permalink to this heading">#</a></h3>
+<p>Here are some typical learning problems.</p>
+<ul class="simple">
+<li><p><strong>Supervised learning</strong> (<a class="reference external" href="https://support.google.com/a/answer/2368132?hl=en">Gmail spam filtering</a>)</p>
+<ul>
+<li><p>Training a model from input data and its corresponding targets to predict targets for new examples.</p></li>
+</ul>
+</li>
+<li><p>Unsupervised learning (<a class="reference external" href="https://news.google.com/">Google News</a>)</p>
+<ul>
+<li><p>Training a model to find patterns in a dataset, typically an unlabeled dataset.</p></li>
+</ul>
+</li>
+<li><p>Reinforcement learning (<a class="reference external" href="https://deepmind.com/research/case-studies/alphago-the-story-so-far">AlphaGo</a>)</p>
+<ul>
+<li><p>A family of algorithms for finding suitable actions to take in a given situation in order to maximize a reward.</p></li>
+</ul>
+</li>
+<li><p>Recommendation systems (<a class="reference external" href="https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf">Amazon item recommendation system</a>)</p>
+<ul>
+<li><p>Predict the “rating” or “preference” a user would give to an item.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="what-is-supervised-machine-learning-ml">
+<h3>What is supervised machine learning (ML)?<a class="headerlink" href="#what-is-supervised-machine-learning-ml" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Training data comprises a set of observations (<span class="math notranslate nohighlight">\(X\)</span>) and their corresponding targets (<span class="math notranslate nohighlight">\(y\)</span>).</p></li>
+<li><p>We wish to find a model function <span class="math notranslate nohighlight">\(f\)</span> that relates <span class="math notranslate nohighlight">\(X\)</span> to <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
+<li><p>We use the model function to predict the targets of new examples.</p></li>
+</ul>
+<!-- ![sup-learning.png](img/sup-learning.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/sup-learning.png" alt="sup-learning.png" width="60%"></center></section>
+<section id="example-predict-whether-a-message-is-spam-or-not">
+<h3>Example: Predict whether a message is spam or not<a class="headerlink" href="#example-predict-whether-a-message-is-spam-or-not" title="Permalink to this heading">#</a></h3>
+<section id="input-features-x-and-target-y">
+<h4>Input features <span class="math notranslate nohighlight">\(X\)</span> and target <span class="math notranslate nohighlight">\(y\)</span><a class="headerlink" href="#input-features-x-and-target-y" title="Permalink to this heading">#</a></h4>
+<p>Download SMS Spam Collection Dataset by running the following code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/spam.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Load the dataset and show some samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sms_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/spam.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span>
+<span class="n">sms_df</span> <span class="o">=</span> <span class="n">sms_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Unnamed: 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Unnamed: 3&quot;</span><span class="p">,</span> <span class="s2">&quot;Unnamed: 4&quot;</span><span class="p">])</span>
+<span class="n">sms_df</span> <span class="o">=</span> <span class="n">sms_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;v1&quot;</span><span class="p">:</span> <span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="s2">&quot;v2&quot;</span><span class="p">:</span> <span class="s2">&quot;sms&quot;</span><span class="p">})</span>
+<span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">sms_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">train_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;text-align&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_ca1d9_row0_col0, #T_ca1d9_row0_col1, #T_ca1d9_row1_col0, #T_ca1d9_row1_col1, #T_ca1d9_row2_col0, #T_ca1d9_row2_col1, #T_ca1d9_row3_col0, #T_ca1d9_row3_col1, #T_ca1d9_row4_col0, #T_ca1d9_row4_col1 {
+  text-align: left;
+}
+</style>
+<table id="T_ca1d9">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_ca1d9_level0_col0" class="col_heading level0 col0" >target</th>
+      <th id="T_ca1d9_level0_col1" class="col_heading level0 col1" >sms</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_ca1d9_level0_row0" class="row_heading level0 row0" >3130</th>
+      <td id="T_ca1d9_row0_col0" class="data row0 col0" >spam</td>
+      <td id="T_ca1d9_row0_col1" class="data row0 col1" >LookAtMe!: Thanks for your purchase of a video clip from LookAtMe!, you've been charged 35p. Think you can do better? Why not send a video in a MMSto 32323.</td>
+    </tr>
+    <tr>
+      <th id="T_ca1d9_level0_row1" class="row_heading level0 row1" >106</th>
+      <td id="T_ca1d9_row1_col0" class="data row1 col0" >ham</td>
+      <td id="T_ca1d9_row1_col1" class="data row1 col1" >Aight, I'll hit you up when I get some cash</td>
+    </tr>
+    <tr>
+      <th id="T_ca1d9_level0_row2" class="row_heading level0 row2" >4697</th>
+      <td id="T_ca1d9_row2_col0" class="data row2 col0" >ham</td>
+      <td id="T_ca1d9_row2_col1" class="data row2 col1" >Don no da:)whats you plan?</td>
+    </tr>
+    <tr>
+      <th id="T_ca1d9_level0_row3" class="row_heading level0 row3" >856</th>
+      <td id="T_ca1d9_row3_col0" class="data row3 col0" >ham</td>
+      <td id="T_ca1d9_row3_col1" class="data row3 col1" >Going to take your babe out ?</td>
+    </tr>
+    <tr>
+      <th id="T_ca1d9_level0_row4" class="row_heading level0 row4" >3454</th>
+      <td id="T_ca1d9_row4_col0" class="data row4 col0" >ham</td>
+      <td id="T_ca1d9_row4_col1" class="data row4 col1" >No need lar. Jus testing e phone card. Dunno network not gd i thk. Me waiting 4 my sis 2 finish bathing so i can bathe. Dun disturb u liao u cleaning ur room.</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="training-a-supervised-machine-learning-model-with-x-and-y">
+<h4>Training a supervised machine learning model with <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(y\)</span><a class="headerlink" href="#training-a-supervised-machine-learning-model-with-x-and-y" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;sms&quot;</span><span class="p">],</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;sms&quot;</span><span class="p">],</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;vect&quot;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">5000</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">&quot;clf&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">5000</span><span class="p">)),</span>
+<span class="p">])</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;vect&#x27;, CountVectorizer(max_features=5000)),
+                (&#x27;clf&#x27;, LogisticRegression(max_iter=5000))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;vect&#x27;, CountVectorizer(max_features=5000)),
+                (&#x27;clf&#x27;, LogisticRegression(max_iter=5000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">CountVectorizer</label><div class="sk-toggleable__content"><pre>CountVectorizer(max_features=5000)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=5000)</pre></div></div></div></div></div></div></div></div></div>
+</div>
+</section>
+<section id="predicting-labels-for-unseen-data-using-the-trained-model">
+<h4>Predicting labels for unseen data using the trained model<a class="headerlink" href="#predicting-labels-for-unseen-data-using-the-trained-model" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;text-align&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_84b01_row0_col0, #T_84b01_row1_col0, #T_84b01_row2_col0, #T_84b01_row3_col0 {
+  text-align: left;
+}
+</style>
+<table id="T_84b01">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_84b01_level0_col0" class="col_heading level0 col0" >sms</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_84b01_level0_row0" class="row_heading level0 row0" >3245</th>
+      <td id="T_84b01_row0_col0" class="data row0 col0" >Funny fact Nobody teaches volcanoes 2 erupt, tsunamis 2 arise, hurricanes 2 sway aroundn no 1 teaches hw 2 choose a wife Natural disasters just happens</td>
+    </tr>
+    <tr>
+      <th id="T_84b01_level0_row1" class="row_heading level0 row1" >944</th>
+      <td id="T_84b01_row1_col0" class="data row1 col0" >I sent my scores to sophas and i had to do secondary application for a few schools. I think if you are thinking of applying, do a research on cost also. Contact joke ogunrinde, her school is one me the less expensive ones</td>
+    </tr>
+    <tr>
+      <th id="T_84b01_level0_row2" class="row_heading level0 row2" >1044</th>
+      <td id="T_84b01_row2_col0" class="data row2 col0" >We know someone who you know that fancies you. Call 09058097218 to find out who. POBox 6, LS15HB 150p</td>
+    </tr>
+    <tr>
+      <th id="T_84b01_level0_row3" class="row_heading level0 row3" >2484</th>
+      <td id="T_84b01_row3_col0" class="data row3 col0" >Only if you promise your getting out as SOON as you can. And you'll text me in the morning to let me know you made it in ok.</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;sms&quot;</span><span class="p">:</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span>
+    <span class="s2">&quot;spam&quot;</span><span class="p">:</span> <span class="n">y_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># actual spam</span>
+    <span class="s2">&quot;spam_predictions&quot;</span><span class="p">:</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]),</span>
+<span class="p">}</span>
+<span class="n">pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pred_dict</span><span class="p">)</span>
+<span class="n">pred_df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;text-align&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_2fb51_row0_col0, #T_2fb51_row0_col1, #T_2fb51_row0_col2, #T_2fb51_row1_col0, #T_2fb51_row1_col1, #T_2fb51_row1_col2, #T_2fb51_row2_col0, #T_2fb51_row2_col1, #T_2fb51_row2_col2, #T_2fb51_row3_col0, #T_2fb51_row3_col1, #T_2fb51_row3_col2 {
+  text-align: left;
+}
+</style>
+<table id="T_2fb51">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_2fb51_level0_col0" class="col_heading level0 col0" >sms</th>
+      <th id="T_2fb51_level0_col1" class="col_heading level0 col1" >spam</th>
+      <th id="T_2fb51_level0_col2" class="col_heading level0 col2" >spam_predictions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_2fb51_level0_row0" class="row_heading level0 row0" >3245</th>
+      <td id="T_2fb51_row0_col0" class="data row0 col0" >Funny fact Nobody teaches volcanoes 2 erupt, tsunamis 2 arise, hurricanes 2 sway aroundn no 1 teaches hw 2 choose a wife Natural disasters just happens</td>
+      <td id="T_2fb51_row0_col1" class="data row0 col1" >ham</td>
+      <td id="T_2fb51_row0_col2" class="data row0 col2" >ham</td>
+    </tr>
+    <tr>
+      <th id="T_2fb51_level0_row1" class="row_heading level0 row1" >944</th>
+      <td id="T_2fb51_row1_col0" class="data row1 col0" >I sent my scores to sophas and i had to do secondary application for a few schools. I think if you are thinking of applying, do a research on cost also. Contact joke ogunrinde, her school is one me the less expensive ones</td>
+      <td id="T_2fb51_row1_col1" class="data row1 col1" >ham</td>
+      <td id="T_2fb51_row1_col2" class="data row1 col2" >ham</td>
+    </tr>
+    <tr>
+      <th id="T_2fb51_level0_row2" class="row_heading level0 row2" >1044</th>
+      <td id="T_2fb51_row2_col0" class="data row2 col0" >We know someone who you know that fancies you. Call 09058097218 to find out who. POBox 6, LS15HB 150p</td>
+      <td id="T_2fb51_row2_col1" class="data row2 col1" >spam</td>
+      <td id="T_2fb51_row2_col2" class="data row2 col2" >spam</td>
+    </tr>
+    <tr>
+      <th id="T_2fb51_level0_row3" class="row_heading level0 row3" >2484</th>
+      <td id="T_2fb51_row3_col0" class="data row3 col0" >Only if you promise your getting out as SOON as you can. And you'll text me in the morning to let me know you made it in ok.</td>
+      <td id="T_2fb51_row3_col1" class="data row3 col1" >ham</td>
+      <td id="T_2fb51_row3_col2" class="data row3 col2" >ham</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p><strong>We have accurately predicted labels for the unseen text messages above!</strong></p>
+</section>
+</section>
+<section id="supervised-machine-learning-a-popular-definition">
+<h3>(Supervised) Machine learning: a popular definition<a class="headerlink" href="#supervised-machine-learning-a-popular-definition" title="Permalink to this heading">#</a></h3>
+<blockquote>
+A field of study that gives computers the ability to learn without being explicitly programmed. <br> -- Arthur Samuel (1959)
+</blockquote><p>ML is a different way to think about problem-solving.</p>
+<!-- ![traditional-programming-vs-ml.png](img/traditional-programming-vs-ml.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/traditional-programming-vs-ml.png" alt="traditional-programming-vs-ml.png" width="70%"></center></section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<p>Let’s look at some concrete examples of supervised machine learning.</p>
+<section id="example-1-predicting-whether-a-patient-has-a-liver-disease-or-not">
+<h4>Example 1: Predicting whether a patient has a liver disease or not<a class="headerlink" href="#example-1-predicting-whether-a-patient-has-a-liver-disease-or-not" title="Permalink to this heading">#</a></h4>
+<section id="input-data">
+<h5>Input data<a class="headerlink" href="#input-data" title="Permalink to this heading">#</a></h5>
+<p>Suppose we are interested in predicting whether a patient has the disease or not. We are given some tabular data with inputs and outputs of liver patients, as shown below. The data contains a number of input features and a special column called “Target” which is the output we are interested in predicting.</p>
+<p>Download the data from <a class="reference external" href="https://www.kaggle.com/uciml/indian-liver-patient-records">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/indian_liver_patient.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/indian_liver_patient.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Disease&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;No Disease&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Dataset&quot;</span><span class="p">:</span> <span class="s2">&quot;Target&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">train_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Total_Bilirubin</th>
+      <th>Direct_Bilirubin</th>
+      <th>Alkaline_Phosphotase</th>
+      <th>Alamine_Aminotransferase</th>
+      <th>Aspartate_Aminotransferase</th>
+      <th>Total_Protiens</th>
+      <th>Albumin</th>
+      <th>Albumin_and_Globulin_Ratio</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>268</th>
+      <td>40</td>
+      <td>14.5</td>
+      <td>6.4</td>
+      <td>358</td>
+      <td>50</td>
+      <td>75</td>
+      <td>5.7</td>
+      <td>2.1</td>
+      <td>0.50</td>
+      <td>Disease</td>
+    </tr>
+    <tr>
+      <th>356</th>
+      <td>33</td>
+      <td>0.7</td>
+      <td>0.2</td>
+      <td>256</td>
+      <td>21</td>
+      <td>30</td>
+      <td>8.5</td>
+      <td>3.9</td>
+      <td>0.80</td>
+      <td>Disease</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>24</td>
+      <td>0.7</td>
+      <td>0.2</td>
+      <td>188</td>
+      <td>11</td>
+      <td>10</td>
+      <td>5.5</td>
+      <td>2.3</td>
+      <td>0.71</td>
+      <td>No Disease</td>
+    </tr>
+    <tr>
+      <th>488</th>
+      <td>60</td>
+      <td>0.7</td>
+      <td>0.2</td>
+      <td>171</td>
+      <td>31</td>
+      <td>26</td>
+      <td>7.0</td>
+      <td>3.5</td>
+      <td>1.00</td>
+      <td>No Disease</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>18</td>
+      <td>0.8</td>
+      <td>0.2</td>
+      <td>199</td>
+      <td>34</td>
+      <td>31</td>
+      <td>6.5</td>
+      <td>3.5</td>
+      <td>1.16</td>
+      <td>No Disease</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="building-a-supervised-machine-learning-model">
+<h5>Building a supervised machine learning model<a class="headerlink" href="#building-a-supervised-machine-learning-model" title="Permalink to this heading">#</a></h5>
+<p>Let’s train a supervised machine learning model with the input and output above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">])</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">])</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LGBMClassifier(random_state=123)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" checked><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">LGBMClassifier</label><div class="sk-toggleable__content"><pre>LGBMClassifier(random_state=123)</pre></div></div></div></div></div></div></div>
+</div>
+</section>
+<section id="model-predictions-on-unseen-data">
+<h5>Model predictions on unseen data<a class="headerlink" href="#model-predictions-on-unseen-data" title="Permalink to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Given the features of new patients, we’ll use this model to predict whether these patients have the liver disease or not.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Predicted_target&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+
+<span class="n">df_concat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">pred_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_concat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Total_Bilirubin</th>
+      <th>Direct_Bilirubin</th>
+      <th>Alkaline_Phosphotase</th>
+      <th>Alamine_Aminotransferase</th>
+      <th>Aspartate_Aminotransferase</th>
+      <th>Total_Protiens</th>
+      <th>Albumin</th>
+      <th>Albumin_and_Globulin_Ratio</th>
+      <th>Predicted_target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>19</td>
+      <td>1.4</td>
+      <td>0.8</td>
+      <td>178</td>
+      <td>13</td>
+      <td>26</td>
+      <td>8.0</td>
+      <td>4.6</td>
+      <td>1.30</td>
+      <td>No Disease</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12</td>
+      <td>1.0</td>
+      <td>0.2</td>
+      <td>719</td>
+      <td>157</td>
+      <td>108</td>
+      <td>7.2</td>
+      <td>3.7</td>
+      <td>1.00</td>
+      <td>Disease</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>60</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>214</td>
+      <td>412</td>
+      <td>850</td>
+      <td>7.3</td>
+      <td>3.2</td>
+      <td>0.78</td>
+      <td>Disease</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>42</td>
+      <td>0.5</td>
+      <td>0.1</td>
+      <td>162</td>
+      <td>155</td>
+      <td>108</td>
+      <td>8.1</td>
+      <td>4.0</td>
+      <td>0.90</td>
+      <td>Disease</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="example-2-predicting-the-label-of-a-given-image">
+<h4>Example 2: Predicting the label of a given image<a class="headerlink" href="#example-2-predicting-the-label-of-a-given-image" title="Permalink to this heading">#</a></h4>
+<p>Suppose you want to predict the label of a given image using supervised machine learning. We are using a pre-trained model here to predict labels of new unseen images.</p>
+<!-- ![monkey.jpg](img/monkey.jpg) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/monkey.jpg" alt="monkey.jpg" width="25%"></center><!-- ![cat.jpg](img/cat.jpg) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/cat.jpg" alt="cat.jpg" width="45%"></center><p>Demo: <a class="reference external" href="https://imagerecognize.com/#uploaded-img">Image Recognize</a></p>
+<ul class="simple">
+<li><p>If you know deep learning, pytorch or tensorflow, it is easy to build a similar recognition system.</p></li>
+<li><p>If you are interested in deep learning, take <strong>ECE 8550</strong> offered every spring.</p></li>
+</ul>
+</section>
+<section id="example-3-predicting-sentiment-expressed-in-a-movie-review">
+<h4>Example 3: Predicting sentiment expressed in a movie review<a class="headerlink" href="#example-3-predicting-sentiment-expressed-in-a-movie-review" title="Permalink to this heading">#</a></h4>
+<p>Suppose you are interested in predicting whether a given movie review is positive or negative. You can do it using supervised machine learning.</p>
+<p>Download the data by running the following cell.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/imdb_master.csv&quot;</span><span class="p">)</span>
+<span class="n">imdb_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/imdb_master.csv&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;ISO-8859-1&quot;</span><span class="p">)</span>
+<span class="n">imdb_df</span> <span class="o">=</span> <span class="n">imdb_df</span><span class="p">[</span><span class="n">imdb_df</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;pos&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">))]</span>
+<span class="n">imdb_df</span> <span class="o">=</span> <span class="n">imdb_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Unnamed: 0&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;file&quot;</span><span class="p">])</span>
+<span class="n">imdb_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;target&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">imdb_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">train_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;text-align&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_9b338_row0_col0, #T_9b338_row0_col1 {
+  text-align: left;
+}
+</style>
+<table id="T_9b338">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_9b338_level0_col0" class="col_heading level0 col0" >review</th>
+      <th id="T_9b338_level0_col1" class="col_heading level0 col1" >target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_9b338_level0_row0" class="row_heading level0 row0" >17812</th>
+      <td id="T_9b338_row0_col0" class="data row0 col0" >It may have been inevitable that with the onslaught of "slasher" movies in the early 1980's, that a few good ones might slip through the cracks. This is a great "rare" film from Jeff Lieberman, who insured his cult status with his memorable 1970's films "Squirm" and "Blue Sunshine".<br /><br />Five young people head into the Oregon mountains (this movie was actually shot on location) to do some camping and check out the deed to some land that one of them has acquired. Before long, they will predictably be terrorized by a bulky killer with an incredibly creepy wheezing laugh.<br /><br />"Just Before Dawn" is noticeably more ambitious, "arty", and intelligent than some slasher films. Lieberman actually fleshes out the characters - well, two of them, anyway - as much as a 90-minute-long film will allow him. The film has genuine moments of suspense and tension, and actually refrains from graphic gore, save for one killing right at the beginning.<br /><br />There is an above-average cast here, including Oscar winner George Kennedy, as a forest ranger who's understandably gone a little flaky from having been alone in the wilderness for too long. Jack Lemmon's son Chris, future Brian De Palma regular Gregg Henry, blonde lead Deborah Benson (it's too bad she hasn't become a more well-known performer, judging by her work here), Ralph Seymour ("Ghoulies"), Mike Kellin ("Sleepaway Camp"), and Jamie Rose ("Chopper Chicks in Zombietown") round out the cast.<br /><br />Some of the shots are interesting, and the early music score by Brad Feidel (now best known for his "Terminator" theme) is haunting and atmospheric.<br /><br />This is worth catching for the important plot twist at about the one hour mark, although a moment at about 75 minutes in involving the heroine and a tree and the killer is almost comical; it may actually remind a viewer of a cartoon! One of the most clever touches is the final dispatching of the killer, which I'd never seen before in a horror film and probably won't see again.<br /><br />I didn't give it 10 out of 10 because I can't honestly that I was that frightened. Still, it's an interesting slasher that is worthy of re-discovery.<br /><br />"That deed don't mean nothing, son. Those mountains can't read."<br /><br />9/10</td>
+      <td id="T_9b338_row0_col1" class="data row0 col1" >pos</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build an ML model</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;review&quot;</span><span class="p">],</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;review&quot;</span><span class="p">],</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;vect&quot;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">1000</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">&quot;clf&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)),</span>
+<span class="p">])</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-3 {color: black;background-color: white;}#sk-container-id-3 pre{padding: 0;}#sk-container-id-3 div.sk-toggleable {background-color: white;}#sk-container-id-3 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-3 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-3 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-3 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-3 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-3 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-3 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-3 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-3 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-3 div.sk-item {position: relative;z-index: 1;}#sk-container-id-3 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-3 div.sk-item::before, #sk-container-id-3 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-3 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-3 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-3 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-3 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-3 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-3 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-3 div.sk-label-container {text-align: center;}#sk-container-id-3 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-3 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;vect&#x27;, CountVectorizer(max_features=1000)),
+                (&#x27;clf&#x27;, LogisticRegression(max_iter=1000))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;vect&#x27;, CountVectorizer(max_features=1000)),
+                (&#x27;clf&#x27;, LogisticRegression(max_iter=1000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">CountVectorizer</label><div class="sk-toggleable__content"><pre>CountVectorizer(max_features=1000)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000)</pre></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict on unseen data using the built model</span>
+<span class="n">pred_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;reviews&quot;</span><span class="p">:</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span>
+    <span class="s2">&quot;sentiment_predictions&quot;</span><span class="p">:</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]),</span>
+<span class="p">}</span>
+<span class="n">pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pred_dict</span><span class="p">)</span>
+<span class="n">pred_df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_properties</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;text-align&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_7ec04_row0_col0, #T_7ec04_row0_col1, #T_7ec04_row1_col0, #T_7ec04_row1_col1, #T_7ec04_row2_col0, #T_7ec04_row2_col1 {
+  text-align: left;
+}
+</style>
+<table id="T_7ec04">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_7ec04_level0_col0" class="col_heading level0 col0" >reviews</th>
+      <th id="T_7ec04_level0_col1" class="col_heading level0 col1" >sentiment_predictions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_7ec04_level0_row0" class="row_heading level0 row0" >11872</th>
+      <td id="T_7ec04_row0_col0" class="data row0 col0" >You'll feel like you've experienced a vacation in Hell after you have sat down and watched this horrible TV movie. This movie is an exercise in over-acting (very bad over-acting) to situations that made out to be more than what they are. I won't give away the plot, but once you realize why the people in this film are running from the native man in the film you will demand the two wasted hours of your life back. The only plus is seeing Marcia Brady running around in a bikini!</td>
+      <td id="T_7ec04_row0_col1" class="data row0 col1" >neg</td>
+    </tr>
+    <tr>
+      <th id="T_7ec04_level0_row1" class="row_heading level0 row1" >40828</th>
+      <td id="T_7ec04_row1_col0" class="data row1 col0" >Bela Lugosi gets to play one of his rare good guy roles in a serial based upon the long running radio hit (which was also the source of a feature film where Lugosi played the villain.) Lugosi cuts a fine dashing figure and its sad that he didn't get more roles where he could be the guy in command in a good way. Here Chandu returns from the East in order to help the Princess Nadji who is being hunted by the leaders of the cult of Ubasti who need her to bring back from the dead the high priestess of their cult. This is a good looking globe trotting serial that is a great deal of fun. To be certain the pacing is a bit slack, more akin to one of Principals (the producing studios) features then a rip roaring adventure, but it's still enjoyable. This plays better than the two feature films that were cut from it because it allows for things to happen at their own pace instead of feeling rushed or having a sense that "hey I missed something". One of the trilogy of three good serials Lugosi made, the others being SOS Coast Guard and Phantom Creeps</td>
+      <td id="T_7ec04_row1_col1" class="data row1 col1" >pos</td>
+    </tr>
+    <tr>
+      <th id="T_7ec04_level0_row2" class="row_heading level0 row2" >36400</th>
+      <td id="T_7ec04_row2_col0" class="data row2 col0" >When you wish for the dragon to eat every cast member, you know you're in for a bad ride.<br /><br />I went in with very, very low expectations, having read some of the other comments, and was not let down. Unlike some other cheap and failed movies, however, this one doesn't really remain hilariously (and unintentionally) funny throughout.<br /><br />-SPOILERS FOLLOW-<br /><br />First of all, plot it very inconsistent. Looking past the "small" mistakes, such as the dragon growing up in 3 hours, the whole idea it's based on is messed up. See, the movie wants us to believe that dragons came from outer space in the form of meteorites which really were dragon eggs. After explaining this, they show some peasant poking at one with his pitchfork and the dragon pops out. Later, the obligatory "crazy scientist" guy babbles on about how dragons outlived the dinosaurs. So apparently humans were around when dinosaurs were, or we just have a fine little plot hole here. The other major thing is that the lab is blown up with a force "half as strong" as what was used for Hiroshima. Then two guys later walk in to check everything out, and it's almost unscathed! There's even another dragon, which grew out of who knows what. All in all it's very predictable. As soon as the guy mentioned cloning, I guessed they'd clone a dragon. That means that our Mr. Smarty-pants security guy isn't so intuitive and smart as the movie would have you believe, if you ignore that I knew this film would be about, you know, dragons.<br /><br />Putting that aside, the second worst thing is the "special effects." Others have mentioned the fake rocks falling during the beginning, the CG helicopter, and the dragon. It looks a bit better than a blob, but it ruined whatever it had going for it when it trudged down the hall in the same manner time after time. To their credit, the flying dragons in the beginning looked OK from far away (although the one in the cave is probably the worst one in the whole movie.) These things are funny to watch, however. The scenes where a million different shots of the same person facing different ways are shown are not. Nor are the "introduction" screens with the vital stats.<br /><br />Coming to the actors, they weren't the greatest, but I guess at least they tried? They seemed more enthusiastic about what they were doing than many of the actors participating in the recent "BloodRayne," for example, and you've got to give them points for that. One thing I noticed though was that the woman who plays Meredith often had her face covered in make-up that was many tones lighter than the rest of her. She looked like she had a bad run-in with some white-face.<br /><br />The script is bad and cheesy. You don't really notice the music, but it's actually not too bad for the most part.<br /><br />The bottom line is don't watch it unless you want to see it because you hear it's bad (like I did), although the only funny things are the bad CG effects. Other than that, don't waste your time and money.</td>
+      <td id="T_7ec04_row2_col1" class="data row2 col1" >neg</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="example-4-predicting-housing-prices">
+<h4>Example 4: Predicting housing prices<a class="headerlink" href="#example-4-predicting-housing-prices" title="Permalink to this heading">#</a></h4>
+<p>Suppose we want to predict housing prices given a number of attributes associated with houses.</p>
+<p>Download the data from <a class="reference external" href="https://www.kaggle.com/harlfoxem/housesalesprediction">here</a> or run the following cell.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/kc_house_data.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/kc_house_data.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="s2">&quot;target&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">train_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>target</th>
+      <th>bedrooms</th>
+      <th>bathrooms</th>
+      <th>sqft_living</th>
+      <th>sqft_lot</th>
+      <th>floors</th>
+      <th>waterfront</th>
+      <th>view</th>
+      <th>condition</th>
+      <th>grade</th>
+      <th>sqft_above</th>
+      <th>sqft_basement</th>
+      <th>yr_built</th>
+      <th>yr_renovated</th>
+      <th>zipcode</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>sqft_living15</th>
+      <th>sqft_lot15</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8583</th>
+      <td>509000.0</td>
+      <td>2</td>
+      <td>1.50</td>
+      <td>1930</td>
+      <td>3521</td>
+      <td>2.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>8</td>
+      <td>1930</td>
+      <td>0</td>
+      <td>1989</td>
+      <td>0</td>
+      <td>98007</td>
+      <td>47.6092</td>
+      <td>-122.146</td>
+      <td>1840</td>
+      <td>3576</td>
+    </tr>
+    <tr>
+      <th>19257</th>
+      <td>675000.0</td>
+      <td>5</td>
+      <td>2.75</td>
+      <td>2570</td>
+      <td>12906</td>
+      <td>2.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>8</td>
+      <td>2570</td>
+      <td>0</td>
+      <td>1987</td>
+      <td>0</td>
+      <td>98075</td>
+      <td>47.5814</td>
+      <td>-122.050</td>
+      <td>2580</td>
+      <td>12927</td>
+    </tr>
+    <tr>
+      <th>1295</th>
+      <td>420000.0</td>
+      <td>3</td>
+      <td>1.00</td>
+      <td>1150</td>
+      <td>5120</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6</td>
+      <td>800</td>
+      <td>350</td>
+      <td>1946</td>
+      <td>0</td>
+      <td>98116</td>
+      <td>47.5588</td>
+      <td>-122.392</td>
+      <td>1220</td>
+      <td>5120</td>
+    </tr>
+    <tr>
+      <th>15670</th>
+      <td>680000.0</td>
+      <td>8</td>
+      <td>2.75</td>
+      <td>2530</td>
+      <td>4800</td>
+      <td>2.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>7</td>
+      <td>1390</td>
+      <td>1140</td>
+      <td>1901</td>
+      <td>0</td>
+      <td>98112</td>
+      <td>47.6241</td>
+      <td>-122.305</td>
+      <td>1540</td>
+      <td>4800</td>
+    </tr>
+    <tr>
+      <th>3913</th>
+      <td>357823.0</td>
+      <td>3</td>
+      <td>1.50</td>
+      <td>1240</td>
+      <td>9196</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>8</td>
+      <td>1240</td>
+      <td>0</td>
+      <td>1968</td>
+      <td>0</td>
+      <td>98072</td>
+      <td>47.7562</td>
+      <td>-122.094</td>
+      <td>1690</td>
+      <td>10800</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build a regression model</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]),</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]),</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">XGBRegressor</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-4 {color: black;background-color: white;}#sk-container-id-4 pre{padding: 0;}#sk-container-id-4 div.sk-toggleable {background-color: white;}#sk-container-id-4 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-4 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-4 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-4 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-4 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-4 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-4 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-4 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-4 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-4 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-4 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-4 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-4 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-4 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-4 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-4 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-4 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-4 div.sk-item {position: relative;z-index: 1;}#sk-container-id-4 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-4 div.sk-item::before, #sk-container-id-4 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-4 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-4 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-4 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-4 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-4 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-4 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-4 div.sk-label-container {text-align: center;}#sk-container-id-4 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-4 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-4" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=None, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=None, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             n_estimators=100, n_jobs=None, num_parallel_tree=None,
+             predictor=None, random_state=None, ...)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" checked><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">XGBRegressor</label><div class="sk-toggleable__content"><pre>XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=None, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=None, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             n_estimators=100, n_jobs=None, num_parallel_tree=None,
+             predictor=None, random_state=None, ...)</pre></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict on unseen examples using the built model</span>
+<span class="n">pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="c1"># {&quot;Predicted target&quot;: model.predict(X_test[0:4]).tolist(), &quot;Actual price&quot;: y_test[0:4].tolist()}</span>
+    <span class="p">{</span><span class="s2">&quot;Predicted_target&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+<span class="n">df_concat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pred_df</span><span class="p">,</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_concat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Predicted_target</th>
+      <th>bedrooms</th>
+      <th>bathrooms</th>
+      <th>sqft_living</th>
+      <th>sqft_lot</th>
+      <th>floors</th>
+      <th>waterfront</th>
+      <th>view</th>
+      <th>condition</th>
+      <th>grade</th>
+      <th>sqft_above</th>
+      <th>sqft_basement</th>
+      <th>yr_built</th>
+      <th>yr_renovated</th>
+      <th>zipcode</th>
+      <th>lat</th>
+      <th>long</th>
+      <th>sqft_living15</th>
+      <th>sqft_lot15</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>333981.6250</td>
+      <td>4</td>
+      <td>2.25</td>
+      <td>2130</td>
+      <td>8078</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>7</td>
+      <td>1380</td>
+      <td>750</td>
+      <td>1977</td>
+      <td>0</td>
+      <td>98055</td>
+      <td>47.4482</td>
+      <td>-122.209</td>
+      <td>2300</td>
+      <td>8112</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>615222.4375</td>
+      <td>3</td>
+      <td>2.50</td>
+      <td>2210</td>
+      <td>7620</td>
+      <td>2.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>8</td>
+      <td>2210</td>
+      <td>0</td>
+      <td>1994</td>
+      <td>0</td>
+      <td>98052</td>
+      <td>47.6938</td>
+      <td>-122.130</td>
+      <td>1920</td>
+      <td>7440</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>329770.0625</td>
+      <td>4</td>
+      <td>1.50</td>
+      <td>1800</td>
+      <td>9576</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>7</td>
+      <td>1800</td>
+      <td>0</td>
+      <td>1977</td>
+      <td>0</td>
+      <td>98045</td>
+      <td>47.4664</td>
+      <td>-121.747</td>
+      <td>1370</td>
+      <td>9576</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>565091.6250</td>
+      <td>3</td>
+      <td>2.50</td>
+      <td>1580</td>
+      <td>1321</td>
+      <td>2.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>3</td>
+      <td>8</td>
+      <td>1080</td>
+      <td>500</td>
+      <td>2014</td>
+      <td>0</td>
+      <td>98107</td>
+      <td>47.6688</td>
+      <td>-122.402</td>
+      <td>1530</td>
+      <td>1357</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To summarize, supervised machine learning can be used on a variety of problems and different kinds of data.</p>
+</section>
+</section>
+<section id="machine-learning-workflow">
+<h3>Machine learning workflow<a class="headerlink" href="#machine-learning-workflow" title="Permalink to this heading">#</a></h3>
+<p>Supervised machine learning is quite flexible; it can be used on a variety of problems and different kinds of data. Here is a typical workflow of a supervised machine learning system.</p>
+<p>We will build machine learning pipelines in this course, focusing on some of the steps below.</p>
+<!-- ![ml-workflow.png](img/ml-workflow.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ml-workflow.png" alt="ml-workflow.png" width="65%"></center></section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Machine learning is a different paradigm for problem-solving.</p></li>
+<li><p>Very often it reduces the time you spend programming and helps customizing and scaling your products.</p></li>
+<li><p>In supervised learning, we are given a set of observations (<span class="math notranslate nohighlight">\(X\)</span>) and their corresponding targets (<span class="math notranslate nohighlight">\(y\)</span>) and we wish to find a model function <span class="math notranslate nohighlight">\(f\)</span> that relates <span class="math notranslate nohighlight">\(X\)</span> to <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
+</ul>
+</section>
+<section id="recommendation-reading-materials">
+<h2>Recommendation reading materials<a class="headerlink" href="#recommendation-reading-materials" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Machine_learning">Machine Learning (Wikipedia)</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/Gv9_4yMHFhI">A Gentle Introduction to Machine Learning</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=HcqpanDadyQ">What is Machine Learning (YouTube)</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=nKW8Ndu7Mjw">The 7 steps of machine learning (Youtube)</a></p></li>
+</ul>
+<hr></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ECE 4420/6420 Machine Learning in Engineering</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_decision-trees.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Machine learning concepts</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning">Machine learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prevalence-of-ml">Prevalence of ML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-ml-prevalent">Why is ML prevalent?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-spam-emails">Examples of spam emails</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-machine-learning">Supervised machine learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-machine-learning">Types of machine learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-supervised-machine-learning-ml">What is supervised machine learning (ML)?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-predict-whether-a-message-is-spam-or-not">Example: Predict whether a message is spam or not</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#input-features-x-and-target-y">Input features <span class="math notranslate nohighlight">\(X\)</span> and target <span class="math notranslate nohighlight">\(y\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-supervised-machine-learning-model-with-x-and-y">Training a supervised machine learning model with <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(y\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-labels-for-unseen-data-using-the-trained-model">Predicting labels for unseen data using the trained model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-machine-learning-a-popular-definition">(Supervised) Machine learning: a popular definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-predicting-whether-a-patient-has-a-liver-disease-or-not">Example 1: Predicting whether a patient has a liver disease or not</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#input-data">Input data</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-supervised-machine-learning-model">Building a supervised machine learning model</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#model-predictions-on-unseen-data">Model predictions on unseen data</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-predicting-the-label-of-a-given-image">Example 2: Predicting the label of a given image</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-predicting-sentiment-expressed-in-a-movie-review">Example 3: Predicting sentiment expressed in a movie review</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-predicting-housing-prices">Example 4: Predicting housing prices</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-workflow">Machine learning workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

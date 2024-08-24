@@ -1,0 +1,3255 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Recommender systems &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '17_recommender-systems';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Machine learning fairness" href="22_ethics.html" />
+    <link rel="prev" title="DBSCAN" href="16_dbscan_hierarchical.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/17_recommender-systems.ipynb" download="17_recommender-systems.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Recommender systems</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-outcomes">Learning outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommender-systems-motivation">Recommender systems motivation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-recommender-system">What is a recommender system?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-recommender-systems">Example: Recommender Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-should-we-care-about-recommendation-systems">Why should we care about recommendation systems?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-kind-of-data-do-we-need-to-build-recommendation-systems">What kind of data do we need to build recommendation systems?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-approaches">Main approaches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-approaches">Examples of approaches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-netflix-prize">The Netflix prize</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The Netflix prize</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommender-systems-problem">Recommender systems problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-formulation">Problem formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-matrix">Utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-example-of-a-utility-matrix">Toy example of a utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sparsity-of-the-utility-matrix">The sparsity of the utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-we-predict">What do we predict?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-dataset-jester-1-7m-jokes-ratings-dataset">Example dataset: Jester 1.7M jokes ratings dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-stats">Dataset stats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-utility-matrix">Creating utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-matrix-for-the-example-problem">Utility matrix for the example problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-baseline-approaches">Evaluation and Baseline Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-splitting">Data splitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-for-you">Questions for you</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-evaluation">Error evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baselines">Baselines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-average-baseline">Global average baseline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbours-imputation"><span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-with-finding-nearest-neighbors">Recommendation with finding nearest neighbors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-on-a-query-joke"><span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors on a query joke</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-with-predictions">What to do with predictions?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering">Collaborative filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem">Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-or-regression">Classification or regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rating-prediction">Rating prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rating-prediction-using-the-surprise-package">Rating prediction using the surprise package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">Singular value decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-formulation">SVD formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-optimization">SVD optimization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-for-recommender-systems">Cross-validation for recommender systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-collaborative-filtering-approaches">Other Collaborative Filtering Approaches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-based-collaborative-filtering">User-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#illustration-of-user-based-collaborative-filtering">Illustration of user-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#item-based-collaborative-filtering">Item-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#illustration-of-item-based-collaborative-filtering">Illustration of item-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-user-based-and-item-based-collaborative-filtering">Comparing user-based and item-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering-advantages-and-disadvantages">Collaborative filtering: advantages and disadvantages</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content-based-filtering">Content-based filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-content-based-filtering-recommendation">What is content-based filtering recommendation?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-content-filtering">Example of content-filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-of-items-based-item-similarity">Recommendation of items based item similarity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#content-based-filtering-advantages-disadvantages">Content-based Filtering Advantages &amp; Disadvantages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-filtering">Hybrid filtering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-comments-and-summary">Final comments and summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formulating-the-problem-of-recommender-systems">Formulating the problem of recommender systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-of-recsys">Evaluation of recsys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-at-n">Precision at N</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-thoughts-on-recommendation-systems">Some thoughts on recommendation systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Some thoughts on recommendation systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-false-questions">True/False questions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="recommender-systems">
+<h1>Recommender systems<a class="headerlink" href="#recommender-systems" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 75 minutes</p></li>
+</ul>
+<hr><section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">cmle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">surprise</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">KNNImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">from</span> <span class="nn">surprise</span> <span class="kn">import</span> <span class="n">SVD</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Reader</span><span class="p">,</span> <span class="n">accuracy</span>
+<span class="kn">from</span> <span class="nn">surprise.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="c1"># plt.style.use(&quot;seaborn&quot;)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_colwidth&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-outcomes">
+<h2>Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permalink to this heading">#</a></h2>
+<p>From this lecture, students are expected to be able to:</p>
+<ul class="simple">
+<li><p>State the problem of recommender systems.</p></li>
+<li><p>Describe the components of a utility matrix.</p></li>
+<li><p>Create a utility matrix given ratings data.</p></li>
+<li><p>Describe a common approach to evaluate recommender systems.</p></li>
+<li><p>Implement some baseline approaches to complete the utility matrix.</p></li>
+<li><p>Explain the idea of collaborative filtering.</p></li>
+<li><p>Explain some serious consequences of recommendation systems.</p></li>
+</ul>
+</section>
+<section id="recommender-systems-motivation">
+<h2>Recommender systems motivation<a class="headerlink" href="#recommender-systems-motivation" title="Permalink to this heading">#</a></h2>
+<section id="what-is-a-recommender-system">
+<h3>What is a recommender system?<a class="headerlink" href="#what-is-a-recommender-system" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A recommender or a recommendation system <strong>recommends</strong> a particular product or service to users they are likely to consume.</p></li>
+</ul>
+<!-- ![recommendation_system.png](img/recommendation_system.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/recommendation_system.png" alt="recommendation_system.png" width="50%"></center>
+</section>
+<section id="example-recommender-systems">
+<h3>Example: Recommender Systems<a class="headerlink" href="#example-recommender-systems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A client goes to Amazon to buy products.</p></li>
+<li><p>Amazon has some information about the client. They also have information about other clients buying similar products.</p></li>
+<li><p>What should they recommend to the client, so that they buy more products?</p></li>
+<li><p>There’s no “right” answer (no label).</p></li>
+<li><p>The whole idea is to understand user behavior in order to recommend the products they are likely to consume.</p></li>
+</ul>
+</section>
+<section id="why-should-we-care-about-recommendation-systems">
+<h3>Why should we care about recommendation systems?<a class="headerlink" href="#why-should-we-care-about-recommendation-systems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Almost everything we buy or consume today is in some way or another influenced by recommendation systems.</p>
+<ul>
+<li><p>Music (Spotify), videos (YouTube), news, books and products (Amazon), movies (Netflix), jokes, restaurants, dating, friends (Facebook), professional connections (Linkedin)</p></li>
+</ul>
+</li>
+<li><p>Recommendation systems are at the core of the success of many companies.</p>
+<ul>
+<li><p><a class="reference external" href="https://www.amazon.science/the-history-of-amazons-recommendation-algorithm">Amazon</a></p></li>
+<li><p><a class="reference external" href="https://help.netflix.com/en/node/100639">Netflix</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="what-kind-of-data-do-we-need-to-build-recommendation-systems">
+<h3>What kind of data do we need to build recommendation systems?<a class="headerlink" href="#what-kind-of-data-do-we-need-to-build-recommendation-systems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>User ratings data</strong> (most common)</p></li>
+<li><p><strong>Features related to items or users</strong></p></li>
+<li><p>Customer purchase history data</p></li>
+</ul>
+</section>
+<section id="main-approaches">
+<h3>Main approaches<a class="headerlink" href="#main-approaches" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Collaborative filtering</strong></p>
+<ul>
+<li><p>“Unsupervised” learning</p></li>
+<li><p>We only have labels <span class="math notranslate nohighlight">\(y_{ij}\)</span> (rating of user <span class="math notranslate nohighlight">\(i\)</span> for item <span class="math notranslate nohighlight">\(j\)</span>).</p></li>
+<li><p>We learn features.</p></li>
+</ul>
+</li>
+<li><p><strong>Content-based recommenders</strong></p>
+<ul>
+<li><p>Supervised learning</p></li>
+<li><p>Extract features <span class="math notranslate nohighlight">\(x_i\)</span> of users and/or items and build a model to predict rating <span class="math notranslate nohighlight">\(y_i\)</span> given <span class="math notranslate nohighlight">\(x_i\)</span>.</p></li>
+<li><p>Apply the model to predict for new users/items.</p></li>
+</ul>
+</li>
+<li><p><strong>Hybrid</strong></p>
+<ul>
+<li><p>Combining collaborative filtering with content-based filtering</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="examples-of-approaches">
+<h3>Examples of approaches<a class="headerlink" href="#examples-of-approaches" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Type</p></th>
+<th class="head text-left"><p>Definition</p></th>
+<th class="head text-left"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>content-based filtering</strong></p></td>
+<td class="text-left"><p>Uses <em>similarity between items</em> to recommend items similar to what the user likes.</p></td>
+<td class="text-left"><p>If user A watches two cute cat videos, then the system can recommend cute animal videos to that user.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>collaborative filtering</strong></p></td>
+<td class="text-left"><p>Uses <em>similarities between queries and items simultaneously</em> to provide recommendations.</p></td>
+<td class="text-left"><p>If user A is similar to user B, and user B likes video 1, then the system can recommend video 1 to user A (even if user A hasn’t seen any videos similar to video 1).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-netflix-prize">
+<h3>The Netflix prize<a class="headerlink" href="#the-netflix-prize" title="Permalink to this heading">#</a></h3>
+<p>Back in 2006, Netflix announced the Netflix Prize, a machine learning competition for predicting movie ratings. They offered a one million dollar prize to whoever improved the accuracy of their existing recommendation system by 10%.</p>
+<!-- ![netflix.png](img/netflix.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/netflix.png" alt="netflix.png" width="50%"></center>
+<!-- [Source](https://netflixtechblog.com/netflix-recommendations-beyond-the-5-stars-part-1-55838468f429) --></section>
+<section id="id1">
+<h3>The Netflix prize<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>100M ratings from 0.5M users on 18k movies.</p></li>
+<li><p>The grand prize was $1M for the first team to reduce squared error at least by 10%.</p></li>
+<li><p>Winning entry (and most entries) used collaborative filtering:</p>
+<ul>
+<li><p>Methods that only look at ratings, not features of movies/users.</p></li>
+</ul>
+</li>
+<li><p>A simple collaborative filtering method that does really well:</p>
+<ul>
+<li><p>Now adopted by many companies.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="recommender-systems-problem">
+<h2>Recommender systems problem<a class="headerlink" href="#recommender-systems-problem" title="Permalink to this heading">#</a></h2>
+<section id="problem-formulation">
+<h3>Problem formulation<a class="headerlink" href="#problem-formulation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Most often the data for recommender systems come in as <strong>ratings</strong> for a set of items from a set of users.</p></li>
+<li><p>We have two entities: <span class="math notranslate nohighlight">\(N\)</span> <strong>users</strong> and <span class="math notranslate nohighlight">\(M\)</span> <strong>items</strong>.</p></li>
+<li><p><strong>Users</strong> are consumers.</p></li>
+<li><p><strong>Items</strong> are the products or services offered.</p>
+<ul>
+<li><p>E.g., movies (Netflix), books (Amazon), songs (Spotify), people (Tinder)</p></li>
+</ul>
+</li>
+</ul>
+<!-- ![utility_matrix.png](img/utility_matrix.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/utility_matrix.png" alt="utility_matrix.png" width="50%"></center>
+</section>
+<section id="utility-matrix">
+<h3>Utility matrix<a class="headerlink" href="#utility-matrix" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A <strong>utility matrix</strong> captures <strong>interactions</strong> between <span class="math notranslate nohighlight">\(N\)</span> <strong>users</strong> and <span class="math notranslate nohighlight">\(M\)</span> <strong>items</strong>.</p></li>
+<li><p>The interaction may come in different forms:</p>
+<ul>
+<li><p>ratings, clicks, purchases</p></li>
+</ul>
+</li>
+</ul>
+<!-- ![utility_matrix.png](img/utility_matrix.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/utility_matrix.png" alt="utility_matrix.png" width="50%"></center></section>
+<section id="toy-example-of-a-utility-matrix">
+<h3>Toy example of a utility matrix<a class="headerlink" href="#toy-example-of-a-utility-matrix" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Below is a toy utility matrix. Here <span class="math notranslate nohighlight">\(N\)</span> = 6 and <span class="math notranslate nohighlight">\(M\)</span> = 5.</p></li>
+<li><p>Each entry <span class="math notranslate nohighlight">\(y_{ij}\)</span> (<span class="math notranslate nohighlight">\(i^{th}\)</span> row and <span class="math notranslate nohighlight">\(j^{th}\)</span> column) denotes the rating given by the user <span class="math notranslate nohighlight">\(i\)</span> to item <span class="math notranslate nohighlight">\(j\)</span>.</p></li>
+<li><p>We represent users in terms of items and items in terms of users.</p></li>
+</ul>
+<!-- ![utility_matrix.png](img/utility_matrix.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/utility_matrix.png" alt="utility_matrix.png" width="50%"></center></section>
+<section id="the-sparsity-of-the-utility-matrix">
+<h3>The sparsity of the utility matrix<a class="headerlink" href="#the-sparsity-of-the-utility-matrix" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The utility matrix is very sparse because usually users only interact with a few items.</p></li>
+<li><p>For example:</p>
+<ul>
+<li><p>All Netflix users will have rated only a small percentage of content available on Netflix</p></li>
+<li><p>All Amazon clients will have rated only a small fraction of items among all items available on Amazon</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="what-do-we-predict">
+<h3>What do we predict?<a class="headerlink" href="#what-do-we-predict" title="Permalink to this heading">#</a></h3>
+<p>Given a utility matrix of <span class="math notranslate nohighlight">\(N\)</span> users and <span class="math notranslate nohighlight">\(M\)</span> items, <strong>complete the utility matrix</strong>. In other words, <strong>predict missing values in the matrix</strong>.</p>
+<!-- ![utility_matrix.png](img/utility_matrix.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/utility_matrix.png" alt="utility_matrix.png" width="50%"></center><ul class="simple">
+<li><p>Once we have predicted ratings, we can recommend items to users they are likely to rate higher.</p></li>
+</ul>
+</section>
+<section id="example-dataset-jester-1-7m-jokes-ratings-dataset">
+<h3>Example dataset: Jester 1.7M jokes ratings dataset<a class="headerlink" href="#example-dataset-jester-1-7m-jokes-ratings-dataset" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We’ll use a sample of the <a class="reference external" href="https://www.kaggle.com/vikashrajluhaniwal/jester-17m-jokes-ratings-dataset">Jester 1.7M jokes ratings dataset</a> to demonstrate different recommendation systems.</p></li>
+</ul>
+<p>The dataset comes with two CSVs</p>
+<ul class="simple">
+<li><p>A CSV containing ratings (-10.0 to +10.0) of 150 jokes from 59,132 users.</p></li>
+<li><p>A CSV containing joke IDs and the actual text of jokes.</p></li>
+</ul>
+<blockquote>
+<div><p>Some jokes might be offensive. Please do not look too much into the actual text data if you are sensitive to such language.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Recommendation systems are most effective when you have a large amount of data.</p></li>
+<li><p>But we are only taking a sample here for speed.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/jester_ratings.csv&quot;</span><span class="p">)</span>
+<span class="n">ratings_full</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/jester_ratings.csv&quot;</span><span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">ratings_full</span><span class="p">[</span><span class="n">ratings_full</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">4000</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ratings</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>userId</th>
+      <th>jokeId</th>
+      <th>rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5</td>
+      <td>0.219</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>7</td>
+      <td>-9.281</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>8</td>
+      <td>-9.281</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>13</td>
+      <td>-6.781</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>15</td>
+      <td>0.875</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user_key</span> <span class="o">=</span> <span class="s2">&quot;userId&quot;</span>
+<span class="n">item_key</span> <span class="o">=</span> <span class="s2">&quot;jokeId&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataset-stats">
+<h3>Dataset stats<a class="headerlink" href="#dataset-stats" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ratings</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 141362 entries, 0 to 141361
+Data columns (total 3 columns):
+ #   Column  Non-Null Count   Dtype  
+---  ------  --------------   -----  
+ 0   userId  141362 non-null  int64  
+ 1   jokeId  141362 non-null  int64  
+ 2   rating  141362 non-null  float64
+dtypes: float64(1), int64(2)
+memory usage: 4.3 MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of ratings:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ratings</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average rating:  </span><span class="si">%0.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="s2">&quot;rating&quot;</span><span class="p">])))</span>
+<span class="n">item_key</span> <span class="o">=</span> <span class="s2">&quot;jokeId&quot;</span>
+<span class="n">user_key</span> <span class="o">=</span> <span class="s2">&quot;userId&quot;</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="n">user_key</span><span class="p">]))</span>
+<span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="n">item_key</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of users (N): </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">N</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of items (M): </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">M</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fraction non-nan ratings: </span><span class="si">%0.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ratings</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">M</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of ratings: 141362
+Average rating:  1.200
+Number of users (N): 3635
+Number of items (M): 140
+Fraction non-nan ratings: 0.278
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-utility-matrix">
+<h3>Creating utility matrix<a class="headerlink" href="#creating-utility-matrix" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Let’s construct the utility matrix with the <code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">of</span> <span class="pre">users</span></code> rows and the <code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">of</span> <span class="pre">items</span></code> columns from the ratings data.</p></li>
+</ul>
+<blockquote>
+<div><p>Note we are constructing a non-sparse matrix for demonstration purpose here. In real life it’s recommended that you work with sparse matrices.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user_mapper</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="n">user_key</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))))</span>
+<span class="n">item_mapper</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="n">item_key</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">))))</span>
+<span class="n">user_inverse_mapper</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="n">user_key</span><span class="p">])))</span>
+<span class="n">item_inverse_mapper</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">ratings</span><span class="p">[</span><span class="n">item_key</span><span class="p">])))</span>
+
+
+<span class="k">def</span> <span class="nf">create_Y_from_ratings</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">))</span>
+    <span class="n">Y</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">user_mapper</span><span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="n">user_key</span><span class="p">]]</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">item_mapper</span><span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="n">item_key</span><span class="p">]]</span>
+        <span class="n">Y</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;rating&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">Y</span>
+
+
+<span class="n">Y_mat</span> <span class="o">=</span> <span class="n">create_Y_from_ratings</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="n">Y_mat</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3635, 140)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="utility-matrix-for-the-example-problem">
+<h3>Utility matrix for the example problem<a class="headerlink" href="#utility-matrix-for-the-example-problem" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Rows represent users.</p></li>
+<li><p>Columns represent items (jokes in our case).</p></li>
+<li><p>Each cell gives the rating given by the user to the corresponding joke.</p></li>
+<li><p>Users are features for jokes and jokes are features for users.</p></li>
+<li><p>We want to predict the missing entries.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Y_mat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>130</th>
+      <th>131</th>
+      <th>132</th>
+      <th>133</th>
+      <th>134</th>
+      <th>135</th>
+      <th>136</th>
+      <th>137</th>
+      <th>138</th>
+      <th>139</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.219</td>
+      <td>-9.281</td>
+      <td>-9.281</td>
+      <td>-6.781</td>
+      <td>0.875</td>
+      <td>-9.656</td>
+      <td>-9.031</td>
+      <td>-7.469</td>
+      <td>-8.719</td>
+      <td>-9.156</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-9.688</td>
+      <td>9.938</td>
+      <td>9.531</td>
+      <td>9.938</td>
+      <td>0.406</td>
+      <td>3.719</td>
+      <td>9.656</td>
+      <td>-2.688</td>
+      <td>-9.562</td>
+      <td>-9.125</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-9.844</td>
+      <td>-9.844</td>
+      <td>-7.219</td>
+      <td>-2.031</td>
+      <td>-9.938</td>
+      <td>-9.969</td>
+      <td>-9.875</td>
+      <td>-9.812</td>
+      <td>-9.781</td>
+      <td>-6.844</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-5.812</td>
+      <td>-4.500</td>
+      <td>-4.906</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6.906</td>
+      <td>4.750</td>
+      <td>-5.906</td>
+      <td>-0.406</td>
+      <td>-4.031</td>
+      <td>3.875</td>
+      <td>6.219</td>
+      <td>5.656</td>
+      <td>6.094</td>
+      <td>5.406</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3630</th>
+      <td>NaN</td>
+      <td>-9.812</td>
+      <td>-0.062</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3631</th>
+      <td>NaN</td>
+      <td>-9.844</td>
+      <td>7.531</td>
+      <td>-9.719</td>
+      <td>-9.344</td>
+      <td>3.875</td>
+      <td>9.812</td>
+      <td>8.938</td>
+      <td>8.375</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3632</th>
+      <td>NaN</td>
+      <td>-1.906</td>
+      <td>3.969</td>
+      <td>-2.312</td>
+      <td>-0.344</td>
+      <td>-8.844</td>
+      <td>4.188</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3633</th>
+      <td>NaN</td>
+      <td>-8.875</td>
+      <td>-9.156</td>
+      <td>-9.156</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3634</th>
+      <td>NaN</td>
+      <td>-6.312</td>
+      <td>1.281</td>
+      <td>-3.531</td>
+      <td>2.125</td>
+      <td>-5.812</td>
+      <td>5.562</td>
+      <td>-6.062</td>
+      <td>0.125</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.188</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>3635 rows × 140 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="evaluation-and-baseline-approaches">
+<h2>Evaluation and Baseline Approaches<a class="headerlink" href="#evaluation-and-baseline-approaches" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Recall that our goal is to predict missing entries in the utility matrix.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Y_mat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>130</th>
+      <th>131</th>
+      <th>132</th>
+      <th>133</th>
+      <th>134</th>
+      <th>135</th>
+      <th>136</th>
+      <th>137</th>
+      <th>138</th>
+      <th>139</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.219</td>
+      <td>-9.281</td>
+      <td>-9.281</td>
+      <td>-6.781</td>
+      <td>0.875</td>
+      <td>-9.656</td>
+      <td>-9.031</td>
+      <td>-7.469</td>
+      <td>-8.719</td>
+      <td>-9.156</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-9.688</td>
+      <td>9.938</td>
+      <td>9.531</td>
+      <td>9.938</td>
+      <td>0.406</td>
+      <td>3.719</td>
+      <td>9.656</td>
+      <td>-2.688</td>
+      <td>-9.562</td>
+      <td>-9.125</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-9.844</td>
+      <td>-9.844</td>
+      <td>-7.219</td>
+      <td>-2.031</td>
+      <td>-9.938</td>
+      <td>-9.969</td>
+      <td>-9.875</td>
+      <td>-9.812</td>
+      <td>-9.781</td>
+      <td>-6.844</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-5.812</td>
+      <td>-4.500</td>
+      <td>-4.906</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6.906</td>
+      <td>4.750</td>
+      <td>-5.906</td>
+      <td>-0.406</td>
+      <td>-4.031</td>
+      <td>3.875</td>
+      <td>6.219</td>
+      <td>5.656</td>
+      <td>6.094</td>
+      <td>5.406</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3630</th>
+      <td>NaN</td>
+      <td>-9.812</td>
+      <td>-0.062</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3631</th>
+      <td>NaN</td>
+      <td>-9.844</td>
+      <td>7.531</td>
+      <td>-9.719</td>
+      <td>-9.344</td>
+      <td>3.875</td>
+      <td>9.812</td>
+      <td>8.938</td>
+      <td>8.375</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3632</th>
+      <td>NaN</td>
+      <td>-1.906</td>
+      <td>3.969</td>
+      <td>-2.312</td>
+      <td>-0.344</td>
+      <td>-8.844</td>
+      <td>4.188</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3633</th>
+      <td>NaN</td>
+      <td>-8.875</td>
+      <td>-9.156</td>
+      <td>-9.156</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3634</th>
+      <td>NaN</td>
+      <td>-6.312</td>
+      <td>1.281</td>
+      <td>-3.531</td>
+      <td>2.125</td>
+      <td>-5.812</td>
+      <td>5.562</td>
+      <td>-6.062</td>
+      <td>0.125</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.188</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>3635 rows × 140 columns</p>
+</div></div></div>
+</div>
+<section id="evaluation">
+<h3>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We’ll try a number of methods to do this.</p></li>
+<li><p>Although there is no notion of “accurate” recommendations, we need a way to evaluate our predictions so that we’ll be able to compare different methods.</p></li>
+<li><p>Although we are doing unsupervised learning, we’ll split the data and evaluate our predictions as follows.</p></li>
+</ul>
+</section>
+<section id="data-splitting">
+<h3>Data splitting<a class="headerlink" href="#data-splitting" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We split the <strong>ratings</strong> into train and validation sets.</p></li>
+<li><p>It’s easier to split the rating data instead of splitting the utility matrix.</p></li>
+<li><p>Don’t worry about <code class="docutils literal notranslate"><span class="pre">y</span></code>; we’re not really going to use it.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">ratings</span><span class="p">[</span><span class="n">user_key</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_valid</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_valid</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((113089, 3), (28273, 3))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will create utility matrices for train and validation splits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_mat</span> <span class="o">=</span> <span class="n">create_Y_from_ratings</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="n">valid_mat</span> <span class="o">=</span> <span class="n">create_Y_from_ratings</span><span class="p">(</span><span class="n">X_valid</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">valid_mat</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((3635, 140), (3635, 140))
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">train_mat</span></code> has only ratings from the train set and <code class="docutils literal notranslate"><span class="pre">valid_mat</span></code> has only ratings from the valid set.</p></li>
+<li><p>During training, we assume that we do not have access to some of the available ratings. We predict these ratings and evaluate them against ratings in the validation set.</p></li>
+</ul>
+</section>
+<section id="questions-for-you">
+<h3>Questions for you<a class="headerlink" href="#questions-for-you" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>How do train and validation utility matrices differ?</p></li>
+<li><p>Why are utility matrices for train and validation sets of the same shape?
+<br><br></p></li>
+</ul>
+<p><strong>Answer:</strong></p>
+<ul class="simple">
+<li><p>The training matrix <code class="docutils literal notranslate"><span class="pre">train_mat</span></code> is of shape N by M but only has ratings from <code class="docutils literal notranslate"><span class="pre">X_train</span></code> and all other ratings missing.</p></li>
+<li><p>The validation matrix <code class="docutils literal notranslate"><span class="pre">valid_mat</span></code> is also of shape N by M but it only has ratings <code class="docutils literal notranslate"><span class="pre">X_valid</span></code> and all other ratings missing.</p></li>
+<li><p>They have the same shape because both have the same number of users and items; that’s how we have constructed them.</p></li>
+</ul>
+</section>
+<section id="error-evaluation">
+<h3>Error evaluation<a class="headerlink" href="#error-evaluation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Now that we have train and validation sets, how do we evaluate our predictions?</p></li>
+<li><p>You can calculate the error between actual ratings and predicted ratings with metrics of your choice.</p>
+<ul>
+<li><p>The most common ones are MSE or RMSE.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">error</span></code> function below calculates RMSE and the <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> function prints train and validation RMSE.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">((</span><span class="n">X1</span> <span class="o">-</span> <span class="n">X2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">pred_X</span><span class="p">,</span> <span class="n">train_X</span><span class="p">,</span> <span class="n">valid_X</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;Global average&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> train RMSE: </span><span class="si">%0.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">error</span><span class="p">(</span><span class="n">pred_X</span><span class="p">,</span> <span class="n">train_X</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> valid RMSE: </span><span class="si">%0.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">error</span><span class="p">(</span><span class="n">pred_X</span><span class="p">,</span> <span class="n">valid_X</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="baselines">
+<h3>Baselines<a class="headerlink" href="#baselines" title="Permalink to this heading">#</a></h3>
+<p>Let’s first try some simple approaches to predict missing entries.</p>
+<ol class="arabic simple">
+<li><p>Global average baseline</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html"><span class="math notranslate nohighlight">\(k\)</span>-Nearest Neighbours imputation</a></p></li>
+</ol>
+</section>
+<section id="global-average-baseline">
+<h3>Global average baseline<a class="headerlink" href="#global-average-baseline" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Let’s examine the RMSE of the global average baseline.</p></li>
+<li><p>In this baseline, we predict everything as the global average rating</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">train_mat</span><span class="p">)</span>
+<span class="n">pred_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">train_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="n">avg</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pred_g</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>130</th>
+      <th>131</th>
+      <th>132</th>
+      <th>133</th>
+      <th>134</th>
+      <th>135</th>
+      <th>136</th>
+      <th>137</th>
+      <th>138</th>
+      <th>139</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>...</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>...</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>...</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>...</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>...</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+      <td>1.20741</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 140 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_g</span><span class="p">,</span> <span class="n">train_mat</span><span class="p">,</span> <span class="n">valid_mat</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;Global average&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global average train RMSE: 5.75
+Global average valid RMSE: 5.77
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="k-nearest-neighbours-imputation">
+<h3><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html"><span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours imputation</a><a class="headerlink" href="#k-nearest-neighbours-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Regarding missing values, can we try the <span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors type <strong>imputation</strong>?</p></li>
+<li><p>Impute missing values using the mean value from <span class="math notranslate nohighlight">\(k\)</span> nearest neighbors found in the training set.</p></li>
+<li><p>Calculate distances between examples using features where neither value is missing.</p></li>
+</ul>
+<!-- ![utility_matrix.png](img/utility_matrix.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/utility_matrix.png" alt="utility_matrix.png" width="50%"></center><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">KNNImputer</span>
+
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">KNNImputer</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">train_mat_imp</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train_mat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_mat_imp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>130</th>
+      <th>131</th>
+      <th>132</th>
+      <th>133</th>
+      <th>134</th>
+      <th>135</th>
+      <th>136</th>
+      <th>137</th>
+      <th>138</th>
+      <th>139</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-5.9406</td>
+      <td>-9.2810</td>
+      <td>-9.2810</td>
+      <td>-6.7810</td>
+      <td>0.8750</td>
+      <td>-9.6560</td>
+      <td>-9.0310</td>
+      <td>-7.4690</td>
+      <td>-8.7190</td>
+      <td>-9.1560</td>
+      <td>...</td>
+      <td>-4.5311</td>
+      <td>1.8968</td>
+      <td>0.6905</td>
+      <td>-3.1218</td>
+      <td>1.2843</td>
+      <td>-2.6063</td>
+      <td>-0.1812</td>
+      <td>-1.3937</td>
+      <td>1.7625</td>
+      <td>-0.4092</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.3405</td>
+      <td>9.9380</td>
+      <td>9.5310</td>
+      <td>9.9380</td>
+      <td>0.4060</td>
+      <td>3.7190</td>
+      <td>9.6560</td>
+      <td>-2.6880</td>
+      <td>4.3438</td>
+      <td>-9.1250</td>
+      <td>...</td>
+      <td>2.2437</td>
+      <td>3.1719</td>
+      <td>5.0251</td>
+      <td>5.1812</td>
+      <td>8.2407</td>
+      <td>5.9311</td>
+      <td>5.8375</td>
+      <td>6.3812</td>
+      <td>1.1687</td>
+      <td>6.2532</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-9.8440</td>
+      <td>-3.5750</td>
+      <td>-7.2190</td>
+      <td>-2.0310</td>
+      <td>-9.9380</td>
+      <td>-9.9690</td>
+      <td>-9.8750</td>
+      <td>-9.8120</td>
+      <td>-9.7810</td>
+      <td>-6.8440</td>
+      <td>...</td>
+      <td>-4.4186</td>
+      <td>-3.1156</td>
+      <td>-1.5655</td>
+      <td>-5.6250</td>
+      <td>0.3720</td>
+      <td>-4.0439</td>
+      <td>-6.0500</td>
+      <td>-5.5563</td>
+      <td>-5.4125</td>
+      <td>-5.5874</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-5.8120</td>
+      <td>-2.4624</td>
+      <td>-4.9060</td>
+      <td>-2.7781</td>
+      <td>-0.0532</td>
+      <td>-3.8594</td>
+      <td>1.7031</td>
+      <td>-0.3687</td>
+      <td>1.8469</td>
+      <td>0.0593</td>
+      <td>...</td>
+      <td>-2.0344</td>
+      <td>2.1469</td>
+      <td>2.8875</td>
+      <td>1.6845</td>
+      <td>1.2437</td>
+      <td>-0.0156</td>
+      <td>1.2595</td>
+      <td>3.8219</td>
+      <td>3.1971</td>
+      <td>5.0249</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.3157</td>
+      <td>4.7500</td>
+      <td>1.8658</td>
+      <td>-0.4060</td>
+      <td>1.7937</td>
+      <td>3.8750</td>
+      <td>6.2190</td>
+      <td>1.9220</td>
+      <td>6.0940</td>
+      <td>5.4060</td>
+      <td>...</td>
+      <td>-0.2844</td>
+      <td>1.1313</td>
+      <td>4.0157</td>
+      <td>3.0344</td>
+      <td>4.0406</td>
+      <td>0.5218</td>
+      <td>4.3594</td>
+      <td>4.0968</td>
+      <td>3.9250</td>
+      <td>3.9657</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3630</th>
+      <td>-0.7750</td>
+      <td>-9.8120</td>
+      <td>-0.0620</td>
+      <td>-2.8218</td>
+      <td>-4.1470</td>
+      <td>-4.8281</td>
+      <td>2.2718</td>
+      <td>-2.8782</td>
+      <td>-1.0125</td>
+      <td>0.0688</td>
+      <td>...</td>
+      <td>-6.6844</td>
+      <td>3.0531</td>
+      <td>2.8687</td>
+      <td>1.5281</td>
+      <td>4.5002</td>
+      <td>-0.1878</td>
+      <td>2.0031</td>
+      <td>4.0908</td>
+      <td>2.3563</td>
+      <td>5.0406</td>
+    </tr>
+    <tr>
+      <th>3631</th>
+      <td>2.5188</td>
+      <td>-5.0625</td>
+      <td>-0.4001</td>
+      <td>-9.7190</td>
+      <td>-9.3440</td>
+      <td>-1.6408</td>
+      <td>-4.1187</td>
+      <td>8.9380</td>
+      <td>8.3750</td>
+      <td>-0.9314</td>
+      <td>...</td>
+      <td>-4.0344</td>
+      <td>7.9155</td>
+      <td>3.4282</td>
+      <td>4.2968</td>
+      <td>6.7968</td>
+      <td>7.3999</td>
+      <td>1.8500</td>
+      <td>5.8219</td>
+      <td>5.1812</td>
+      <td>2.8437</td>
+    </tr>
+    <tr>
+      <th>3632</th>
+      <td>0.1749</td>
+      <td>-1.9060</td>
+      <td>3.9690</td>
+      <td>-1.3844</td>
+      <td>-0.3440</td>
+      <td>-8.8440</td>
+      <td>4.1880</td>
+      <td>-1.5564</td>
+      <td>5.0593</td>
+      <td>0.3343</td>
+      <td>...</td>
+      <td>-4.0126</td>
+      <td>2.8344</td>
+      <td>2.4499</td>
+      <td>2.9312</td>
+      <td>2.3750</td>
+      <td>-0.4062</td>
+      <td>1.4375</td>
+      <td>3.9750</td>
+      <td>-1.2220</td>
+      <td>2.8375</td>
+    </tr>
+    <tr>
+      <th>3633</th>
+      <td>-4.5937</td>
+      <td>-6.4907</td>
+      <td>-6.1594</td>
+      <td>-9.1560</td>
+      <td>-7.1437</td>
+      <td>-6.5406</td>
+      <td>3.8718</td>
+      <td>-1.7782</td>
+      <td>-3.7406</td>
+      <td>-0.6406</td>
+      <td>...</td>
+      <td>-4.6938</td>
+      <td>4.8061</td>
+      <td>4.9968</td>
+      <td>-0.1626</td>
+      <td>2.4187</td>
+      <td>-0.7750</td>
+      <td>4.6781</td>
+      <td>1.7658</td>
+      <td>0.4595</td>
+      <td>0.1843</td>
+    </tr>
+    <tr>
+      <th>3634</th>
+      <td>-0.0812</td>
+      <td>-6.3120</td>
+      <td>1.2810</td>
+      <td>-3.5310</td>
+      <td>2.1250</td>
+      <td>-5.8120</td>
+      <td>5.5620</td>
+      <td>0.2218</td>
+      <td>0.1250</td>
+      <td>-1.1874</td>
+      <td>...</td>
+      <td>-3.8156</td>
+      <td>4.1812</td>
+      <td>4.1880</td>
+      <td>3.7280</td>
+      <td>3.0750</td>
+      <td>2.1033</td>
+      <td>2.8156</td>
+      <td>5.5312</td>
+      <td>3.8283</td>
+      <td>4.1219</td>
+    </tr>
+  </tbody>
+</table>
+<p>3635 rows × 140 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="n">train_mat_imp</span><span class="p">,</span> <span class="n">train_mat</span><span class="p">,</span> <span class="n">valid_mat</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;KNN imputer&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNN imputer train RMSE: 0.00
+KNN imputer valid RMSE: 4.79
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="recommendation-with-finding-nearest-neighbors">
+<h3>Recommendation with finding <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestNeighbors.html">nearest neighbors</a><a class="headerlink" href="#recommendation-with-finding-nearest-neighbors" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Recommendation: give suggestions for some items -&gt; find similar items for a query item.</p></li>
+<li><p>We can look at the nearest neighbors of a query item.</p></li>
+<li><p>Here our columns are jokes, and users ratings are features for jokes, and we’ll have to find the nearest neighbors of column vectors.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_mat_imp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>130</th>
+      <th>131</th>
+      <th>132</th>
+      <th>133</th>
+      <th>134</th>
+      <th>135</th>
+      <th>136</th>
+      <th>137</th>
+      <th>138</th>
+      <th>139</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-5.9406</td>
+      <td>-9.2810</td>
+      <td>-9.2810</td>
+      <td>-6.7810</td>
+      <td>0.8750</td>
+      <td>-9.6560</td>
+      <td>-9.0310</td>
+      <td>-7.4690</td>
+      <td>-8.7190</td>
+      <td>-9.1560</td>
+      <td>...</td>
+      <td>-4.5311</td>
+      <td>1.8968</td>
+      <td>0.6905</td>
+      <td>-3.1218</td>
+      <td>1.2843</td>
+      <td>-2.6063</td>
+      <td>-0.1812</td>
+      <td>-1.3937</td>
+      <td>1.7625</td>
+      <td>-0.4092</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.3405</td>
+      <td>9.9380</td>
+      <td>9.5310</td>
+      <td>9.9380</td>
+      <td>0.4060</td>
+      <td>3.7190</td>
+      <td>9.6560</td>
+      <td>-2.6880</td>
+      <td>4.3438</td>
+      <td>-9.1250</td>
+      <td>...</td>
+      <td>2.2437</td>
+      <td>3.1719</td>
+      <td>5.0251</td>
+      <td>5.1812</td>
+      <td>8.2407</td>
+      <td>5.9311</td>
+      <td>5.8375</td>
+      <td>6.3812</td>
+      <td>1.1687</td>
+      <td>6.2532</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-9.8440</td>
+      <td>-3.5750</td>
+      <td>-7.2190</td>
+      <td>-2.0310</td>
+      <td>-9.9380</td>
+      <td>-9.9690</td>
+      <td>-9.8750</td>
+      <td>-9.8120</td>
+      <td>-9.7810</td>
+      <td>-6.8440</td>
+      <td>...</td>
+      <td>-4.4186</td>
+      <td>-3.1156</td>
+      <td>-1.5655</td>
+      <td>-5.6250</td>
+      <td>0.3720</td>
+      <td>-4.0439</td>
+      <td>-6.0500</td>
+      <td>-5.5563</td>
+      <td>-5.4125</td>
+      <td>-5.5874</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-5.8120</td>
+      <td>-2.4624</td>
+      <td>-4.9060</td>
+      <td>-2.7781</td>
+      <td>-0.0532</td>
+      <td>-3.8594</td>
+      <td>1.7031</td>
+      <td>-0.3687</td>
+      <td>1.8469</td>
+      <td>0.0593</td>
+      <td>...</td>
+      <td>-2.0344</td>
+      <td>2.1469</td>
+      <td>2.8875</td>
+      <td>1.6845</td>
+      <td>1.2437</td>
+      <td>-0.0156</td>
+      <td>1.2595</td>
+      <td>3.8219</td>
+      <td>3.1971</td>
+      <td>5.0249</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.3157</td>
+      <td>4.7500</td>
+      <td>1.8658</td>
+      <td>-0.4060</td>
+      <td>1.7937</td>
+      <td>3.8750</td>
+      <td>6.2190</td>
+      <td>1.9220</td>
+      <td>6.0940</td>
+      <td>5.4060</td>
+      <td>...</td>
+      <td>-0.2844</td>
+      <td>1.1313</td>
+      <td>4.0157</td>
+      <td>3.0344</td>
+      <td>4.0406</td>
+      <td>0.5218</td>
+      <td>4.3594</td>
+      <td>4.0968</td>
+      <td>3.9250</td>
+      <td>3.9657</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3630</th>
+      <td>-0.7750</td>
+      <td>-9.8120</td>
+      <td>-0.0620</td>
+      <td>-2.8218</td>
+      <td>-4.1470</td>
+      <td>-4.8281</td>
+      <td>2.2718</td>
+      <td>-2.8782</td>
+      <td>-1.0125</td>
+      <td>0.0688</td>
+      <td>...</td>
+      <td>-6.6844</td>
+      <td>3.0531</td>
+      <td>2.8687</td>
+      <td>1.5281</td>
+      <td>4.5002</td>
+      <td>-0.1878</td>
+      <td>2.0031</td>
+      <td>4.0908</td>
+      <td>2.3563</td>
+      <td>5.0406</td>
+    </tr>
+    <tr>
+      <th>3631</th>
+      <td>2.5188</td>
+      <td>-5.0625</td>
+      <td>-0.4001</td>
+      <td>-9.7190</td>
+      <td>-9.3440</td>
+      <td>-1.6408</td>
+      <td>-4.1187</td>
+      <td>8.9380</td>
+      <td>8.3750</td>
+      <td>-0.9314</td>
+      <td>...</td>
+      <td>-4.0344</td>
+      <td>7.9155</td>
+      <td>3.4282</td>
+      <td>4.2968</td>
+      <td>6.7968</td>
+      <td>7.3999</td>
+      <td>1.8500</td>
+      <td>5.8219</td>
+      <td>5.1812</td>
+      <td>2.8437</td>
+    </tr>
+    <tr>
+      <th>3632</th>
+      <td>0.1749</td>
+      <td>-1.9060</td>
+      <td>3.9690</td>
+      <td>-1.3844</td>
+      <td>-0.3440</td>
+      <td>-8.8440</td>
+      <td>4.1880</td>
+      <td>-1.5564</td>
+      <td>5.0593</td>
+      <td>0.3343</td>
+      <td>...</td>
+      <td>-4.0126</td>
+      <td>2.8344</td>
+      <td>2.4499</td>
+      <td>2.9312</td>
+      <td>2.3750</td>
+      <td>-0.4062</td>
+      <td>1.4375</td>
+      <td>3.9750</td>
+      <td>-1.2220</td>
+      <td>2.8375</td>
+    </tr>
+    <tr>
+      <th>3633</th>
+      <td>-4.5937</td>
+      <td>-6.4907</td>
+      <td>-6.1594</td>
+      <td>-9.1560</td>
+      <td>-7.1437</td>
+      <td>-6.5406</td>
+      <td>3.8718</td>
+      <td>-1.7782</td>
+      <td>-3.7406</td>
+      <td>-0.6406</td>
+      <td>...</td>
+      <td>-4.6938</td>
+      <td>4.8061</td>
+      <td>4.9968</td>
+      <td>-0.1626</td>
+      <td>2.4187</td>
+      <td>-0.7750</td>
+      <td>4.6781</td>
+      <td>1.7658</td>
+      <td>0.4595</td>
+      <td>0.1843</td>
+    </tr>
+    <tr>
+      <th>3634</th>
+      <td>-0.0812</td>
+      <td>-6.3120</td>
+      <td>1.2810</td>
+      <td>-3.5310</td>
+      <td>2.1250</td>
+      <td>-5.8120</td>
+      <td>5.5620</td>
+      <td>0.2218</td>
+      <td>0.1250</td>
+      <td>-1.1874</td>
+      <td>...</td>
+      <td>-3.8156</td>
+      <td>4.1812</td>
+      <td>4.1880</td>
+      <td>3.7280</td>
+      <td>3.0750</td>
+      <td>2.1033</td>
+      <td>2.8156</td>
+      <td>5.5312</td>
+      <td>3.8283</td>
+      <td>4.1219</td>
+    </tr>
+  </tbody>
+</table>
+<p>3635 rows × 140 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="k-nearest-neighbors-on-a-query-joke">
+<h3><span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors on a query joke<a class="headerlink" href="#k-nearest-neighbors-on-a-query-joke" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Let’s transpose the matrix.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">item_user_mat</span> <span class="o">=</span> <span class="n">train_mat_imp</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/jester_items.csv&quot;</span><span class="p">)</span>
+<span class="n">jokes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/jester_items.csv&quot;</span><span class="p">)</span>
+<span class="n">jokes_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>jokeId</th>
+      <th>jokeText</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>A man visits the doctor. The doctor says "I have bad news for you.You have\ncancer and Alzheimer's disease". \nThe man replies "Well,thank God I don't have cancer!"\n</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>This couple had an excellent relationship going until one day he came home\nfrom work to find his girlfriend packing. He asked her why she was leaving him\nand she told him that she had heard awful things about him. \n\n"What could they possibly have said to make you move out?" \n\n"They told me that you were a pedophile." \n\nHe replied, "That's an awfully big word for a ten year old." \n</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Q. What's 200 feet long and has 4 teeth? \n\nA. The front row at a Willie Nelson Concert.\n</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Q. What's the difference between a man and a toilet? \n\nA. A toilet doesn't follow you around after you use it.\n</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Q.\tWhat's O. J. Simpson's Internet address? \nA.\tSlash, slash, backslash, slash, slash, escape.\n</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">id_joke_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">jokes_df</span><span class="o">.</span><span class="n">jokeId</span><span class="p">,</span> <span class="n">jokes_df</span><span class="o">.</span><span class="n">jokeText</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
+
+<span class="k">def</span> <span class="nf">get_topk_recommendations</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">query_ind</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">query_idx</span> <span class="o">=</span> <span class="n">item_inverse_mapper</span><span class="p">[</span><span class="n">query_ind</span><span class="p">]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">neigh_ind</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">X</span><span class="p">[</span><span class="n">query_ind</span><span class="p">]],</span> <span class="n">k</span><span class="p">,</span> <span class="n">return_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">neigh_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">neigh_ind</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">query_ind</span> <span class="o">==</span> <span class="n">query_ind</span><span class="p">))</span>
+    <span class="n">recs</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_joke_map</span><span class="p">[</span><span class="n">item_inverse_mapper</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">neigh_ind</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query joke: &quot;</span><span class="p">,</span> <span class="n">id_joke_map</span><span class="p">[</span><span class="n">query_idx</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">recs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;top recommendations&quot;</span><span class="p">])</span>
+
+
+<span class="n">get_topk_recommendations</span><span class="p">(</span><span class="n">item_user_mat</span><span class="p">,</span> <span class="n">query_ind</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Query joke:  Q: If a person who speaks three languages is called &quot;tri-lingual,&quot; and
+a person who speaks two languages is called &quot;bi-lingual,&quot; what do call
+a person who only speaks one language?
+
+A: American! 
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>top recommendations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Q: What is the difference between George  Washington, Richard Nixon,\nand Bill Clinton?\n\nA: Washington couldn't tell a lie, Nixon couldn't   tell the truth, and\nClinton doesn't know the difference.\n</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A man in a hot air balloon realized he was lost. He reduced altitude and spotted a woman below. He descended a bit more and shouted, "Excuse me, can you help me? I promised a friend I would meet him an hour ago, but I don't know where I am." The woman below replied, "You are in a hot air balloon hovering approximately 30 feet above the ground. You are between 40 and 41 degrees north latitude and between 59 and 60 degrees west longitude." "You must be an engineer," said the balloonist. "I am," replied the woman. "How did you know?" "Well," answered the balloonist, "everything you told me is technically correct, but I have no idea what to make of your information, and the fact is, I am still lost. Frankly, you've not been much help so far." The woman below responded, "You must be in management." "I am," replied the balloonist, "but how did you know?" "Well," said the woman, "you don't know where you are or where you are going. You have risen to where you are due to a large quantity of hot air. You made a promise that you have no idea how to keep, and you expect people beneath you to solve your problems. The fact is, you are in exactly the same position you were in before we met, but now, somehow, it's my fault!"</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>If pro- is the opposite of con- then congress must be the opposite\nof progress.\n</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Arnold Swartzeneger and Sylvester Stallone are making a movie about\nthe lives of the great composers.  \nStallone says "I want to be Mozart." \nSwartzeneger says: "In that case...  I'll be Bach."\n</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Question</strong></p>
+<ul class="simple">
+<li><p>Instead of imputation, what would be the consequences if we replace <code class="docutils literal notranslate"><span class="pre">nan</span></code> with zeros so that we can calculate distances between vectors?</p></li>
+</ul>
+<p><strong>Answer</strong></p>
+<p>It’s not a good idea to replace ratings with 0, because 0 can be an actual rating value in our case.</p>
+</section>
+<section id="what-to-do-with-predictions">
+<h3>What to do with predictions?<a class="headerlink" href="#what-to-do-with-predictions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Once you have predictions, you can sort them based on ratings and recommend items with the highest ratings.</p></li>
+</ul>
+</section>
+</section>
+<section id="collaborative-filtering">
+<h2>Collaborative filtering<a class="headerlink" href="#collaborative-filtering" title="Permalink to this heading">#</a></h2>
+<section id="id2">
+<h3>Collaborative filtering<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>One of the most popular approaches for recommendation systems.</p></li>
+<li><p>The approach used by the winning entry (and most of the entries) in the Netflix competition.</p></li>
+<li><p>An unsupervised approach</p>
+<ul>
+<li><p>Only uses the user-item interactions given in the ratings matrix.</p></li>
+</ul>
+</li>
+<li><p><strong>Intuition</strong></p>
+<ul>
+<li><p>We may have similar users and similar items which can help us predict missing entries.</p></li>
+<li><p>Leverage social information to provide recommendations.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="problem">
+<h3>Problem<a class="headerlink" href="#problem" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Given a utility matrix with many missing entries, how can we predict missing ratings?</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+? &amp; ? &amp; \checkmark  &amp; ? &amp; \checkmark\\
+\checkmark &amp; ? &amp; ?  &amp; ? &amp; ?\\
+? &amp; \checkmark &amp; \checkmark  &amp; ? &amp; \checkmark\\
+? &amp; ? &amp; ?  &amp; ? &amp; ?\\
+? &amp; ? &amp; ? &amp; \checkmark &amp; ?\\
+? &amp; \checkmark &amp; \checkmark  &amp; ? &amp; \checkmark
+\end{bmatrix}
+\end{split}\]</div>
+<blockquote>
+<div><p>Note: rating prediction <span class="math notranslate nohighlight">\(\neq\)</span> Classification or regression</p>
+</div></blockquote>
+</section>
+<section id="classification-or-regression">
+<h3>Classification or regression<a class="headerlink" href="#classification-or-regression" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We have <span class="math notranslate nohighlight">\(X\)</span> and targets for some rows in <span class="math notranslate nohighlight">\(X\)</span>.</p></li>
+<li><p>We want to predict the last column (target column).</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+\checkmark &amp; \checkmark &amp; \checkmark  &amp; \checkmark &amp; \checkmark\\
+\checkmark &amp; \checkmark &amp; \checkmark  &amp; \checkmark &amp; \checkmark\\
+\checkmark &amp; \checkmark &amp; \checkmark  &amp; \checkmark &amp; \checkmark\\
+\checkmark &amp; \checkmark &amp; \checkmark  &amp; \checkmark &amp; ?\\
+\checkmark &amp; \checkmark &amp; \checkmark  &amp; \checkmark &amp; ?\\
+\checkmark &amp; \checkmark &amp; \checkmark  &amp; \checkmark &amp; ?\\
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="rating-prediction">
+<h3>Rating prediction<a class="headerlink" href="#rating-prediction" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Ratings data has many missing values in the utility matrix. There is no special target column. We want to predict the missing entries in the matrix.</p></li>
+<li><p>Since our goal is to <strong>predict</strong> ratings, usually the utility matrix is referred to as a <span class="math notranslate nohighlight">\(Y\)</span> matrix.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+? &amp; ? &amp; \checkmark  &amp; ? &amp; \checkmark\\
+\checkmark &amp; ? &amp; ?  &amp; ? &amp; ?\\
+? &amp; \checkmark &amp; \checkmark  &amp; ? &amp; \checkmark\\
+? &amp; ? &amp; ?  &amp; ? &amp; ?\\
+? &amp; ? &amp; ? &amp; \checkmark &amp; ?\\
+? &amp; \checkmark &amp; \checkmark  &amp; ? &amp; \checkmark
+\end{bmatrix}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>I’ll show you how to use a package that implements collaborative filtering.</p></li>
+<li><p>We don’t have sufficient background to understand how it works under the hood.</p></li>
+</ul>
+</section>
+<section id="rating-prediction-using-the-surprise-package">
+<h3>Rating prediction using the surprise package<a class="headerlink" href="#rating-prediction-using-the-surprise-package" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We’ll be using a package called <a class="reference external" href="https://surprise.readthedocs.io/en/stable/index.html">Surprise</a>.</p></li>
+<li><p>The collaborative filtering algorithm we use in this package is called <code class="docutils literal notranslate"><span class="pre">SVD</span></code>.</p></li>
+</ul>
+</section>
+<section id="singular-value-decomposition">
+<h3>Singular value decomposition<a class="headerlink" href="#singular-value-decomposition" title="Permalink to this heading">#</a></h3>
+<!-- ![img/svd.png](svd.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/svd.png" alt="svd.png" width="90%"></center></section>
+<section id="svd-formulation">
+<h3>SVD formulation<a class="headerlink" href="#svd-formulation" title="Permalink to this heading">#</a></h3>
+<p><strong>Matrix Decomposition in SVD</strong>: SVD decomposes a matrix into three distinct matrices:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(U\)</span> (left singular vectors)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span> (singular values, typically represented as a diagonal matrix)</p></li>
+<li><p><span class="math notranslate nohighlight">\( V^T\)</span> (right singular vectors, the transpose of <span class="math notranslate nohighlight">\( V \)</span>)</p></li>
+</ul>
+<!-- ![img/svd2.png](svd2.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/svd2.png" alt="svd2.png" width="70%"></center></section>
+<section id="svd-optimization">
+<h3>SVD optimization<a class="headerlink" href="#svd-optimization" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[ \min_{U,\Sigma,V} \sum_{i, j} ( U_{i,j} - [U \Sigma U^T]_{i,j})^2 \]</div>
+<!-- ![img/svd2.png](svd2.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/svd2.png" alt="svd2.png" width="70%"></center><p>Let’s try it out on our Jester dataset utility matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">surprise</span>
+<span class="kn">from</span> <span class="nn">surprise</span> <span class="kn">import</span> <span class="n">SVD</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Reader</span><span class="p">,</span> <span class="n">accuracy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reader</span> <span class="o">=</span> <span class="n">Reader</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_from_df</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>  <span class="c1"># Load the data</span>
+
+<span class="n">trainset</span><span class="p">,</span> <span class="n">validset</span> <span class="o">=</span> <span class="n">surprise</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># Split the data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">SVD</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainset</span><span class="p">)</span>
+<span class="n">svd_preds</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">validset</span><span class="p">)</span>
+<span class="n">accuracy</span><span class="o">.</span><span class="n">rmse</span><span class="p">(</span><span class="n">svd_preds</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RMSE: 5.2893
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.28926338380112
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>No big improvement over the global baseline (RMSE=5.77).</p></li>
+<li><p>Probably because we are only considering a test.</p></li>
+</ul>
+</section>
+<section id="cross-validation-for-recommender-systems">
+<h3>Cross-validation for recommender systems<a class="headerlink" href="#cross-validation-for-recommender-systems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We can also carry out cross-validation and grid search with this package.</p></li>
+<li><p>Let’s look at an example of cross-validation.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surprise.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="p">[</span>
+                         <span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">],</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating RMSE, MAE of algorithm SVD on 5 split(s).
+
+                  Fold 1  Fold 2  Fold 3  Fold 4  Fold 5  Mean    Std     
+RMSE (testset)    5.2924  5.3015  5.2829  5.2441  5.3033  5.2848  0.0216  
+MAE (testset)     4.2050  4.2241  4.2049  4.1659  4.2129  4.2026  0.0196  
+Fit time          1.11    1.14    1.11    1.11    1.14    1.12    0.01    
+Test time         0.25    0.11    0.11    0.24    0.11    0.16    0.07    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test_rmse    5.284847
+test_mae     4.202578
+fit_time     1.123441
+test_time    0.161927
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Jester dataset is available as one of the built-in datasets in this package and you can load it as follows and run cross-validation as follows.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">load_builtin</span><span class="p">(</span><span class="s2">&quot;jester&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">measures</span><span class="o">=</span><span class="p">[</span>
+                         <span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">],</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating RMSE, MAE of algorithm SVD on 5 split(s).
+
+                  Fold 1  Fold 2  Fold 3  Fold 4  Fold 5  Mean    Std     
+RMSE (testset)    4.5731  4.6182  4.5880  4.5900  4.5997  4.5938  0.0149  
+MAE (testset)     3.3178  3.3494  3.3269  3.3272  3.3302  3.3303  0.0104  
+Fit time          16.16   16.94   16.91   16.86   16.85   16.74   0.29    
+Test time         3.05    3.51    3.05    3.05    3.04    3.14    0.19    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test_rmse    4.593791 
+test_mae     3.330297 
+fit_time     16.744463
+test_time    3.141612 
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="other-collaborative-filtering-approaches">
+<h3>Other Collaborative Filtering Approaches<a class="headerlink" href="#other-collaborative-filtering-approaches" title="Permalink to this heading">#</a></h3>
+<p>Collaborative Filtering (CF) is a mean of recommendation based on users’ past interactions with items.</p>
+<ol class="arabic simple">
+<li><p>User-based: measure the similarity between target users and other users.</p></li>
+<li><p>Item-based: measure the similarity between the items that target users rates/ interacts with and other items.</p></li>
+</ol>
+<p><strong>Note, we only have the utility matrix.</strong></p>
+</section>
+<section id="user-based-collaborative-filtering">
+<h3>User-based collaborative filtering<a class="headerlink" href="#user-based-collaborative-filtering" title="Permalink to this heading">#</a></h3>
+<p>In order to make a new recommendation to a user, user-user method roughly tries to identify users with the most similar “interactions profile” (nearest neighbours) in order to suggest items that are the most popular among these neighbours (and that are “new” to our user).</p>
+<p>Assume that we want to make a recommendation for a given user.</p>
+<ul class="simple">
+<li><p>First, every user can be represented by its vector of interactions with the different items (“its line” in the interaction matrix).</p></li>
+<li><p>Then, we can compute some kind of “similarity” between our user of interest and every other users. That similarity measure is such that two users with similar interactions on the same items should be considered as being close.</p></li>
+</ul>
+</section>
+<section id="illustration-of-user-based-collaborative-filtering">
+<h3>Illustration of user-based collaborative filtering<a class="headerlink" href="#illustration-of-user-based-collaborative-filtering" title="Permalink to this heading">#</a></h3>
+<!-- ![user-based-collaborate.png](img/user-based-collaborate.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/user-based-collaborate.png" alt="user-based-collaborate.png" width="80%"></center></section>
+<section id="item-based-collaborative-filtering">
+<h3>Item-based collaborative filtering<a class="headerlink" href="#item-based-collaborative-filtering" title="Permalink to this heading">#</a></h3>
+<p>To make a new recommendation to a user, the idea of item-item method is to find items similar to the ones the user already “positively” interacted with. Two items are considered to be similar if most of the users that have interacted with both of them did it in a similar way.</p>
+<p>Assume that we want to make a recommendation for a given user.</p>
+<ul class="simple">
+<li><p>First, we consider the item this user liked the most and represent it (as all the other items) by its vector of interaction with every users (“its column” in the interaction matrix).</p></li>
+<li><p>Then, we can compute similarities between the “best item” and all the other items.</p></li>
+<li><p>Once the similarities have been computed, we can then keep the k-nearest-neighbours to the selected “best item” that are new to our user of interest and recommend these items.</p></li>
+</ul>
+</section>
+<section id="illustration-of-item-based-collaborative-filtering">
+<h3>Illustration of item-based collaborative filtering<a class="headerlink" href="#illustration-of-item-based-collaborative-filtering" title="Permalink to this heading">#</a></h3>
+<!-- ![item-based-collaborate.png](img/item-based-collaborate.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/item-based-collaborate.png" alt="item-based-collaborate.png" width="80%"></center></section>
+<section id="comparing-user-based-and-item-based-collaborative-filtering">
+<h3>Comparing user-based and item-based collaborative filtering<a class="headerlink" href="#comparing-user-based-and-item-based-collaborative-filtering" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The user-based method is based on the search of similar users in terms of interactions with items.</p></li>
+<li><p>The item-item method is based on the search of similar items in terms of user-item interactions.</p></li>
+</ul>
+<!-- ![user-item-comparison.png](img/user-item-comparison.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/user-item-comparison.png" alt="user-item-comparison.png" width="70%"></center></section>
+<section id="collaborative-filtering-advantages-and-disadvantages">
+<h3>Collaborative filtering: advantages and disadvantages<a class="headerlink" href="#collaborative-filtering-advantages-and-disadvantages" title="Permalink to this heading">#</a></h3>
+<p><strong>Advantages</strong></p>
+<ul class="simple">
+<li><p>No domain knowledge is required since all the features are learned automatically.</p></li>
+<li><p>Can help users discover new interests even if they’re not actively searching for them by recommending new items similar to what they’re interested in.</p></li>
+<li><p>Does not require in-detail features and contextual data of products or items. It only needs the user-item interaction matrix to train the matrix factorization model.</p></li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul class="simple">
+<li><p>Data sparsity can lead to difficulty in recommending new products or users since the suggestions are based on historic data and interactions.</p></li>
+<li><p>As the user base grows, the algorithms suffer due to high data volume and lack of scalability.</p></li>
+<li><p>Lack of diversity in the long run.</p></li>
+</ul>
+</section>
+</section>
+<section id="content-based-filtering">
+<h2>Content-based filtering<a class="headerlink" href="#content-based-filtering" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>In collaborative filtering, we assumed that we only have ratings data.</p></li>
+<li><p>Usually, there is some information on items and users available.</p></li>
+<li><p>Examples</p>
+<ul>
+<li><p>Netflix can describe movies as action, romance, comedy, documentaries.</p></li>
+<li><p>Amazon could describe books according to topics: math, languages, and history.</p></li>
+<li><p>Tinder could describe people according to age, location, and employment.</p></li>
+</ul>
+</li>
+<li><p>Can we use this information to give recommendation?</p></li>
+</ul>
+<section id="what-is-content-based-filtering-recommendation">
+<h3>What is content-based filtering recommendation?<a class="headerlink" href="#what-is-content-based-filtering-recommendation" title="Permalink to this heading">#</a></h3>
+<p>Content-based filtering uses <strong>item features</strong> to recommend other items similar to what the user likes, based on their previous actions or explicit feedback.</p>
+<!-- ![img/comparison-collaborative-content.png](img/comparison-collaborative-content.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/comparison-collaborative-content.png" alt="img/comparison-collaborative-content.png" width="70%"></center><!-- ![img/comparison-collaborative-content2.png](img/comparison-collaborative-content2.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/comparison-collaborative-content2.png" alt="img/comparison-collaborative-content2.png" width="80%"></center></section>
+<section id="example-of-content-filtering">
+<h3>Example of content-filtering<a class="headerlink" href="#example-of-content-filtering" title="Permalink to this heading">#</a></h3>
+<p>To demonstrate content-based filtering, let’s hand-engineer some features for the Google Play store.
+The following figure shows a feature matrix where <strong>each row represents an app</strong> and <strong>each column represents a feature</strong>.
+Features could include categories (such as Education, Casual, Health), the publisher of the app, and many others.
+To simplify, assume this feature matrix is binary: a non-zero value means the app has that feature.</p>
+<!-- ![img/content-filtering-example.png](content-filtering-example.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/content-filtering-example.png" alt="content-filtering-example.png" width="40%"></center></section>
+<section id="recommendation-of-items-based-item-similarity">
+<h3>Recommendation of items based item similarity<a class="headerlink" href="#recommendation-of-items-based-item-similarity" title="Permalink to this heading">#</a></h3>
+<!-- ![img/content-filtering-rec.png](content-filtering-rec.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/content-filtering-rec.png" alt="content-filtering-rec.png" width="60%"></center></section>
+<section id="content-based-filtering-advantages-disadvantages">
+<h3>Content-based Filtering Advantages &amp; Disadvantages<a class="headerlink" href="#content-based-filtering-advantages-disadvantages" title="Permalink to this heading">#</a></h3>
+<p><strong>Advantages</strong></p>
+<ul class="simple">
+<li><p>The model doesn’t need any data about other users, since the recommendations are specific to this user. This makes it easier to scale to a large number of users.</p></li>
+<li><p>The model can capture the specific interests of a user, and can recommend niche items that very few other users are interested in.</p></li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul class="simple">
+<li><p>Since the feature representation of the items are hand-engineered to some extent, this technique requires a lot of domain knowledge. Therefore, the model can only be as good as the hand-engineered features.</p></li>
+<li><p>The model can only make recommendations based on existing interests of the user. In other words, the model has limited ability to expand on the users’ existing interests.</p></li>
+</ul>
+</section>
+<section id="hybrid-filtering">
+<h3>Hybrid filtering<a class="headerlink" href="#hybrid-filtering" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Combining the advantages of collaborative filtering and content-based filtering.</p></li>
+</ul>
+<!-- ![hybrid-recommendation.png](img/hybrid-recommendation.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/hybrid-recommendation.png" alt="hybrid-recommendation.png" width="70%"></center></section>
+</section>
+<section id="final-comments-and-summary">
+<h2>Final comments and summary<a class="headerlink" href="#final-comments-and-summary" title="Permalink to this heading">#</a></h2>
+<section id="formulating-the-problem-of-recommender-systems">
+<h3>Formulating the problem of recommender systems<a class="headerlink" href="#formulating-the-problem-of-recommender-systems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We are given ratings data.</p></li>
+<li><p>We use this data to create a <strong>utility matrix</strong> that encodes interactions between users and items.</p></li>
+<li><p>The utility matrix has many missing entries.</p></li>
+<li><p>We defined the recommendation systems problem as a <strong>matrix completion problem</strong>.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Collaborative filtering<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Collaborative filtering is an unsupervised approach to recommendation systems.</p></li>
+</ul>
+</section>
+<section id="evaluation-of-recsys">
+<h3>Evaluation of recsys<a class="headerlink" href="#evaluation-of-recsys" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We split the data similarly to supervised systems.</p></li>
+<li><p>We evaluate recommendation systems using traditional regression metrics such as MSE or RMSE.</p></li>
+<li><p>But real evaluation of the recommender system can be very tricky because there is no ground truth.</p></li>
+<li><p>We have been using RMSE due to the lack of a better measure.</p></li>
+<li><p>What we actually want to measure is the interest that our user has in the recommended items.</p></li>
+</ul>
+</section>
+<section id="precision-at-n">
+<h3>Precision at N<a class="headerlink" href="#precision-at-n" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Another popular evaluation metric from information retrieval is precision at N.</p></li>
+<li><p>Suppose you recommend top-N items, then we look at the proportion of the items that are relevant.
+$<span class="math notranslate nohighlight">\(\text{Precision at } N = \frac{r}{N}\)</span>$</p></li>
+<li><p>For example, <span class="math notranslate nohighlight">\(r\)</span> could be the number of elements in your list that the user rated.</p></li>
+<li><p>In this way, you would know that your system is recommending items that the user had an interest in!</p></li>
+</ul>
+</section>
+<section id="some-thoughts-on-recommendation-systems">
+<h3>Some thoughts on recommendation systems<a class="headerlink" href="#some-thoughts-on-recommendation-systems" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Be mindful of the consequences of the recommendation systems.</p></li>
+<li><p>Companies such as Amazon,  Netflix, Facebook, and Google (YouTube), which extensively use recommendation systems, are profit-driven and so they design these systems to maximize user attention; their focus is not necessarily human well-being.</p></li>
+<li><p>There are tons of news and research articles on the serious consequences of recommendation systems.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Some thoughts on recommendation systems<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Some weird stories got media attention.
+<a class="reference external" href="https://www.forbes.com/sites/kashmirhill/2012/02/16/how-target-figured-out-a-teen-girl-was-pregnant-before-her-father-did/?sh=3171af136668">How Target Figured Out A Teen Girl Was Pregnant Before Her Father Did</a></p></li>
+<li><p>More serious consequences are in political contexts.</p>
+<ul>
+<li><p><a class="reference external" href="https://www.nytimes.com/2018/11/06/technology/myanmar-facebook.html">Facebook Admits It Was Used to Incite Violence in Myanmar</a></p></li>
+<li><p><a class="reference external" href="https://www.theatlantic.com/politics/archive/2018/03/youtube-extremism-and-the-long-tail/555350/">YouTube Extremism and the Long Tail</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="true-false-questions">
+<h3>True/False questions<a class="headerlink" href="#true-false-questions" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>To evaluate rating predictions we split the data. The shapes of the validation utility matrix and train utility matrix are the same.</p></li>
+<li><p>It would be reasonable to impute missing values in the utility matrix by taking the average of the ratings given to an item by similar users.</p></li>
+<li><p>You might be able to predict missing ratings in the utility matrix using supervised machine learning methods.
+<br><br><br><br></p></li>
+</ol>
+</section>
+</section>
+<section id="recommendation-reading-materials">
+<h2>Recommendation reading materials<a class="headerlink" href="#recommendation-reading-materials" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=z0dx-YckFko">Collaborative filtering for recommendation systems in Python, by N. Hug</a></p></li>
+<li><p><a class="reference external" href="https://www.ted.com/talks/barry_schwartz_the_paradox_of_choice">An interesting talk: The paradox of choice</a></p></li>
+<li><p><a class="reference external" href="https://help.netflix.com/en/node/100639">How Netflix’s Recommendations System Works</a></p></li>
+<li><p><a class="reference external" href="https://learning.oreilly.com/library/view/hands-on-recommendation-systems/9781788993753/">Hands-on Recommendation Systems with Python</a></p></li>
+<li><p><a class="reference external" href="https://realpython.com/build-recommendation-engine-collaborative-filtering/">Build a Recommendation Engine With Collaborative Filtering</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/introduction-to-recommender-systems-6c66cf15ada">Introduction to recommender systems | by Baptiste Rocca | Towards Data Science</a></p></li>
+</ul>
+<hr></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="16_dbscan_hierarchical.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">DBSCAN</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="22_ethics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Machine learning fairness</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-outcomes">Learning outcomes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommender-systems-motivation">Recommender systems motivation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-recommender-system">What is a recommender system?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-recommender-systems">Example: Recommender Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-should-we-care-about-recommendation-systems">Why should we care about recommendation systems?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-kind-of-data-do-we-need-to-build-recommendation-systems">What kind of data do we need to build recommendation systems?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#main-approaches">Main approaches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-approaches">Examples of approaches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-netflix-prize">The Netflix prize</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">The Netflix prize</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommender-systems-problem">Recommender systems problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-formulation">Problem formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-matrix">Utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-example-of-a-utility-matrix">Toy example of a utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sparsity-of-the-utility-matrix">The sparsity of the utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-we-predict">What do we predict?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-dataset-jester-1-7m-jokes-ratings-dataset">Example dataset: Jester 1.7M jokes ratings dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-stats">Dataset stats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-utility-matrix">Creating utility matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-matrix-for-the-example-problem">Utility matrix for the example problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-baseline-approaches">Evaluation and Baseline Approaches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-splitting">Data splitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#questions-for-you">Questions for you</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-evaluation">Error evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baselines">Baselines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-average-baseline">Global average baseline</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbours-imputation"><span class="math notranslate nohighlight">\(k\)</span>-nearest neighbours imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-with-finding-nearest-neighbors">Recommendation with finding nearest neighbors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-on-a-query-joke"><span class="math notranslate nohighlight">\(k\)</span>-nearest neighbors on a query joke</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-with-predictions">What to do with predictions?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering">Collaborative filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem">Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-or-regression">Classification or regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rating-prediction">Rating prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rating-prediction-using-the-surprise-package">Rating prediction using the surprise package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">Singular value decomposition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-formulation">SVD formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-optimization">SVD optimization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-for-recommender-systems">Cross-validation for recommender systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-collaborative-filtering-approaches">Other Collaborative Filtering Approaches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-based-collaborative-filtering">User-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#illustration-of-user-based-collaborative-filtering">Illustration of user-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#item-based-collaborative-filtering">Item-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#illustration-of-item-based-collaborative-filtering">Illustration of item-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-user-based-and-item-based-collaborative-filtering">Comparing user-based and item-based collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collaborative-filtering-advantages-and-disadvantages">Collaborative filtering: advantages and disadvantages</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content-based-filtering">Content-based filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-content-based-filtering-recommendation">What is content-based filtering recommendation?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-content-filtering">Example of content-filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-of-items-based-item-similarity">Recommendation of items based item similarity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#content-based-filtering-advantages-disadvantages">Content-based Filtering Advantages &amp; Disadvantages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hybrid-filtering">Hybrid filtering</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-comments-and-summary">Final comments and summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formulating-the-problem-of-recommender-systems">Formulating the problem of recommender systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Collaborative filtering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-of-recsys">Evaluation of recsys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-at-n">Precision at N</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-thoughts-on-recommendation-systems">Some thoughts on recommendation systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Some thoughts on recommendation systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-false-questions">True/False questions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Zero-Trust Cybersecurity for Vehicles &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Lectures/04_autonomous vechilces';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Designing a Zero Trust Architecture" href="03_Designing%20a%20Zero%20Trust%20architecture.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logoo.png" class="logo__image only-light" alt="My Jupyter Book - Home"/>
+    <script>document.write(`<img src="../_static/logoo.png" class="logo__image only-dark" alt="My Jupyter Book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Zero Trust Architecture for Secure Connected and Autonomous Vehicles
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction_to_Zero_trust.html">Introduction to Zero Trust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Zero%20Trust%20Architecture.html"><strong>Zero Trust Architectureal Model</strong></a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="03_Designing%20a%20Zero%20Trust%20architecture.html">Designing a Zero Trust Architecture</a></li>
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Zero-Trust Cybersecurity for Vehicles</a></li>
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Lectures/04_autonomous vechilces.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Zero-Trust Cybersecurity for Vehicles</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Zero-Trust Cybersecurity for Vehicles</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-automotive-cybersecurity">Importance of Automotive Cybersecurity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-connected-and-autonomous-vehicles-cavs">Overview of Connected and Autonomous Vehicles (CAVs)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-security-in-cavs">Importance of Security in CAVs</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#security-risks-specific-to-the-controller-area-network-can">Security Risks Specific to the Controller Area Network (CAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#application-of-zta-in-cavs">Application of ZTA in CAVs:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#nist-s-seven-tenets-of-zero-trust-in-cavs">NIST’s Seven Tenets of Zero-Trust in CAVs</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-architecture-for-cavs">Zero-Trust Architecture for CAVs</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zt-policy">ZT Policy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-policy"><strong>Static Policy:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-policy"><strong>Dynamic Policy:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-enforcement-in-zta-for-cavs">Policy Enforcement in ZTA for CAVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zta-for-hub-and-spoke-can-bus-networks">ZTA for Hub-and-Spoke CAN Bus Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale-behind-hub-and-spoke-model">Rationale Behind Hub-and-Spoke Model:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#benefits-of-segmentation">Benefits of Segmentation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-studies-on-zta-on-can">Case Studies on ZTA on CAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excessive-speeding">Excessive Speeding:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#harsh-acceleration">Harsh Acceleration:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abrupt-lane-changes">Abrupt Lane Changes:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collision-scenarios">Collision Scenarios:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="zero-trust-cybersecurity-for-vehicles">
+<h1>Zero-Trust Cybersecurity for Vehicles<a class="headerlink" href="#zero-trust-cybersecurity-for-vehicles" title="Link to this heading">#</a></h1>
+<section id="importance-of-automotive-cybersecurity">
+<h2>Importance of Automotive Cybersecurity<a class="headerlink" href="#importance-of-automotive-cybersecurity" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Automotive cybersecurity has become increasingly important due to the upcoming UNECE WP.29 R155 regulation, which mandates cybersecurity management systems for vehicles starting July 2024.</p></li>
+<li><p>Compliance with this regulation is essential for obtaining type approval in regions like Europe, Japan, and South Korea. Although not mandatory in the United States, US carmakers must comply if they wish to export vehicles abroad.</p></li>
+<li><p>Despite being a “check-the-box” regulation, ensuring true cybersecurity requires more than just meeting regulatory standards; it demands comprehensive and proactive security measures.</p></li>
+</ul>
+<p>Block Harbor Cybersecurity | Automotive Security Research Group |
+Automotive Cybersecurity Steps Up source</p>
+<p><strong>Shift to Software-Defined Vehicles:</strong></p>
+<ul class="simple">
+<li><p>The transition to software-defined vehicles presents new cybersecurity challenges. Traditional firewall approaches, which created a secure perimeter, are inadequate for modern vehicles that require access to sensors and ECUs deep within the system.</p></li>
+<li><p>This transition is driving carmakers to reconsider their cybersecurity architectures, moving towards models like Zero-Trust, which mandates continuous authentication and authorization for all data sources, including external connections and onboard sensors.</p></li>
+</ul>
+<p>Zero-Trust is being increasingly adopted in IT networks, healthcare systems, financial institutions, and now automotive systems, reflecting its versatility and effectiveness in enhancing security.</p>
+</section>
+<section id="overview-of-connected-and-autonomous-vehicles-cavs">
+<h2>Overview of Connected and Autonomous Vehicles (CAVs)<a class="headerlink" href="#overview-of-connected-and-autonomous-vehicles-cavs" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>Definition and Functionality:</strong></p>
+<p>CAVs are vehicles equipped with advanced technologies that enable them to communicate with other vehicles, infrastructure, and even pedestrians, as well as operate autonomously without human intervention.</p>
+<p>These vehicles rely on a combination of sensors, cameras, LIDAR, radar, and artificial intelligence to perceive their environment, make decisions, and execute driving tasks.</p>
+</li>
+<li><p><strong>Advancements in Transportation:</strong></p>
+<p><strong>Safety:</strong> CAVs promise to reduce traffic accidents by eliminating human errors, which are responsible for most road incidents.</p>
+</li>
+</ul>
+<p><strong>Efficiency:</strong> By optimizing traffic flow and reducing congestion through vehicle-to-vehicle (V2V) and vehicle-to-infrastructure (V2I) communication, CAVs can improve overall transportation efficiency.</p>
+<p><strong>Convenience:</strong> Autonomous driving offers enhanced convenience, especially for long-distance travel, elderly drivers, and those with disabilities.</p>
+<ul>
+<li><p><strong>Emerging Security Challenges:</strong></p>
+<p><strong>Interconnectivity Risks:</strong> As CAVs become more connected, they also become more susceptible to cyber-attacks. The interconnectivity between vehicles and infrastructure creates a larger attack surface.</p>
+<p><strong>Data Privacy Concerns:</strong> CAVs collect vast amounts of data, including location, behavior, and biometrics, raising concerns about data privacy and potential misuse.</p>
+<p><strong>Real-Time Threats:</strong> The need for real-time data processing and decision-making makes CAVs vulnerable to attacks that can have immediate and potentially catastrophic consequences.</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="importance-of-security-in-cavs">
+<h1>Importance of Security in CAVs<a class="headerlink" href="#importance-of-security-in-cavs" title="Link to this heading">#</a></h1>
+<ul>
+<li><p><strong>Complex Network of Systems:</strong></p>
+<p>CAVs consist of multiple interconnected systems, including the powertrain, infotainment, telematics, and advanced driver assistance systems (ADAS). Each system must interact securely with others, but their interdependence increases the risk of cascading failures if one system is compromised.</p>
+</li>
+<li><p><strong>Vulnerability to Cyber-Attacks:</strong></p>
+<p><strong>Spoofing:</strong> An attacker can inject false data into the vehicle’s network, misleading the CAV’s decision-making processes. For example, the vehicle might receive incorrect sensor data, leading it to make unsafe maneuvers.</p>
+</li>
+</ul>
+<p><strong>Jamming:</strong> Attackers can disrupt wireless communication channels, such as GPS signals or V2V communication, by overwhelming them with noise or interference. This can cause the vehicle to lose critical information needed for navigation or collision avoidance.</p>
+<ul>
+<li><p><strong>Impact on Public Safety:</strong></p>
+<p>A successful cyber-attack on a CAV could lead to severe consequences, including loss of control over the vehicle, accidents, and even fatalities.</p>
+</li>
+</ul>
+</section>
+<section id="security-risks-specific-to-the-controller-area-network-can">
+<h1>Security Risks Specific to the Controller Area Network (CAN)<a class="headerlink" href="#security-risks-specific-to-the-controller-area-network-can" title="Link to this heading">#</a></h1>
+<p><strong>Security Risks Specific to the CAN Bus:</strong></p>
+<ul class="simple">
+<li><p>The CAN bus is a vehicle’s internal network that allows microcontrollers and devices to communicate with each other without a host computer. It’s used for everything from engine management to braking and lighting.</p></li>
+<li><p>The CAN bus was not originally designed with security in mind, making it vulnerable to various attacks.</p></li>
+<li><p><strong>Lack of Authentication:</strong> Messages on the CAN bus are not authenticated, meaning that any connected device can send commands as if it were a legitimate component of the vehicle.</p></li>
+<li><p><strong>Susceptibility to Spoofing and Injection Attacks:</strong> An attacker could inject malicious messages into the CAN bus, causing the vehicle to perform unintended actions, such as disabling the brakes or accelerating unexpectedly.</p></li>
+<li><p><strong>Broadcast Nature:</strong> Since CAN messages are broadcast to all nodes in the network, any compromised node can eavesdrop on the entire network, leading to potential data breaches.</p></li>
+<li><p><strong>Segmentation Attacks:</strong> Segmentation attacks involve isolating parts of the network, disrupting communication between critical components.  By segmenting the network, attackers can prevent important messages from reaching their intended destination, leading to system failures.
+<em>Example: An attacker could segment the CAN bus to prevent the transmission of braking commands, causing the vehicle to lose braking capability.</em></p></li>
+</ul>
+</section>
+<section id="application-of-zta-in-cavs">
+<h1>Application of ZTA in CAVs:<a class="headerlink" href="#application-of-zta-in-cavs" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Securing Communication Channels:</strong> ZTA can be applied to secure all communication channels within a CAV, ensuring that every message sent between sensors, ECUs, and external entities is authenticated and encrypted.</p></li>
+<li><p><strong>Dynamic Policy Enforcement:</strong> ZTA allows for dynamic security policies that can adapt to changing conditions, such as the vehicle’s speed, location, and the presence of other vehicles.</p></li>
+<li><p><strong>Example of ZTA in Action:</strong> If a CAV detects an unknown device attempting to connect to its network, ZTA policies would block the connection until the device is verified and authorized.</p></li>
+</ul>
+</section>
+<section id="nist-s-seven-tenets-of-zero-trust-in-cavs">
+<h1>NIST’s Seven Tenets of Zero-Trust in CAVs<a class="headerlink" href="#nist-s-seven-tenets-of-zero-trust-in-cavs" title="Link to this heading">#</a></h1>
+<p>These tenets provide a framework for implementing Zero-Trust in any organization, focusing on securing resources, communication, and access control.</p>
+<ol class="arabic simple">
+<li><p><strong>All Data Sources and Computing Services Are Considered Resources:</strong></p></li>
+</ol>
+<p>Every data source, whether it’s within or outside the network, is treated as a resource that needs protection.</p>
+<p><em>Example: In a CAV, every sensor, ECU, and external communication channel is a resource that requires secure access.</em>
+2. <strong>All Communication Is Secured Regardless of Network Location:</strong></p>
+<p>Whether the communication occurs within a secure internal network or over the internet, it must be encrypted and authenticated.</p>
+<p><em>Example: Vehicle-to-vehicle (V2V) and vehicle-to-infrastructure (V2I) communications are encrypted to prevent eavesdropping and tampering.</em>
+3. <strong>Access to Resources Is Granted on a Per-Session Basis:</strong></p>
+<p>Each session requires a fresh authentication and authorization process, preventing unauthorized access from lingering sessions.</p>
+<p><em>Example: After a vehicle stops and is restarted, all communications must be re-authenticated to ensure security.</em>
+4. <strong>Access to Resources Is Determined by Dynamic Policy:</strong></p>
+<p>Access decisions are made in real-time based on dynamic policies that consider various contextual factors, such as user behavior and threat intelligence.</p>
+<p><em>Example: A CAV’s access policies might change based on its location, speed, or proximity to other vehicles.</em>
+5. <strong>Continuous Monitoring and Validation of Security Posture:</strong></p>
+<p>The network continuously monitors all entities and resources, ensuring that any changes in security posture (like a device becoming compromised) are immediately addressed.</p>
+<p><em>Example: If a sensor in a CAV starts sending abnormal data, it is immediately isolated from the network until verified.</em>
+6. <strong>Environment Is Prepared for All Scenarios (Assume Breach):</strong></p>
+<p>The network is designed with the assumption that a breach will happen, and thus, it is prepared to mitigate damage through swift isolation and response.</p>
+<p><em>Example: If an ECU is compromised, the system quickly isolates it and initiates a fail-safe mode to maintain safety.</em>
+7. <strong>Automation and Orchestration Are Emphasized:</strong></p>
+<p>Security policies and responses are automated to ensure consistency, speed, and scalability in defending against threats.</p>
+<p><em>Example: Automated systems in a CAV can detect and respond to threats faster than human operators, reducing the impact of attacks.</em></p>
+</section>
+<section id="zero-trust-architecture-for-cavs">
+<h1>Zero-Trust Architecture for CAVs<a class="headerlink" href="#zero-trust-architecture-for-cavs" title="Link to this heading">#</a></h1>
+<section id="zt-policy">
+<h2>ZT Policy<a class="headerlink" href="#zt-policy" title="Link to this heading">#</a></h2>
+<p>Static vs. Dynamic Policy</p>
+<section id="static-policy">
+<h3><strong>Static Policy:</strong><a class="headerlink" href="#static-policy" title="Link to this heading">#</a></h3>
+<p><strong>Design Specific:</strong> Static policies are set by the vehicle manufacturers during the design phase and are based on the anticipated use cases and operational environments.</p>
+<p><strong>Limited Flexibility:</strong> These policies are typically hard-coded into the system, making them less adaptable to unforeseen scenarios. This rigidity can be a double-edged sword; while it ensures consistency, it also limits the ability to respond to new threats.</p>
+<p>Advantages: ✅Simplicity. ✅ Predictability ✅Lower Overhead.</p>
+<p>Disadvantages: ❌Inflexibility ❌ Delayed Response ❌ Manual Updates</p>
+</section>
+<section id="dynamic-policy">
+<h3><strong>Dynamic Policy:</strong><a class="headerlink" href="#dynamic-policy" title="Link to this heading">#</a></h3>
+<p><strong>Context-Aware Security:</strong> Dynamic policies are designed to adapt to the current context, such as changes in the vehicle’s environment, operational status, or detected threats. This allows the system to respond more effectively to real-time conditions.</p>
+<p><strong>Continuous Evaluation:</strong> Unlike static policies, dynamic policies are continuously evaluated and updated as the situation demands. This can involve inputs from various sensors, communication networks, and external threat intelligence sources.</p>
+<p>Advantages: ✅ Adaptability ✅ Real-Time Response ✅ Automated Updates.</p>
+<p>Disadvantages: ❌Complexity ❌ Higher Overhead ❌ Potential Instability</p>
+</section>
+</section>
+<section id="policy-enforcement-in-zta-for-cavs">
+<h2>Policy Enforcement in ZTA for CAVs<a class="headerlink" href="#policy-enforcement-in-zta-for-cavs" title="Link to this heading">#</a></h2>
+<p>The Zero Trust Architecture (ZTA) for Connected and Autonomous Vehicles (CAVs) builds upon the foundational principles outlined by NIST for Zero Trust. In this context, we demonstrate how ZTA implements and enforces Zero Trust policies within the CAV’s internal network. It incorporates several key components to ensure the security and integrity of the vehicle’s communications. Each component plays a specific role, but they must work together to enforce comprehensive security policies across the vehicle’s internal network​.</p>
+<ul class="simple">
+<li><p><strong>Policy Enforcement Point (PEP):</strong> The PEP is implemented within CAN bus nodes and acts to enforce the policy specifications compiled by the PE. It is responsible for establishing or closing communication flows between resources, ensuring that each resource implements its own PEP to protect the network​.</p></li>
+<li><p><strong>Policy Decision Point (PDP):</strong> The PDP receives policy intent from the PA (Policy Administrator) and environmental information from the CM. It makes decisions about policy enforcement in real-time and communicates these decisions to the PE and PEPs within the network​.</p></li>
+<li><p><strong>Policy Engine (PE):</strong> The PE translates the high-level policy intent into enforceable commands specific to each PEP. It works closely with the PDP to ensure that policies are enforced dynamically based on the current context​.</p></li>
+<li><p><strong>Context Manager (CM):</strong> The CM monitors the vehicle’s CAN bus network, processing communication flows to maintain an accurate state of each resource. Because the CAN bus communication protocol relies on broadcast messages
+across the entire bus medium. It also plays a crucial role in continuous context checks, which are integral to the overall Zero-Trust strategy within the vehicle​.</p></li>
+<li><p><strong>Device Fingerprinting (DF):</strong> DF is implemented through the CM and involves identifying and verifying ECUs based on their traffic patterns and pre-registered characteristics. This ensures that only authorized and known devices can communicate within the network, helping to detect and prevent unauthorized access​.</p></li>
+</ul>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/CAVs.png?raw=true" alt="sup-learning.png" width="60%"></center>
+<p><strong>Workflow:</strong></p>
+<ul class="simple">
+<li><p><strong>Dynamic Policy Enforcement:</strong> The PEPs enforce decisions made by the PDP in real-time, responding dynamically to changes in the vehicle’s operational environment​.</p></li>
+<li><p><strong>Continuous Contextual Monitoring:</strong> The CM provides ongoing feedback to the PDP, allowing the system to adapt to new threats or changes in the network environment. This ensures that security policies remain effective even as conditions evolve​.</p></li>
+<li><p><strong>Device and Flow Validation:</strong> DF and CM collaborate to validate devices and control communication flows, ensuring that only legitimate and authorized entities can interact within the network​.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>When a sensor resource wants to access another sensor or ECU in the network, it must request permission from the PDP, for example, a proximity sensor wishing to interface with a parking-assist ECU. Therefore, a request will be made from the PEP and sent to the PDP. The PDP will attempt a policy match with input from the most recent subject and device context from the CM. Unlike the routine device continuous context check, this flow initiation request will include the resource to access. When a policy match occurs that results in an allowed flow, the PE will compile the policy specification down to PEP-specific syntax, which is pushed to the PEPs involved in the flow.</p>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/ZTA_workflow.png?raw=true" alt="sup-learning.png" width="60%"></center>
+</section>
+<section id="zta-for-hub-and-spoke-can-bus-networks">
+<h2>ZTA for Hub-and-Spoke CAN Bus Networks<a class="headerlink" href="#zta-for-hub-and-spoke-can-bus-networks" title="Link to this heading">#</a></h2>
+<section id="rationale-behind-hub-and-spoke-model">
+<h3>Rationale Behind Hub-and-Spoke Model:<a class="headerlink" href="#rationale-behind-hub-and-spoke-model" title="Link to this heading">#</a></h3>
+<p>The primary issue with a flat, unsegmented CAN bus is its single broadcast domain, where any node on the bus can communicate with and listen to any other node, posing significant security risks.</p>
+<p>The <strong>hub-and-spoke design</strong> is implemented to enhance the security of the vehicle’s internal network by segmenting the CAN bus into smaller, more manageable sections (spokes), each connected to a central hub.</p>
+<p><strong>The Hub:</strong> At the center of this model is the Zero-Trust (ZT) controller, which acts as the central point of control, enforcing security policies across the various segments. The ZT controller manages the flow of information between the different spokes, ensuring that each communication adheres to the Zero-Trust principles.</p>
+<p>The CAN bus is segmented into multiple spokes, each connecting back to the central hub—the ZT controller. This figure illustrates how the ZT controller manages security across these segments, enforcing policies and maintaining the integrity of the network by controlling the flow of information between the spokes.</p>
+<p>The figure also highlights the physical and logical separation between different ECUs and sensors within the network, emphasizing how the design aids in protecting against attacks by ensuring that compromised segments can be quickly isolated without affecting the entire network.</p>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/hub-and-spoke.png?raw=true" alt="sup-learning.png" width="60%"></center>
+</section>
+<section id="benefits-of-segmentation">
+<h3>Benefits of Segmentation<a class="headerlink" href="#benefits-of-segmentation" title="Link to this heading">#</a></h3>
+<p>The segmentation of the CAN bus into multiple spokes significantly limits the potential impact of an attack. If one segment (spoke) is compromised, the attack is contained within that section, preventing it from spreading to other parts of the network.</p>
+<p>Limiting the Attack Radius: By reducing the attack surface to individual segments, the hub-and-spoke architecture effectively limits the blast radius of any security breach. This isolation makes it more difficult for attackers to cause widespread damage or access multiple critical systems simultaneously.</p>
+<p>Example: If a malicious entity gains access to one spoke of the CAN bus, the segmentation ensures that only the devices within that spoke are affected. The ZT controller can then isolate the compromised spoke from the rest of the network, thereby protecting the overall integrity of the vehicle’s systems.</p>
+<p><strong>Components of ZTA:</strong></p>
+<ul class="simple">
+<li><p><strong>Policy Enforcement Points (PEPs):</strong> Enforce security policies by allowing or denying access to resources.</p></li>
+<li><p><strong>Policy Decision Points (PDPs):</strong> Make decisions on whether to grant or deny access based on current security policies.</p></li>
+<li><p><strong>Policy Engine (PE):</strong> The brain of the system that processes security policies.</p></li>
+<li><p><strong>Policy Administrator (PA):</strong> Manages and updates policies as required.</p></li>
+<li><p><strong>Context Manager (CM):</strong> Continuously monitors the state of the network and its components to ensure that all entities are verified.</p></li>
+</ul>
+</section>
+</section>
+<section id="case-studies-on-zta-on-can">
+<h2>Case Studies on ZTA on CAN<a class="headerlink" href="#case-studies-on-zta-on-can" title="Link to this heading">#</a></h2>
+<section id="excessive-speeding">
+<h3>Excessive Speeding:<a class="headerlink" href="#excessive-speeding" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Excessive speeding, defined as operating the vehicle well above designated speed limits, was a key focus area.</p></li>
+<li><p>The CM continuously monitored speed data from the vehicle’s Electronic Control Units (ECUs) to detect when the vehicle exceeded safe speed thresholds.</p></li>
+<li><p>A ZT policy was defined to set speed limits; if the CM detected speed increases beyond these limits, it triggered an alert to the PDP.</p></li>
+<li><p>The PDP then instructed the PEP to take corrective action, such as adjusting the accelerator input to prevent further speeding, thereby enhancing safety by controlling the vehicle’s speed in real-time.</p></li>
+</ul>
+</section>
+<section id="harsh-acceleration">
+<h3>Harsh Acceleration:<a class="headerlink" href="#harsh-acceleration" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Harsh acceleration, indicative of aggressive driving, was another critical behavior monitored by the ZTA.</p></li>
+<li><p>The ZT policy for this case involved analyzing acceleration patterns over time, particularly looking for instances of rapid, full-throttle acceleration.</p></li>
+<li><p>When the frequency of such acceleration signals exceeded a predefined threshold, the CM alerted the PDP, which then determined the appropriate response.</p></li>
+<li><p>The PEP was directed to enforce measures such as limiting further acceleration or applying the brakes, promoting safer driving behaviors by curbing excessive acceleration.</p></li>
+</ul>
+</section>
+<section id="abrupt-lane-changes">
+<h3>Abrupt Lane Changes:<a class="headerlink" href="#abrupt-lane-changes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Abrupt lane changes, which involve sudden shifts in lanes without signaling, pose significant traffic risks.</p></li>
+<li><p>The ZT policy addressed this by monitoring steering behavior and the use of turn indicators.</p></li>
+<li><p>If the CM detected frequent lane changes without the use of turn indicators, it flagged the behavior to the PDP.</p></li>
+<li><p>The PDP would then instruct the PEP to take actions such as reducing vehicle speed and ensuring turn indicators were used, thereby reducing the likelihood of accidents caused by unexpected lane changes.</p></li>
+</ul>
+</section>
+<section id="collision-scenarios">
+<h3>Collision Scenarios:<a class="headerlink" href="#collision-scenarios" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Collision scenarios were also simulated to assess the ZTA’s response to real-world accidents.</p></li>
+<li><p>The CM monitored critical data such as the activation of airbags, which served as indicators of a collision.</p></li>
+<li><p>Upon detecting these indicators, the CM alerted the PDP, which assessed the vehicle’s speed and whether the operator was still accelerating.</p></li>
+<li><p>If unsafe conditions were confirmed, the PDP instructed the PEP to engage the vehicle’s braking system, gradually bringing the vehicle to a stop to minimize the impact and ensure occupant safety.</p></li>
+</ul>
+<p>important links:
+<a class="reference external" href="https://spectrum.ieee.org/zero-trust-security-autonomous-systems">https://spectrum.ieee.org/zero-trust-security-autonomous-systems</a>
+<a class="reference external" href="https://www.swri.org/podcast/ep64?utm_source=YouTube&amp;amp;utm_medium=SM&amp;amp;utm_campaign=Podcast-64">https://www.swri.org/podcast/ep64?utm_source=YouTube&amp;utm_medium=SM&amp;utm_campaign=Podcast-64</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_Designing%20a%20Zero%20Trust%20architecture.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Designing a Zero Trust Architecture</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Zero-Trust Cybersecurity for Vehicles</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-automotive-cybersecurity">Importance of Automotive Cybersecurity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-connected-and-autonomous-vehicles-cavs">Overview of Connected and Autonomous Vehicles (CAVs)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-security-in-cavs">Importance of Security in CAVs</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#security-risks-specific-to-the-controller-area-network-can">Security Risks Specific to the Controller Area Network (CAN)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#application-of-zta-in-cavs">Application of ZTA in CAVs:</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#nist-s-seven-tenets-of-zero-trust-in-cavs">NIST’s Seven Tenets of Zero-Trust in CAVs</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-architecture-for-cavs">Zero-Trust Architecture for CAVs</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zt-policy">ZT Policy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-policy"><strong>Static Policy:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-policy"><strong>Dynamic Policy:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policy-enforcement-in-zta-for-cavs">Policy Enforcement in ZTA for CAVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zta-for-hub-and-spoke-can-bus-networks">ZTA for Hub-and-Spoke CAN Bus Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale-behind-hub-and-spoke-model">Rationale Behind Hub-and-Spoke Model:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#benefits-of-segmentation">Benefits of Segmentation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-studies-on-zta-on-can">Case Studies on ZTA on CAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excessive-speeding">Excessive Speeding:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#harsh-acceleration">Harsh Acceleration:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abrupt-lane-changes">Abrupt Lane Changes:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#collision-scenarios">Collision Scenarios:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

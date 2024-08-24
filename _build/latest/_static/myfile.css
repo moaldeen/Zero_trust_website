@@ -1,0 +1,16 @@
+@media (min-width:960px) {
+    .bd-sidebar-primary {
+        flex-basis:15% 
+   }
+    input#__primary:checked~.bd-container .bd-sidebar-primary {
+        margin-left:-15%;
+        visibility:hidden;
+        opacity:0 
+   }
+    .bd-page-width {
+        max-width:120rem;
+   }
+}
+.bd-main .bd-content .bd-article-container {
+    max-width:90em;
+}

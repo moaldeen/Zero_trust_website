@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Project &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'a02_final_project';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup" href="a03_setup.html" />
+    <link rel="prev" title="Syllabus" href="a01_syllabus.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/a02_final_project.ipynb" download="a02_final_project.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Project</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kaggle-competitions">Kaggle Competitions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-kaggle">What is Kaggle?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-kaggle-competition">What is a Kaggle competition?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structure-of-a-kaggle-competition">Structure of a Kaggle Competition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-competitions">Types of Competitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-competitions">Beyond Competitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-conclusion">In Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-requirements">Project Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#milestone-and-final-delivery">Milestone and Final Delivery</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-1-project-proposal-10"><strong>Deliverable 1: project proposal</strong> (10%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-2-dummy-model-checkpoint-10"><strong>Deliverable 2: dummy model checkpoint</strong> (10%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-3-checkpoint-of-advanced-models-10"><strong>Deliverable 3: checkpoint of advanced models</strong> (10%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-4-presentation-40"><strong>Deliverable 4: presentation</strong> (40%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-5-report-30"><strong>Deliverable 5: report</strong> (30%)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#presentation">Presentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-dates">Key Dates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-if-i-want-to-do-other-topics">What if I want to do other topics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#past-projects-of-ece-4420-6420">Past Projects of ECE 4420/6420</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fall">2022 Fall</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2021 Fall</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="project">
+<h1>Project<a class="headerlink" href="#project" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 75 minutes</p></li>
+</ul>
+<hr><section id="kaggle-competitions">
+<h2>Kaggle Competitions<a class="headerlink" href="#kaggle-competitions" title="Permalink to this heading">#</a></h2>
+<section id="what-is-kaggle">
+<h3>What is Kaggle?<a class="headerlink" href="#what-is-kaggle" title="Permalink to this heading">#</a></h3>
+<p>Kaggle is a platform primarily for predictive modeling and analytics competitions. Individuals and teams can participate in real-world challenges posted by organizations, where the primary goal is often to produce the best models for predictive data analysis.</p>
+</section>
+<section id="what-is-a-kaggle-competition">
+<h3>What is a Kaggle competition?<a class="headerlink" href="#what-is-a-kaggle-competition" title="Permalink to this heading">#</a></h3>
+<p>Kaggle competitions are online contests hosted on the Kaggle platform where data scientists and enthusiasts tackle real-world problems using machine learning, with top solutions often earning prizes and recognition. Participants train their models on provided datasets, submit predictions, and are ranked on a public leaderboard based on their model’s accuracy or other predefined metrics.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.kaggle.com/competitions">List of Kaggle Competitions</a></p></li>
+</ul>
+</section>
+<section id="structure-of-a-kaggle-competition">
+<h3>Structure of a Kaggle Competition<a class="headerlink" href="#structure-of-a-kaggle-competition" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Problem Statement</strong>: Organizations post a detailed problem statement and provide relevant datasets.</p></li>
+<li><p><strong>Dataset</strong>: Participants are given a training dataset, with which they can train their machine learning models, and a test dataset, with which they can predict outcomes.</p></li>
+<li><p><strong>Submission &amp; Leaderboard</strong>: After making predictions on the test set, participants can submit their results to Kaggle, which then evaluates the results based on a predefined metric and ranks participants on a public leaderboard.</p></li>
+<li><p><strong>Prizes</strong>: Many competitions offer cash prizes for the top finishers, but the competition isn’t just about the money. Being highly ranked in a Kaggle competition can lead to job opportunities and significant recognition in the data science community.</p></li>
+</ul>
+</section>
+<section id="types-of-competitions">
+<h3>Types of Competitions<a class="headerlink" href="#types-of-competitions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Featured Competitions</strong>: These are high-profile competitions with cash prizes. They’re often sponsored by large organizations seeking innovative solutions to complex problems.</p></li>
+<li><p><strong>Research Competitions</strong>: These competitions don’t typically have cash prizes but allow participants to work on unique, cutting-edge problems.</p></li>
+<li><p><strong>Getting Started Competitions</strong>: For those new to data science and Kaggle, these competitions are a great place to learn and practice without the pressure of competing for a prize.</p></li>
+<li><p><strong>Playground Competitions</strong>: These are more casual and can cover a wide range of topics, providing a fun way to experiment and learn.</p></li>
+</ul>
+</section>
+<section id="beyond-competitions">
+<h3>Beyond Competitions<a class="headerlink" href="#beyond-competitions" title="Permalink to this heading">#</a></h3>
+<p>While Kaggle is best known for its competitions, it’s also a broader platform for data science with features like Kaggle Kernels (now called “Notebooks”) – a place where users can write and share their code, datasets, and analyses – and Kaggle Datasets, a vast repository of datasets for various uses.</p>
+<p>Kaggle also boasts a vibrant community forum where participants discuss competitions, share techniques, and seek collaborations. Additionally, Kaggle provides learning resources, including courses on various data science topics.</p>
+</section>
+<section id="in-conclusion">
+<h3>In Conclusion<a class="headerlink" href="#in-conclusion" title="Permalink to this heading">#</a></h3>
+<p>Kaggle competitions provide a real-world, hands-on opportunity for data enthusiasts, analysts, and scientists to hone their skills, learn from peers, and potentially earn prizes and recognition. For businesses and researchers, they offer a way to tap into the collective intelligence of a global community to solve specific challenges.</p>
+</section>
+</section>
+<section id="project-requirements">
+<h2>Project Requirements<a class="headerlink" href="#project-requirements" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Students collaborate in teams, each comprising 3 to 4 members.</p></li>
+<li><p>Each team will get a <strong>random presentation data</strong> from the slots.</p></li>
+<li><p>Each group participates in any one of the Kaggle competitions.</p>
+<ul>
+<li><p>The whole <a class="reference external" href="https://www.kaggle.com/competitions">Competition List</a></p></li>
+<li><p>The <a class="reference external" href="https://www.kaggle.com/competitions?hostSegmentIdFilter=5">Competitions filtered by Getting Started</a> (such as <a class="reference external" href="https://www.kaggle.com/competitions/spaceship-titanic">Spaceship Titanic</a>)</p></li>
+<li><p>The <a class="reference external" href="https://www.kaggle.com/competitions?hostSegmentIdFilter=8">Competitions filtered by Playground</a> (such as <a class="reference external" href="https://www.kaggle.com/c/sf-crime">San Francisco Crime Classification</a>.</p></li>
+<li><p>Or any other competitions</p>
+<ul>
+<li><p>Please mainly focus on the tabular data analysis.</p></li>
+<li><p>The competitions without specific evaluation metrics are NOT allowed, such as <a class="reference external" href="https://www.kaggle.com/competitions/nfl-big-data-bowl-2022/overview/evaluation">NFL Big Data Bowl 2022</a>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>How to choose a competitions</strong>:</p>
+<ul>
+<li><p>Your project should primarily involve classification, regression, dimension reduction, or clustering. These are the areas we’ve explored in depth, and I believe you are equipped in these domains.</p></li>
+<li><p>Consider the complexity of the dataset and the problem statement. Ensure that it’s manageable within the timeframe and resources available to you.</p></li>
+<li><p>To ensure that your selected competition aligns with our course objectives, please submit a brief description (as Deliverable 1) of the Kaggle competition you wish to pursue. I will review your submissions and provide feedback or suggestions for adjustments if necessary.</p></li>
+</ul>
+</li>
+<li><p>You must try several different methods to solve the problem. The method you finally choose for the competition does not have to be a model taught in this course.</p></li>
+<li><p>You must compare your fancy methods with simple baselines, e.g., random guess, all-positive, all-negative, simple linear models, and beat the baselines. The evaluation metric must be the one required by the competition.</p></li>
+</ul>
+</section>
+<section id="milestone-and-final-delivery">
+<h2>Milestone and Final Delivery<a class="headerlink" href="#milestone-and-final-delivery" title="Permalink to this heading">#</a></h2>
+<p><strong>Note</strong>: Each deliverable in this project is interconnected. Missing or delaying one deliverable can significantly impact your ability to successfully complete subsequent deliverables and also impact your grades.</p>
+<section id="deliverable-1-project-proposal-10">
+<h3><strong>Deliverable 1: project proposal</strong> (10%)<a class="headerlink" href="#deliverable-1-project-proposal-10" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Students work as teams.</p></li>
+<li><p>Each team needs to register for a Kaggle competition.</p></li>
+<li><p>Submit your proposal, including competition name, team members, overview, relevance to this course, and plan on Canvas.</p></li>
+<li><p><a class="reference external" href="https://yongkaw.people.clemson.edu/ece4420/1_Project-Proposal-Template.docx">Proposal template</a></p></li>
+</ul>
+<p>Instructor will review and provide feedback on your proposals.</p>
+</section>
+<section id="deliverable-2-dummy-model-checkpoint-10">
+<h3><strong>Deliverable 2: dummy model checkpoint</strong> (10%)<a class="headerlink" href="#deliverable-2-dummy-model-checkpoint-10" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>For this milestone, you will need to have downloaded the data, and also run some initial pre-processing on it.</p></li>
+<li><p>You should also make <strong>at least one</strong> <em>dummy submission</em> on Kaggle.</p></li>
+<li><p>You submit the following results on Canvas.</p>
+<ul>
+<li><p>the Jupyter Notebook for the pre-processing and dummy models (60 pts).</p></li>
+<li><p>a screenshot of scores for the dummy submissions at Kaggle (40 pts).</p></li>
+</ul>
+</li>
+</ul>
+<p>Note: a dummy submission is the one where the prediction is meaningless. For example, the predictions are randomly-assigned, always-positive, always-negative, or most-frequency</p>
+</section>
+<section id="deliverable-3-checkpoint-of-advanced-models-10">
+<h3><strong>Deliverable 3: checkpoint of advanced models</strong> (10%)<a class="headerlink" href="#deliverable-3-checkpoint-of-advanced-models-10" title="Permalink to this heading">#</a></h3>
+<p>For this milestone, you</p>
+<ul class="simple">
+<li><p>should do more data preprocessing and have made <strong>at least two</strong> non-dummy submissions on Kaggle.</p></li>
+<li><p>You submit the following results on Canvas.</p>
+<ul>
+<li><p>the Jupyter Notebook including the non-dummy models (60 pts).</p></li>
+<li><p>a screenshot of scores for the non-dummy submissions at Kaggle (40 pts).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="deliverable-4-presentation-40">
+<h3><strong>Deliverable 4: presentation</strong> (40%)<a class="headerlink" href="#deliverable-4-presentation-40" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Give a presentation and show your explanation and results obtained <strong>by your presentation date</strong>.</p></li>
+<li><p>The complete results are expected in the final report.</p></li>
+<li><p>Please submit your presentation slides (pptx or pdf) <strong>on Cavnas</strong> before your presentation. Instructor will download them to the class computer.</p></li>
+</ul>
+<p><a class="reference external" href="https://yongkaw.people.clemson.edu/ece4420/4_Grading-Criteria-for-Presentation.docx">Presentation Grading criteria</a></p>
+</section>
+<section id="deliverable-5-report-30">
+<h3><strong>Deliverable 5: report</strong> (30%)<a class="headerlink" href="#deliverable-5-report-30" title="Permalink to this heading">#</a></h3>
+<p>By this time, you should</p>
+<ul class="simple">
+<li><p>have made <strong>at least six</strong> non-dummy submissions with different settings (models, preprocessing, hyper-parameters) on Kaggle totally.</p></li>
+<li><p>submit the Jupyter Notebook as the final report (including implementation, documentation, explanation…).</p></li>
+<li><p>you should clearly explain what experiments (data preprocessing, feature engineering, machine learning models) you have conducted in the Jupyter Notebook.</p></li>
+</ul>
+<p><a class="reference external" href="https://yongkaw.people.clemson.edu/ece4420/5_Grading-Criteria-for-Report.docx">Report Grading criteria</a></p>
+</section>
+</section>
+<section id="presentation">
+<h2>Presentation<a class="headerlink" href="#presentation" title="Permalink to this heading">#</a></h2>
+<p>We will host the presentation sessions at the end of this semester.
+The following is a suggested structure for the presentation.
+You don’t necessarily have to organize your presentation using these sections in this order, but that would likely be a good starting point for most projects.</p>
+<ul class="simple">
+<li><p>Briefly describe the competition your group is tackling.</p></li>
+<li><p>Describe the overall objective.</p></li>
+<li><p>Introduce the dataset as well as the exploratory data analysis.</p></li>
+<li><p>Data Preprocessing and Feature Engineering</p></li>
+<li><p>Machine learning models including the dummy and non-dummy approaches you have tried.</p></li>
+<li><p>Evaluation results.</p></li>
+<li><p>Conclusion and future work</p></li>
+</ul>
+<p>Students from Charleston will give the presentation online.</p>
+</section>
+<section id="key-dates">
+<h2>Key Dates<a class="headerlink" href="#key-dates" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Oct. 26: Have a group and choose a competition.</p></li>
+<li><p>Nov. 2: Checkpoint 1</p></li>
+<li><p>Nov. 16: Checkpoint 2</p></li>
+<li><p>Nov. 21 – Dec. 8: Project presentation. (These dates will be adjusted based on # of teams.)</p></li>
+<li><p>Dec. 8: Submit final results. (No late submissions are allowed.)</p></li>
+</ul>
+</section>
+<section id="tips">
+<h2>Tips<a class="headerlink" href="#tips" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Start from a simple task, a simple model, and simple hyper-parameters.</p></li>
+<li><p>A good prediction performance is desired, but the workflow of machine learning is more important.</p></li>
+<li><p>This <a class="reference external" href="https://youtu.be/O1P4r0Iy55U">video</a> is a tour for Kaggle.</p></li>
+<li><p>You can directly write your code at Kaggle and submit results. Please see the tutorials <a class="reference external" href="https://www.youtube.com/watch?v=sLAthlX816c&amp;list=PLqFaTIg4myu8gbDh6oBl7XRYNBlthpDEW">Getting Started on Kaggle: Python coding in Kernels</a> and <a class="reference external" href="https://youtu.be/fvF2H85ko9c">Getting Started on Kaggle: Writing code to analyze a dataset</a>.</p></li>
+<li><p>You can also download the dataset and implement machine learning models offline. Then, you submit the prediction only. See the tutorial <a class="reference external" href="https://youtu.be/68l47Zu4Yxg">My First Kaggle Submission</a>.</p></li>
+<li><p>There is a tutorial for starting a new Kaggle project: <a class="reference external" href="https://youtu.be/I3FBJdiExcg">Beginner Kaggle Data Science Project Walk-Through (Titanic)</a>.</p></li>
+</ol>
+</section>
+<section id="what-if-i-want-to-do-other-topics">
+<h2>What if I want to do other topics<a class="headerlink" href="#what-if-i-want-to-do-other-topics" title="Permalink to this heading">#</a></h2>
+<p>For students wishing to delve into areas outside of the prescribed Kaggle competitions, you are encouraged to explore a topic of your personal interest.
+However, it is imperative that your chosen topic aligns with the course’s objectives and scope.
+To ensure this alignment and to allow for appropriate planning, please email a one-page summary to the instructor for review by <strong>Oct. 20, 2023</strong>.</p>
+<p>Your one-page summary must address the following points:</p>
+<ol class="arabic simple">
+<li><p><strong>Topic Selection</strong>:</p>
+<ul class="simple">
+<li><p><strong>Definition</strong>: Clearly define the topic you intend to explore.</p></li>
+<li><p><strong>Objective</strong>: What specific problem or question does it address?</p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="2">
+<li><p><strong>Relevance to the Course</strong>:</p>
+<ul class="simple">
+<li><p><strong>Connection</strong>: Elaborate on how the topic connects with the course’s content and objectives.</p></li>
+<li><p><strong>Value</strong>: Why is it a valuable area of exploration in the context of our studies?</p></li>
+</ul>
+</li>
+<li><p><strong>Methodology</strong>:</p>
+<ul class="simple">
+<li><p><strong>Approach</strong>: Discuss the methodologies, algorithms, or techniques you plan to employ.</p></li>
+<li><p><strong>Justification</strong>: Provide a brief overview of why these methods are appropriate for your chosen topic.</p></li>
+</ul>
+</li>
+<li><p><strong>Expected Outputs</strong>:</p>
+<ul class="simple">
+<li><p><strong>Deliverables</strong>: List the milestone deliverables you anticipate over the course of the project. This can include datasets, visualizations, models, code, or any other pertinent results.</p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="5">
+<li><p><strong>Other Course Usage</strong>:</p>
+<ul class="simple">
+<li><p><strong>Transparency</strong>: Be transparent about whether this topic, or any components of it, has been or will be used in any other academic course. This is to ensure originality and prevent potential academic integrity issues.</p></li>
+</ul>
+</li>
+</ol>
+<p>Once your summary is submitted, it will be reviewed, and feedback will be provided.
+Please note that your topic must receive <strong>approval</strong> before proceeding.
+Any projects undertaken without prior approval may not be considered for grading and result zero for this portion.</p>
+</section>
+<section id="past-projects-of-ece-4420-6420">
+<h2>Past Projects of ECE 4420/6420<a class="headerlink" href="#past-projects-of-ece-4420-6420" title="Permalink to this heading">#</a></h2>
+<section id="fall">
+<h3>2022 Fall<a class="headerlink" href="#fall" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Digit Recognizer</p></li>
+<li><p>House Price Prediction</p></li>
+<li><p>Natural Language Processing with Disaster Tweets</p></li>
+<li><p>Spaceship Titanic</p></li>
+<li><p>Tabular Playground Series</p></li>
+<li><p>…</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>2021 Fall<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>NFL Team Power Rankings</p></li>
+<li><p>Natural Language Processing with Disaster Tweets</p></li>
+<li><p>Cassava Leaf Disease Classification</p></li>
+<li><p>Fruits Categorical Classification</p></li>
+<li><p>Phishing Detector</p></li>
+<li><p>Detecting Credit Card Fraud</p></li>
+<li><p>Stock Price Prediction</p></li>
+<li><p>Human Protein Atlas Image Classification</p></li>
+<li><p>Titanic - Machine Learning from Disaster</p></li>
+<li><p>…</p></li>
+</ul>
+</section>
+</section>
+<section id="recommendation-reading-materials">
+<h2>Recommendation reading materials<a class="headerlink" href="#recommendation-reading-materials" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://youtu.be/O1P4r0Iy55U">Getting Started on Kaggle: A quick tour | Kaggle</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=sLAthlX816c&amp;list=PLqFaTIg4myu8gbDh6oBl7XRYNBlthpDEW">Getting Started on Kaggle: Python coding in Kernels | Kaggle</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/fvF2H85ko9c">Getting Started on Kaggle: Writing code to analyze a dataset | Kaggle</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/68l47Zu4Yxg">My First Kaggle Submission</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/I3FBJdiExcg">Beginner Kaggle Data Science Project Walk-Through (Titanic)</a></p></li>
+</ul>
+<hr></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="a01_syllabus.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Syllabus</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="a03_setup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Setup</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kaggle-competitions">Kaggle Competitions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-kaggle">What is Kaggle?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-kaggle-competition">What is a Kaggle competition?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structure-of-a-kaggle-competition">Structure of a Kaggle Competition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-competitions">Types of Competitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-competitions">Beyond Competitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-conclusion">In Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-requirements">Project Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#milestone-and-final-delivery">Milestone and Final Delivery</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-1-project-proposal-10"><strong>Deliverable 1: project proposal</strong> (10%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-2-dummy-model-checkpoint-10"><strong>Deliverable 2: dummy model checkpoint</strong> (10%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-3-checkpoint-of-advanced-models-10"><strong>Deliverable 3: checkpoint of advanced models</strong> (10%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-4-presentation-40"><strong>Deliverable 4: presentation</strong> (40%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverable-5-report-30"><strong>Deliverable 5: report</strong> (30%)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#presentation">Presentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-dates">Key Dates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips">Tips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-if-i-want-to-do-other-topics">What if I want to do other topics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#past-projects-of-ece-4420-6420">Past Projects of ECE 4420/6420</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fall">2022 Fall</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2021 Fall</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-reading-materials">Recommendation reading materials</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

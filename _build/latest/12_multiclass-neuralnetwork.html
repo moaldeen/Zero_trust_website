@@ -1,0 +1,1858 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Multi-learning &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '12_multiclass-neuralnetwork';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Unsupervised learning" href="14_unsupervised-learning-pca.html" />
+    <link rel="prev" title="Ensemble learning" href="11_ensembles.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a03_setup.html">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/12_multiclass-neuralnetwork.ipynb" download="12_multiclass-neuralnetwork.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multi-learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-class-meta-strategies">Multi-class, meta-strategies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-class-classification">Multi-class classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-vs-rest">One vs. Rest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-vs-one-approach">One Vs. One approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-vs-one-prediction">One Vs. One prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-ovr-and-ovo-as-wrappers">Using OVR and OVO as wrappers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-false">True/False</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-class-classification-on-happydb-corpus">Multi-class classification on HappyDB corpus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-regression">Multinomial Regression</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Multi-learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-sklearn-multi-learning">Summary of sklearn multi-learning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intro-to-neural-networks">Intro to neural networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-using-mlp">Classification using MLP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-of-mlp">Regression of MLP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-neural-networks">Why neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Why neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-neural-networks">Why not neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Why not neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-software">Deep learning software</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="multi-learning">
+<h1>Multi-learning<a class="headerlink" href="#multi-learning" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 75 minutes</p></li>
+</ul>
+<hr><section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">cmle</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">mglearn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_lfw_people</span><span class="p">,</span> <span class="n">make_blobs</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.multiclass</span> <span class="kn">import</span> <span class="n">OneVsOneClassifier</span><span class="p">,</span> <span class="n">OneVsRestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-objectives">
+<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Apply classifiers to multi-class classification algorithms.</p></li>
+<li><p>Explain the role of neural networks in machine learning and the pros/cons of using them.</p></li>
+<li><p>Understanding the main idea of neural networks.</p></li>
+</ul>
+</section>
+<section id="multi-class-meta-strategies">
+<h2>Multi-class, meta-strategies<a class="headerlink" href="#multi-class-meta-strategies" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>So far we have been talking about binary classification</p></li>
+</ul>
+<!-- ![multiple-class.png](img/multiple-class.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/multiple-class.png" alt="multiple-class.png" width="60%"></center>
+<ul class="simple">
+<li><p>Can we use these classifiers when there are more than two classes?</p>
+<ul>
+<li><p><a class="reference external" href="http://www.image-net.org/challenges/LSVRC/">“ImageNet” computer vision competition</a>, for example, has 1000 classes</p></li>
+</ul>
+</li>
+</ul>
+<section id="multi-class-classification">
+<h3>Multi-class classification<a class="headerlink" href="#multi-class-classification" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Many linear classification models don’t extend naturally to the multiclass case.</p></li>
+<li><p>A common technique is to reduce multiclass classification into several instances of binary classification problems.</p></li>
+<li><p>Two kinds of “hacky” ways to reduce multi-class classification into binary classification:</p>
+<ul>
+<li><p>the one-vs.-rest approach</p></li>
+<li><p>the one-vs.-one approach</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="one-vs-rest">
+<h3>One vs. Rest<a class="headerlink" href="#one-vs-rest" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Learn a binary model for each class that tries to separate that class from all of the other classes.</p></li>
+<li><p>If you have <span class="math notranslate nohighlight">\(k\)</span> classes, it’ll train <span class="math notranslate nohighlight">\(k\)</span> binary classifiers, one for each class.</p></li>
+<li><p>Trained on imbalanced datasets containing all examples.</p></li>
+<li><p>Given a test point, get scores from all binary classifiers (e.g., raw scores for logistic regression).</p></li>
+</ul>
+<!-- ![one-rest.png](img/one-rest.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/one-rest.png" alt="one-rest.png" width="40%"></center><ul class="simple">
+<li><p>The classifier that has the highest score for this class “wins” and that’s going to be the prediction for this class.</p></li>
+<li><p>Since we have one binary classifier per class, for each class, we have coefficients per feature and an intercept.</p></li>
+<li><p>Some classifiers support ovr (ova) natively, such as <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">sklearn.linear_model.LogisticRegression</a>.</p></li>
+</ul>
+<p><strong>multi_class{‘auto’, ‘ovr’, ‘multinomial’}, default=’auto’</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>If the option chosen is &#39;ovr&#39;, then a binary problem is fit for each label. For &#39;multinomial&#39; the loss minimised is the multinomial loss fit across the entire probability distribution, even when the data is binary. ‘multinomial’ is unavailable when solver=&#39;liblinear&#39;. &#39;auto&#39; selects &#39;ovr&#39; if the data is binary, or if solver=&#39;liblinear&#39;, and otherwise selects ‘multinomial’.
+</pre></div>
+</div>
+<p>Let’s create some synthetic data with two features and three classes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mglearn</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 2&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdae178c400&gt;
+</pre></div>
+</div>
+<img alt="_images/b489f72adddf788b833c864944512e94feb94680af0f6f092be1eec3e5516f29.png" src="_images/b489f72adddf788b833c864944512e94feb94680af0f6f092be1eec3e5516f29.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s2">&quot;ovr&quot;</span><span class="p">)</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficient shape: &quot;</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept shape: &quot;</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficient shape:  (3, 2)
+Intercept shape:  (3,)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>This learns three binary linear models.</p></li>
+<li><p>So we have coefficients for two features for each of these three linear models.</p></li>
+<li><p>Also, we have three intercepts, one for each class.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">mglearn</span><span class="o">.</span><span class="n">cm3</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">line</span> <span class="o">*</span> <span class="n">coef</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">)</span> <span class="o">/</span> <span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;Class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 2&quot;</span><span class="p">],</span>
+    <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdadf623520&gt;
+</pre></div>
+</div>
+<img alt="_images/85554a6fe4397d41305ed29b3e9cc12bc773ddf202d9638c27b8062296ed2a64.png" src="_images/85554a6fe4397d41305ed29b3e9cc12bc773ddf202d9638c27b8062296ed2a64.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_test_points</span><span class="p">():</span>
+    <span class="n">test_points</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mf">4.0</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">]]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">test_points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k*&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">test_points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k*&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_points</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">test_points</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k*&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_points</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">test_points</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k*&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>How would you classify the following points?</p>
+<ul>
+<li><p>Pick the class with the highest value for the classification formula.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># You don&#39;t have to understand the code.</span>
+<span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">mglearn</span><span class="o">.</span><span class="n">cm3</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">line</span> <span class="o">*</span> <span class="n">coef</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">)</span> <span class="o">/</span> <span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plot_test_points</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 2&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdadf539000&gt;
+</pre></div>
+</div>
+<img alt="_images/f57cd1b48af58187e9426ef4909c18227cac95d1ac5737ff2c2d4dae7c0047ea.png" src="_images/f57cd1b48af58187e9426ef4909c18227cac95d1ac5737ff2c2d4dae7c0047ea.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># You don&#39;t have to understand the code below.</span>
+<span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_2d_classification</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lr</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">mglearn</span><span class="o">.</span><span class="n">cm3</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">line</span> <span class="o">*</span> <span class="n">coef</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">)</span> <span class="o">/</span> <span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plot_test_points</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;Class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 2&quot;</span><span class="p">],</span>
+    <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Feature 1&#39;)
+</pre></div>
+</div>
+<img alt="_images/1818d9dc5091f9f87d6dd834a29508cffa1f9dba2fa4bfc5eed0f46d5b23de79.png" src="_images/1818d9dc5091f9f87d6dd834a29508cffa1f9dba2fa4bfc5eed0f46d5b23de79.png" />
+</div>
+</div>
+</section>
+<section id="one-vs-one-approach">
+<h3>One Vs. One approach<a class="headerlink" href="#one-vs-one-approach" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Build a binary model for each pair of classes.</p></li>
+<li><p>Trains <span class="math notranslate nohighlight">\(\frac{n \times (n-1)}{2}\)</span> binary classifiers</p></li>
+<li><p>Trained on relatively balanced subsets</p></li>
+</ul>
+<!-- ![one-one.png](img/one-one.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/one-one.png" alt="one-one.png" width="40%"></center></section>
+<section id="one-vs-one-prediction">
+<h3>One Vs. One prediction<a class="headerlink" href="#one-vs-one-prediction" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Apply all of the classifiers on the test example.</p></li>
+<li><p>Count how often each class was predicted.</p></li>
+<li><p>Predict the class with the most votes.</p></li>
+</ul>
+<p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html">sklearn.svm.SVC</a> supports ovo natively.</p>
+<p><strong>decision_function_shape{‘ovo’, ‘ovr’}, default=’ovr’</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Whether to return a one-vs-rest (&#39;ovr&#39;) decision function of shape (n_samples, n_classes) as all other classifiers, or the original one-vs-one (&#39;ovo&#39;) decision function of libsvm which has shape (n_samples, n_classes * (n_classes - 1) / 2). However, note that internally, one-vs-one (&#39;ovo&#39;) is always used as a multi-class strategy to train models; an ovr matrix is only constructed from the ovo matrix. The parameter is ignored for binary classification.
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 2&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdadf58f6d0&gt;
+</pre></div>
+</div>
+<img alt="_images/b489f72adddf788b833c864944512e94feb94680af0f6f092be1eec3e5516f29.png" src="_images/b489f72adddf788b833c864944512e94feb94680af0f6f092be1eec3e5516f29.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svm</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">decision_function_shape</span><span class="o">=</span><span class="s1">&#39;ovo&#39;</span><span class="p">)</span>
+<span class="n">svm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficient shape: &quot;</span><span class="p">,</span> <span class="n">svm</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept shape: &quot;</span><span class="p">,</span> <span class="n">svm</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficient shape:  (3, 2)
+Intercept shape:  (3,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">discrete_scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">svm</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">svm</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">mglearn</span><span class="o">.</span><span class="n">cm3</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">line</span> <span class="o">*</span> <span class="n">coef</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">)</span> <span class="o">/</span> <span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 0&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;Class 0/1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Class 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 0&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Line class 2&quot;</span><span class="p">],</span>
+    <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdaddcab670&gt;
+</pre></div>
+</div>
+<img alt="_images/9ce4bd19a9c5669872227693c3b8bf3796b1b6140c829f3106ed470130b671b1.png" src="_images/9ce4bd19a9c5669872227693c3b8bf3796b1b6140c829f3106ed470130b671b1.png" />
+</div>
+</div>
+</section>
+<section id="using-ovr-and-ovo-as-wrappers">
+<h3>Using OVR and OVO as wrappers<a class="headerlink" href="#using-ovr-and-ovo-as-wrappers" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>You can use these strategies as meta-strategies for <strong>any binary classifiers</strong>.</p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.multiclass.OneVsRestClassifier.html"><code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.multiclass.OneVsOneClassifier.html"><code class="docutils literal notranslate"><span class="pre">OneVsOneClassifier</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>When do we use  <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> and <code class="docutils literal notranslate"><span class="pre">OneVsOneClassifier</span></code></p></li>
+<li><p>It’s not that likely for you to need <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> or <code class="docutils literal notranslate"><span class="pre">OneVsOneClassifier</span></code> because most of the methods you’ll use will have native multi-class support.</p></li>
+<li><p>However, it’s good to know in case you ever need to extend a binary classifier (perhaps one you’ve implemented on your own).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.multiclass</span> <span class="kn">import</span> <span class="n">OneVsOneClassifier</span><span class="p">,</span> <span class="n">OneVsRestClassifier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s examine the time taken by OneVsRestClassifier and OneVsOneClassifier</span>
+
+<span class="c1"># generate blobs with fixed random generator</span>
+<span class="n">X_multi</span><span class="p">,</span> <span class="n">y_multi</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="n">X_train_multi</span><span class="p">,</span> <span class="n">X_test_multi</span><span class="p">,</span> <span class="n">y_train_multi</span><span class="p">,</span> <span class="n">y_test_multi</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_multi</span><span class="p">,</span> <span class="n">y_multi</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">X_multi</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y_multi</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Dark2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7fdaddb63d30&gt;
+</pre></div>
+</div>
+<img alt="_images/3ddb208f7ce65b46cea996b968ae1b28b11120242a0c7bd46beb72a125a70651.png" src="_images/3ddb208f7ce65b46cea996b968ae1b28b11120242a0c7bd46beb72a125a70651.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">OneVsOneClassifier</span><span class="p">(</span><span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="o">%</span><span class="k">timeit</span> model.fit(X_train_multi, y_train_multi);
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With OVO wrapper&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train_multi</span><span class="p">,</span> <span class="n">y_train_multi</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_multi</span><span class="p">,</span> <span class="n">y_test_multi</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>376 ms ± 1.96 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+With OVO wrapper
+0.796
+0.792
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">OneVsRestClassifier</span><span class="p">(</span><span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="o">%</span><span class="k">timeit</span> model.fit(X_train_multi, y_train_multi);
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With OVR wrapper&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train_multi</span><span class="p">,</span> <span class="n">y_train_multi</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_multi</span><span class="p">,</span> <span class="n">y_test_multi</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48.7 ms ± 162 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+With OVR wrapper
+0.728
+0.68
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>As expected OVO takes more time compared to OVR.</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/multiclass.html">Here</a> you will find a summary of how <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> handles multi-class classification for different classifiers.</p></li>
+</ul>
+</section>
+<section id="true-false">
+<h3>True/False<a class="headerlink" href="#true-false" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>One-vs.-one strategy uses all the available data when training each binary classifier.</p></li>
+<li><p>For a 100-class classification problem, one-vs.-rest multi-class strategy will create 100 binary classifiers.</p></li>
+</ol>
+</section>
+<section id="multi-class-classification-on-happydb-corpus">
+<h3>Multi-class classification on <a class="reference external" href="https://www.kaggle.com/ritresearch/happydb">HappyDB</a> corpus<a class="headerlink" href="#multi-class-classification-on-happydb-corpus" title="Permalink to this heading">#</a></h3>
+<p>Let’s examine the precision, recall, and f1-score of different classes in the <a class="reference external" href="https://www.kaggle.com/ritresearch/happydb">HappyDB</a> corpus.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmle</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;data/cleaned_hm.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/cleaned_hm.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sample_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">sample_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">sample_df</span> <span class="o">=</span> <span class="n">sample_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cleaned_hm&quot;</span><span class="p">:</span> <span class="s2">&quot;moment&quot;</span><span class="p">,</span> <span class="s2">&quot;ground_truth_category&quot;</span><span class="p">:</span> <span class="s2">&quot;target&quot;</span><span class="p">})</span>
+<span class="n">sample_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>wid</th>
+      <th>reflection_period</th>
+      <th>original_hm</th>
+      <th>moment</th>
+      <th>modified</th>
+      <th>num_sentence</th>
+      <th>target</th>
+      <th>predicted_category</th>
+    </tr>
+    <tr>
+      <th>hmid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>27676</th>
+      <td>206</td>
+      <td>24h</td>
+      <td>We had a serious talk with some friends of our...</td>
+      <td>We had a serious talk with some friends of our...</td>
+      <td>True</td>
+      <td>2</td>
+      <td>bonding</td>
+      <td>bonding</td>
+    </tr>
+    <tr>
+      <th>27678</th>
+      <td>45</td>
+      <td>24h</td>
+      <td>I meditated last night.</td>
+      <td>I meditated last night.</td>
+      <td>True</td>
+      <td>1</td>
+      <td>leisure</td>
+      <td>leisure</td>
+    </tr>
+    <tr>
+      <th>27697</th>
+      <td>498</td>
+      <td>24h</td>
+      <td>My grandmother start to walk from the bed afte...</td>
+      <td>My grandmother start to walk from the bed afte...</td>
+      <td>True</td>
+      <td>1</td>
+      <td>affection</td>
+      <td>affection</td>
+    </tr>
+    <tr>
+      <th>27705</th>
+      <td>5732</td>
+      <td>24h</td>
+      <td>I picked my daughter up from the airport and w...</td>
+      <td>I picked my daughter up from the airport and w...</td>
+      <td>True</td>
+      <td>1</td>
+      <td>bonding</td>
+      <td>affection</td>
+    </tr>
+    <tr>
+      <th>27715</th>
+      <td>2272</td>
+      <td>24h</td>
+      <td>when i received flowers from my best friend</td>
+      <td>when i received flowers from my best friend</td>
+      <td>True</td>
+      <td>1</td>
+      <td>bonding</td>
+      <td>bonding</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>affection           4810
+achievement         4276
+bonding             1750
+enjoy_the_moment    1514
+leisure             1306
+nature               252
+exercise             217
+Name: target, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s a multiclass classification problem!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">sample_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">X_train_happy</span><span class="p">,</span> <span class="n">y_train_happy</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;moment&quot;</span><span class="p">],</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+<span class="n">X_test_happy</span><span class="p">,</span> <span class="n">y_test_happy</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;moment&quot;</span><span class="p">],</span> <span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">pipe_lr</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s2">&quot;english&quot;</span><span class="p">),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_happy</span><span class="p">,</span> <span class="n">y_train_happy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;countvectorizer&#x27;, CountVectorizer(stop_words=&#x27;english&#x27;)),
+                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=2000))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;countvectorizer&#x27;, CountVectorizer(stop_words=&#x27;english&#x27;)),
+                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=2000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">CountVectorizer</label><div class="sk-toggleable__content"><pre>CountVectorizer(stop_words=&#x27;english&#x27;)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=2000)</pre></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">preds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;achievement&#39;, &#39;affection&#39;, &#39;bonding&#39;, &#39;enjoy_the_moment&#39;,
+       &#39;affection&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the output of <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> now contains a probability for each class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[7.06472059e-01, 3.74986122e-02, 5.65462903e-02, 4.48416381e-02,
+        3.05695788e-02, 1.10293652e-01, 1.37781697e-02],
+       [4.51114085e-03, 9.89340018e-01, 5.83647210e-04, 3.70764087e-03,
+        2.90911947e-04, 6.37035295e-04, 9.29606266e-04],
+       [2.13299808e-03, 1.51563902e-02, 9.78842547e-01, 1.36505795e-03,
+        1.26043208e-03, 9.41950990e-04, 3.00623847e-04],
+       [1.13093080e-01, 9.17955230e-02, 2.38830899e-02, 5.06663381e-01,
+        7.31006755e-03, 2.49573525e-01, 7.68133379e-03],
+       [7.72068590e-02, 5.53170576e-01, 3.87164808e-02, 8.14773143e-02,
+        2.38206312e-02, 2.08447744e-01, 1.71603941e-02]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>And you’ll see that each row adds up to 1, as expected:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1., 1., 1., ..., 1., 1., 1.])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also make a confusion matrix:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">disp</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">pipe_lr</span><span class="p">,</span>
+    <span class="n">X_test_happy</span><span class="p">,</span>
+    <span class="n">y_test_happy</span><span class="p">,</span>
+    <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+    <span class="n">xticks_rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+    <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6e318f0ec9fda9e629352afb5ba1072d3637737dd9c179f7b9f86252d8489655.png" src="_images/6e318f0ec9fda9e629352afb5ba1072d3637737dd9c179f7b9f86252d8489655.png" />
+</div>
+</div>
+<p>And print the classification report.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_happy</span><span class="p">,</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  precision    recall  f1-score   support
+
+     achievement       0.79      0.87      0.83      1302
+       affection       0.90      0.91      0.91      1423
+         bonding       0.91      0.85      0.88       492
+enjoy_the_moment       0.60      0.54      0.57       469
+        exercise       0.91      0.57      0.70        74
+         leisure       0.73      0.70      0.71       407
+          nature       0.73      0.46      0.57        71
+
+        accuracy                           0.82      4238
+       macro avg       0.80      0.70      0.74      4238
+    weighted avg       0.82      0.82      0.81      4238
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Seems like there is a lot of variation in the scores for different classes.</p></li>
+<li><p>The model is performing pretty well on the <em>affection</em> class but not that well on <em>enjoy_the_moment</em> and <em>nature</em> classes.</p></li>
+</ul>
+<p>How are the predictions made?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[7.06472059e-01, 3.74986122e-02, 5.65462903e-02, 4.48416381e-02,
+        3.05695788e-02, 1.10293652e-01, 1.37781697e-02],
+       [4.51114085e-03, 9.89340018e-01, 5.83647210e-04, 3.70764087e-03,
+        2.90911947e-04, 6.37035295e-04, 9.29606266e-04],
+       [2.13299808e-03, 1.51563902e-02, 9.78842547e-01, 1.36505795e-03,
+        1.26043208e-03, 9.41950990e-04, 3.00623847e-04],
+       [1.13093080e-01, 9.17955230e-02, 2.38830899e-02, 5.06663381e-01,
+        7.31006755e-03, 2.49573525e-01, 7.68133379e-03],
+       [7.72068590e-02, 5.53170576e-01, 3.87164808e-02, 8.14773143e-02,
+        2.38206312e-02, 2.08447744e-01, 1.71603941e-02]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, ..., 1, 0, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classes</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">classes_</span>
+<span class="n">classes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;achievement&#39;, &#39;affection&#39;, &#39;bonding&#39;, &#39;enjoy_the_moment&#39;,
+       &#39;exercise&#39;, &#39;leisure&#39;, &#39;nature&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_happy</span><span class="p">)</span>
+<span class="n">y_hat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;achievement&#39;, &#39;affection&#39;, &#39;bonding&#39;, ..., &#39;affection&#39;,
+       &#39;achievement&#39;, &#39;bonding&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>How many coefficients have we learned?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s2">&quot;logisticregression&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7, 8060)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We have one coefficient per feature <em>per class</em>.</p></li>
+<li><p>Let’s examine them.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">pipe_lr</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s2">&quot;countvectorizer&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="n">lr_coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">pipe_lr</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s2">&quot;logisticregression&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;bonding&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">lr_coefs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>achievement</th>
+      <th>affection</th>
+      <th>bonding</th>
+      <th>enjoy_the_moment</th>
+      <th>exercise</th>
+      <th>leisure</th>
+      <th>nature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>friend</th>
+      <td>-1.687529</td>
+      <td>-0.183608</td>
+      <td>5.589866</td>
+      <td>-1.707829</td>
+      <td>0.330456</td>
+      <td>-1.769253</td>
+      <td>-0.572105</td>
+    </tr>
+    <tr>
+      <th>friends</th>
+      <td>-1.304287</td>
+      <td>0.052779</td>
+      <td>5.246125</td>
+      <td>-1.992716</td>
+      <td>0.328815</td>
+      <td>-1.559656</td>
+      <td>-0.771061</td>
+    </tr>
+    <tr>
+      <th>roommate</th>
+      <td>-1.327202</td>
+      <td>-0.690686</td>
+      <td>3.418085</td>
+      <td>-1.138203</td>
+      <td>-0.078646</td>
+      <td>-0.070284</td>
+      <td>-0.113063</td>
+    </tr>
+    <tr>
+      <th>coworkers</th>
+      <td>-0.588496</td>
+      <td>-0.606175</td>
+      <td>3.011513</td>
+      <td>-1.098932</td>
+      <td>-0.088536</td>
+      <td>-0.518752</td>
+      <td>-0.110623</td>
+    </tr>
+    <tr>
+      <th>coworker</th>
+      <td>-0.934857</td>
+      <td>-0.591312</td>
+      <td>2.770930</td>
+      <td>-0.560366</td>
+      <td>-0.093246</td>
+      <td>-0.415496</td>
+      <td>-0.175652</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>feelings</th>
+      <td>0.057296</td>
+      <td>1.194994</td>
+      <td>-0.898329</td>
+      <td>-0.123828</td>
+      <td>-0.103999</td>
+      <td>-0.093033</td>
+      <td>-0.033103</td>
+    </tr>
+    <tr>
+      <th>jogging</th>
+      <td>-0.046343</td>
+      <td>-0.319887</td>
+      <td>-0.909238</td>
+      <td>-0.098763</td>
+      <td>1.521341</td>
+      <td>-0.130390</td>
+      <td>-0.016719</td>
+    </tr>
+    <tr>
+      <th>telling</th>
+      <td>-0.436909</td>
+      <td>0.870929</td>
+      <td>-1.070986</td>
+      <td>0.694175</td>
+      <td>-0.066820</td>
+      <td>0.038809</td>
+      <td>-0.029197</td>
+    </tr>
+    <tr>
+      <th>drive</th>
+      <td>-0.150838</td>
+      <td>0.584506</td>
+      <td>-1.184986</td>
+      <td>0.891987</td>
+      <td>-0.239585</td>
+      <td>-0.453318</td>
+      <td>0.552235</td>
+    </tr>
+    <tr>
+      <th>boy</th>
+      <td>1.398748</td>
+      <td>0.288127</td>
+      <td>-1.327434</td>
+      <td>0.138895</td>
+      <td>-0.261471</td>
+      <td>-0.162182</td>
+      <td>-0.074683</td>
+    </tr>
+  </tbody>
+</table>
+<p>8060 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>The interpretation is feature importance for predicting a certain class. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_coefs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;friend&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.589866406299991
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>This means that if the value for the feature “friend” is bigger, you are more likely to predict class “bonding”.</p></li>
+</ul>
+<ul class="simple">
+<li><p>If you want a general feature importance irrespective of class, you could try looking at the sum of the squares of the coefficients, which is what <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> does:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">lr_coefs</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>friend       4.061151e+01
+friends      3.633188e+01
+husband      2.764409e+01
+wife         2.542235e+01
+son          2.361098e+01
+                 ...     
+curiosity    1.996118e-11
+gang         1.728701e-11
+teases       1.728701e-11
+horror       1.728701e-11
+cinemas      1.728701e-11
+Length: 8060, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ?LogisticRegression</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We can see that there’s a <code class="docutils literal notranslate"><span class="pre">multi_class</span></code> parameter, that can be set to <code class="docutils literal notranslate"><span class="pre">'ovr'</span></code> or <code class="docutils literal notranslate"><span class="pre">'multinomial'</span></code>, or you can have it automatically choose between the two, which is the default.</p></li>
+<li><p>Multinomial logistic regression is also known as <a class="reference external" href="http://deeplearning.stanford.edu/tutorial/supervised/SoftmaxRegression/">softmax regression</a>.</p></li>
+</ul>
+</section>
+<section id="multinomial-regression">
+<h3>Multinomial Regression<a class="headerlink" href="#multinomial-regression" title="Permalink to this heading">#</a></h3>
+<!-- ![softmax-binary.png](img/softmax-binary.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/softmax-binary.png" alt="softmax-binary" width="60%"></center><!-- ![softmax-regression.png](img/softmax-regression.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/softmax-regression.png" alt="softmax-regression.png" width="80%"></center></section>
+</section>
+<section id="id1">
+<h2>Multi-learning<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Multiclass Classification: each instance (or data point) is assigned to one and only one exclusive class out of several possible classes.</p></li>
+<li><p>Multilabel Classification: each instance can be assigned to multiple classes of the same type simultaneously.</p></li>
+<li><p>Multioutput Classification: each instance is assigned multiple labels, but these labels can be of different types or domains.</p></li>
+</ul>
+<!-- ![multiple-learning.png](img/multiple-learning.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/multiple-learning.png" alt="multiple-learning.png" width="80%"></center><!-- ![summary-multi-learning.png](img/summary-multi-learning.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/summary-multi-learning.png" alt="summary-multi-learning.png" width="80%"></center><section id="summary-of-sklearn-multi-learning">
+<h3>Summary of sklearn multi-learning<a class="headerlink" href="#summary-of-sklearn-multi-learning" title="Permalink to this heading">#</a></h3>
+<!-- ![multi_learning.png](img/multi_learning.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/multi_learning.png" alt="multi_learning.png" width="60%"></center><ul class="simple">
+<li><p>Below is a summary of scikit-learn estimators that have multi-learning support built-in, grouped by strategy.</p></li>
+<li><p>You don’t need the meta-estimators provided by this section if you’re using one of these estimators.</p></li>
+</ul>
+<ul class="simple">
+<li><p><strong>Inherently multiclass:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.BernoulliNB.html#sklearn.naive_bayes.BernoulliNB"><code class="docutils literal notranslate"><span class="pre">naive_bayes.BernoulliNB</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier"><code class="docutils literal notranslate"><span class="pre">tree.DecisionTreeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.ExtraTreeClassifier.html#sklearn.tree.ExtraTreeClassifier"><code class="docutils literal notranslate"><span class="pre">tree.ExtraTreeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html#sklearn.ensemble.ExtraTreesClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.ExtraTreesClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html#sklearn.naive_bayes.GaussianNB"><code class="docutils literal notranslate"><span class="pre">naive_bayes.GaussianNB</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier"><code class="docutils literal notranslate"><span class="pre">neighbors.KNeighborsClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.semi_supervised.LabelPropagation.html#sklearn.semi_supervised.LabelPropagation"><code class="docutils literal notranslate"><span class="pre">semi_supervised.LabelPropagation</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.semi_supervised.LabelSpreading.html#sklearn.semi_supervised.LabelSpreading"><code class="docutils literal notranslate"><span class="pre">semi_supervised.LabelSpreading</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis"><code class="docutils literal notranslate"><span class="pre">discriminant_analysis.LinearDiscriminantAnalysis</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC"><code class="docutils literal notranslate"><span class="pre">svm.LinearSVC</span></code></a> (setting multi_class=”crammer_singer”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression"><code class="docutils literal notranslate"><span class="pre">linear_model.LogisticRegression</span></code></a> (setting multi_class=”multinomial”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html#sklearn.linear_model.LogisticRegressionCV"><code class="docutils literal notranslate"><span class="pre">linear_model.LogisticRegressionCV</span></code></a> (setting multi_class=”multinomial”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier"><code class="docutils literal notranslate"><span class="pre">neural_network.MLPClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestCentroid.html#sklearn.neighbors.NearestCentroid"><code class="docutils literal notranslate"><span class="pre">neighbors.NearestCentroid</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis.html#sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis"><code class="docutils literal notranslate"><span class="pre">discriminant_analysis.QuadraticDiscriminantAnalysis</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.RadiusNeighborsClassifier.html#sklearn.neighbors.RadiusNeighborsClassifier"><code class="docutils literal notranslate"><span class="pre">neighbors.RadiusNeighborsClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.RandomForestClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifier.html#sklearn.linear_model.RidgeClassifier"><code class="docutils literal notranslate"><span class="pre">linear_model.RidgeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifierCV.html#sklearn.linear_model.RidgeClassifierCV"><code class="docutils literal notranslate"><span class="pre">linear_model.RidgeClassifierCV</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>Multiclass as One-Vs-One:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.NuSVC.html#sklearn.svm.NuSVC"><code class="docutils literal notranslate"><span class="pre">svm.NuSVC</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC"><code class="docutils literal notranslate"><span class="pre">svm.SVC</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessClassifier.html#sklearn.gaussian_process.GaussianProcessClassifier"><code class="docutils literal notranslate"><span class="pre">gaussian_process.GaussianProcessClassifier</span></code></a> (setting multi_class = “one_vs_one”)</p></li>
+</ul>
+</li>
+<li><p><strong>Multiclass as One-Vs-The-Rest:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn.ensemble.GradientBoostingClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.GradientBoostingClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.gaussian_process.GaussianProcessClassifier.html#sklearn.gaussian_process.GaussianProcessClassifier"><code class="docutils literal notranslate"><span class="pre">gaussian_process.GaussianProcessClassifier</span></code></a> (setting multi_class = “one_vs_rest”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html#sklearn.svm.LinearSVC"><code class="docutils literal notranslate"><span class="pre">svm.LinearSVC</span></code></a> (setting multi_class=”ovr”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression"><code class="docutils literal notranslate"><span class="pre">linear_model.LogisticRegression</span></code></a> (setting multi_class=”ovr”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html#sklearn.linear_model.LogisticRegressionCV"><code class="docutils literal notranslate"><span class="pre">linear_model.LogisticRegressionCV</span></code></a> (setting multi_class=”ovr”)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html#sklearn.linear_model.SGDClassifier"><code class="docutils literal notranslate"><span class="pre">linear_model.SGDClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html#sklearn.linear_model.Perceptron"><code class="docutils literal notranslate"><span class="pre">linear_model.Perceptron</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.PassiveAggressiveClassifier.html#sklearn.linear_model.PassiveAggressiveClassifier"><code class="docutils literal notranslate"><span class="pre">linear_model.PassiveAggressiveClassifier</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>Support multilabel:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier"><code class="docutils literal notranslate"><span class="pre">tree.DecisionTreeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.ExtraTreeClassifier.html#sklearn.tree.ExtraTreeClassifier"><code class="docutils literal notranslate"><span class="pre">tree.ExtraTreeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html#sklearn.ensemble.ExtraTreesClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.ExtraTreesClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier"><code class="docutils literal notranslate"><span class="pre">neighbors.KNeighborsClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier"><code class="docutils literal notranslate"><span class="pre">neural_network.MLPClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.RadiusNeighborsClassifier.html#sklearn.neighbors.RadiusNeighborsClassifier"><code class="docutils literal notranslate"><span class="pre">neighbors.RadiusNeighborsClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.RandomForestClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifier.html#sklearn.linear_model.RidgeClassifier"><code class="docutils literal notranslate"><span class="pre">linear_model.RidgeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeClassifierCV.html#sklearn.linear_model.RidgeClassifierCV"><code class="docutils literal notranslate"><span class="pre">linear_model.RidgeClassifierCV</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>Support multiclass-multioutput:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier"><code class="docutils literal notranslate"><span class="pre">tree.DecisionTreeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.ExtraTreeClassifier.html#sklearn.tree.ExtraTreeClassifier"><code class="docutils literal notranslate"><span class="pre">tree.ExtraTreeClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html#sklearn.ensemble.ExtraTreesClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.ExtraTreesClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier"><code class="docutils literal notranslate"><span class="pre">neighbors.KNeighborsClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.RadiusNeighborsClassifier.html#sklearn.neighbors.RadiusNeighborsClassifier"><code class="docutils literal notranslate"><span class="pre">neighbors.RadiusNeighborsClassifier</span></code></a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier"><code class="docutils literal notranslate"><span class="pre">ensemble.RandomForestClassifier</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+<p>However, meta-estimators can provide additional strategies</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.multiclass.OneVsRestClassifier.html#sklearn.multiclass.OneVsRestClassifier">sklearn.multiclass.OneVsRestClassifier</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.multiclass.OneVsOneClassifier.html#sklearn.multiclass.OneVsOneClassifier">sklearn.multiclass.OneVsOneClassifier</a></p></li>
+</ul>
+</section>
+</section>
+<section id="intro-to-neural-networks">
+<h2>Intro to neural networks<a class="headerlink" href="#intro-to-neural-networks" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Very popular these days under the name of <strong>deep learning</strong>.</p></li>
+<li><p>Neural networks apply a sequence of transformations to your input data.</p></li>
+<li><p>At a very high level, you can think of them as <code class="docutils literal notranslate"><span class="pre">Pipelines</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>.</p></li>
+<li><p>A neural network is a model that’s sort of like its own pipeline</p>
+<ul>
+<li><p>It involves a series of transformations (“layers”) internally.</p></li>
+<li><p>The output is the prediction.</p></li>
+</ul>
+</li>
+</ul>
+<!-- ![pipeline.png](img/pipeline.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/pipeline.png" alt="pipeline.png" width="60%"></center><ul class="simple">
+<li><p>They can be viewed as a generalization of linear models where we apply a series of transformations.</p></li>
+<li><p>Here is a graphical representation of the logistic regression model.</p>
+<ul>
+<li><p>We have 4 features: x[0], x[1], x[2], x[3]</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mglearn</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_logistic_regression_graph</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e0fda94f7cab4ce8849e1fc81f86e31ab463b554edfbcbb298d8df96395cf201.svg" src="_images/e0fda94f7cab4ce8849e1fc81f86e31ab463b554edfbcbb298d8df96395cf201.svg" /></div>
+</div>
+<ul class="simple">
+<li><p>Below we are adding one “layer” of transformations between features and the target.</p></li>
+<li><p>We are repeating the process of computing the weighted sum multiple times.</p></li>
+<li><p>The <strong>hidden units</strong> (e.g., h[1], h[2], …) represent the intermediate processing steps.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_single_hidden_layer_graph</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/61c97448d3847da79e5b574a46d70d1d055f3e71438216b8f13c0463ddca66c5.svg" src="_images/61c97448d3847da79e5b574a46d70d1d055f3e71438216b8f13c0463ddca66c5.svg" /></div>
+</div>
+<ul class="simple">
+<li><p>Now we are adding one more layer of transformations.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_two_hidden_layer_graph</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7532f5787fec264a31503c5fd95f856a1922db186ba0f54bc5a79da61b602528.svg" src="_images/7532f5787fec264a31503c5fd95f856a1922db186ba0f54bc5a79da61b602528.svg" /></div>
+</div>
+<ul class="simple">
+<li><p>Important question: How many features before/after transformation?</p>
+<ul>
+<li><p>e.g. scaling doesn’t change the number of features</p></li>
+<li><p>OHE increases the number of features</p></li>
+</ul>
+</li>
+<li><p>With a neural net, you specify the number of features after each transformation.</p>
+<ul>
+<li><p>In the above, it goes from 4 to 3 to 3 to 1.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>To make them really powerful compared to the linear models, we apply a non-linear function to the weighted sum for each hidden node.</p></li>
+</ul>
+<section id="terminology">
+<h3>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Neural network = neural net = multi-layer perceptron</p></li>
+<li><p>Deep learning ~ using neural networks</p></li>
+</ul>
+<p><strong>Multi-layer Perceptron (MLP)</strong> is a supervised learning algorithm that learns
+a function <span class="math notranslate nohighlight">\(f(\cdot): R^m \rightarrow R^o\)</span> by training on a dataset,
+where <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of dimensions for input and <code class="docutils literal notranslate"><span class="pre">o</span></code> is the
+number of dimensions for output. Given a set of features <span class="math notranslate nohighlight">\(X = {x_1, x_2, ..., x_m}\)</span>
+and a target <code class="docutils literal notranslate"><span class="pre">y</span></code>, it can learn a non-linear function approximator for either
+classification or regression. It is different from logistic regression, in that
+between the input and the output layer, there can be one or more non-linear
+layers, called hidden layers. The following figure shows a one hidden layer MLP with scalar
+output.</p>
+<!-- ![multilayerperceptron_network.png](img/multilayerperceptron_network.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/multilayerperceptron_network.png" alt="multilayerperceptron_network.png" width="40%"></center><p>The leftmost layer, known as the input layer, consists of a set of neurons
+<span class="math notranslate nohighlight">\(\{x_i | x_1, x_2, ..., x_m\}\)</span> representing the input features. Each
+neuron in the hidden layer transforms the values from the previous layer with
+a weighted linear summation <span class="math notranslate nohighlight">\(w_1x_1 + w_2x_2 + ... + w_mx_m\)</span>, followed
+by a non-linear activation function <span class="math notranslate nohighlight">\(g(\cdot):R \rightarrow R\)</span> - like
+the hyperbolic tan function. The output layer receives the values from the
+last hidden layer and transforms them into output values.</p>
+<p>The module contains the public attributes <code class="docutils literal notranslate"><span class="pre">coefs_</span></code> and <code class="docutils literal notranslate"><span class="pre">intercepts_</span></code>.
+<code class="docutils literal notranslate"><span class="pre">coefs_</span></code> is a list of weight matrices, where weight matrix at index
+<code class="docutils literal notranslate"><span class="pre">i</span></code> represents the weights between layer <code class="docutils literal notranslate"><span class="pre">i</span></code> and layer
+<code class="docutils literal notranslate"><span class="pre">i+1</span></code>. <code class="docutils literal notranslate"><span class="pre">intercepts_</span></code> is a list of bias vectors, where the vector
+at index <code class="docutils literal notranslate"><span class="pre">i</span></code> represents the bias values added to layer <code class="docutils literal notranslate"><span class="pre">i+1</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html">MLPRegressor</a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html">MLPClassifier</a> but they aren’t very flexible.</p>
+<ul>
+<li><p>In general, you’ll want to leave the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> ecosystem when using neural networks.</p></li>
+</ul>
+</li>
+<li><p>There’s been a lot of deep learning software out there.</p></li>
+</ul>
+</section>
+<section id="classification-using-mlp">
+<h3>Classification using MLP<a class="headerlink" href="#classification-using-mlp" title="Permalink to this heading">#</a></h3>
+<p>Class <code class="docutils literal notranslate"><span class="pre">MLPClassifier</span></code> implements a multi-layer perceptron (MLP) algorithm
+that trains using <a class="reference external" href="http://ufldl.stanford.edu/wiki/index.php/Backpropagation_Algorithm">Backpropagation</a>.</p>
+<p>MLP trains on two arrays: array X of size (n_samples, n_features), which holds
+the training samples represented as floating point feature vectors; and array
+y of size (n_samples,), which holds the target values (class labels) for the
+training samples</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">MLPClassifier</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>MLPClassifier(alpha=1e-05, hidden_layer_sizes=(5, 2), random_state=1,
+              solver=&#x27;lbfgs&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" checked><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">MLPClassifier</label><div class="sk-toggleable__content"><pre>MLPClassifier(alpha=1e-05, hidden_layer_sizes=(5, 2), random_state=1,
+              solver=&#x27;lbfgs&#x27;)</pre></div></div></div></div></div></div></div>
+</div>
+<p>After fitting (training), the model can predict labels for new samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<p>MLP can fit a <strong>non-linear</strong> model to the training data. <code class="docutils literal notranslate"><span class="pre">clf.coefs_</span></code> contains the weight matrices that constitute the model parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">coef</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">coef</span> <span class="ow">in</span> <span class="n">clf</span><span class="o">.</span><span class="n">coefs_</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(2, 5), (5, 2), (2, 1)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-of-mlp">
+<h3>Regression of MLP<a class="headerlink" href="#regression-of-mlp" title="Permalink to this heading">#</a></h3>
+<p>Class <code class="docutils literal notranslate"><span class="pre">MLPRegressor</span></code> implements a multi-layer perceptron (MLP) that
+trains using backpropagation with no activation function in the output layer,
+which can also be seen as using the identity function as activation function.
+Therefore, it uses the square error as the loss function, and the output is a
+set of continuous values.</p>
+<p><code class="docutils literal notranslate"><span class="pre">MLPRegressor</span></code> also supports multi-output regression, in
+which a sample can have more than one target.</p>
+</section>
+<section id="why-neural-networks">
+<h3>Why neural networks?<a class="headerlink" href="#why-neural-networks" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>They can learn very complex functions.</p>
+<ul>
+<li><p>The fundamental tradeoff is primarily controlled by the <strong>number of layers</strong> and <strong>layer sizes</strong>.</p></li>
+<li><p>More layers / bigger layers –&gt; more complex model.</p></li>
+<li><p>You can generally get a model that will not underfit.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>Why neural networks?<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The work really well for structured data:</p>
+<ul>
+<li><p>1D sequence, e.g. time series, language</p></li>
+<li><p>2D image</p></li>
+<li><p>3D image or video</p></li>
+</ul>
+</li>
+<li><p>They’ve had some incredible successes in the last 10 years.</p></li>
+<li><p>Transfer learning (coming later today) is really useful.</p></li>
+</ul>
+</section>
+<section id="why-not-neural-networks">
+<h3>Why not neural networks?<a class="headerlink" href="#why-not-neural-networks" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Often they require a lot of data.</p></li>
+<li><p>They require a lot of compute time, and, to be faster, specialized hardware called <a class="reference external" href="https://en.wikipedia.org/wiki/Graphics_processing_unit">GPUs</a>.</p></li>
+<li><p>They have huge numbers of hyperparameters are a huge pain to tune.</p>
+<ul>
+<li><p>Think of each layer having hyperparameters, plus some overall hyperparameters.</p></li>
+<li><p>Being slow compounds this problem.</p></li>
+</ul>
+</li>
+<li><p>They are not interpretable.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Why not neural networks?<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When you call <code class="docutils literal notranslate"><span class="pre">fit</span></code>, you are not guaranteed to get the optimal.</p>
+<ul>
+<li><p>There are now a bunch of hyperparameters specific to <code class="docutils literal notranslate"><span class="pre">fit</span></code>, rather than the model.</p></li>
+<li><p>You never really know if <code class="docutils literal notranslate"><span class="pre">fit</span></code> was successful or not.</p></li>
+<li><p>You never really know if you should have run <code class="docutils literal notranslate"><span class="pre">fit</span></code> for longer.</p></li>
+</ul>
+</li>
+<li><p>I don’t recommend training them on your own without further training</p>
+<ul>
+<li><p>Take CPSC 340 and other courses if you’re interested.</p></li>
+<li><p>I’ll show you some ways to use neural networks without calling <code class="docutils literal notranslate"><span class="pre">fit</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="deep-learning-software">
+<h3>Deep learning software<a class="headerlink" href="#deep-learning-software" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> has <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html">MLPRegressor</a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html">MLPClassifier</a> but they aren’t very flexible.</p>
+<ul>
+<li><p>In general, you’ll want to leave the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> ecosystem when using neural networks.</p></li>
+</ul>
+</li>
+<li><p>There’s been a lot of deep learning software out there.</p></li>
+</ul>
+<ul class="simple">
+<li><p>The current big players are:</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.tensorflow.org">TensorFlow</a></p></li>
+<li><p><a class="reference external" href="http://pytorch.org">PyTorch</a></p></li>
+</ol>
+<ul class="simple">
+<li><p>Both are heavily used in industry.</p></li>
+<li><p>If interested, see a <a class="reference external" href="https://en.wikipedia.org/wiki/Comparison_of_deep_learning_software">comparison of deep learning software</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Multi-class classification refers to classification with &gt;2 classes.</p>
+<ul>
+<li><p>Most <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> classifiers work out of the box.</p></li>
+<li><p>With <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> the situation with the coefficients is a bit funky, we get 1 coefficient per feature per class.</p></li>
+</ul>
+</li>
+<li><p>Neural networks are a flexible class of models.</p>
+<ul>
+<li><p>They are hard to train - a lot more on that in CPSC 340.</p></li>
+<li><p>They generally require leaving the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> ecosystem to <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> or <code class="docutils literal notranslate"><span class="pre">pytorch</span></code>.</p></li>
+<li><p>They are particularly powerful for structured input like images, videos, audio, etc.</p></li>
+</ul>
+</li>
+<li><p>The good news is we can use pre-trained neural networks.</p>
+<ul>
+<li><p>This saves us a huge amount of time/cost/effort/resources.</p></li>
+<li><p>We can use these pre-trained networks directly or use them as feature transformers.</p></li>
+</ul>
+</li>
+</ul>
+<hr></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="11_ensembles.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ensemble learning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="14_unsupervised-learning-pca.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Unsupervised learning</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-class-meta-strategies">Multi-class, meta-strategies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-class-classification">Multi-class classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-vs-rest">One vs. Rest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-vs-one-approach">One Vs. One approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-vs-one-prediction">One Vs. One prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-ovr-and-ovo-as-wrappers">Using OVR and OVO as wrappers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-false">True/False</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-class-classification-on-happydb-corpus">Multi-class classification on HappyDB corpus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-regression">Multinomial Regression</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Multi-learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-sklearn-multi-learning">Summary of sklearn multi-learning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intro-to-neural-networks">Intro to neural networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology">Terminology</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-using-mlp">Classification using MLP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-of-mlp">Regression of MLP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-neural-networks">Why neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Why neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-not-neural-networks">Why not neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Why not neural networks?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-learning-software">Deep learning software</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

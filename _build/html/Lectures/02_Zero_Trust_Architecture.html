@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Zero Trust Architectureal Model &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Lectures/02_Zero_Trust_Architecture';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Introduction to Zero Trust" href="01_Introduction_to_Zero_trust.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logoo.png" class="logo__image only-light" alt="My Jupyter Book - Home"/>
+    <script>document.write(`<img src="../_static/logoo.png" class="logo__image only-dark" alt="My Jupyter Book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction_to_Zero_trust.html">Introduction to Zero Trust</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Zero Trust Architectureal Model</strong></a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Lectures/02_Zero_Trust_Architecture.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Zero Trust Architectureal Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>Zero Trust Architectureal Model</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simplified-overview-of-zta">Simplified overview of ZTA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-zero-trust-logical-components">Core Zero Trust Logical Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nist-zta-implementations">NIST ZTA Implementations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-zta-solutions">Real World ZTA Solutions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-deployment-models">Zero Trust Deployment Models</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#device-agent-gateway-based-deployment">Device Agent/Gateway-Based Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resource-enclave-based-deployment">Resource Enclave-Based Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resource-based-deployment-model">Resource-Based Deployment Model</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#trust-algorithem">Trust Algorithem</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-authorization">Zero Trust Authorization</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-a-breach-response-in-zta">An Example of a Breach Response in ZTA</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#securing-zero-trust-architectural-pillars">Securing Zero Trust Architectural Pillars</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-users-pillar">Key Functions of the <strong>Users</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-devices-pillar">Key Functions of the <strong>Devices</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-network-environment-pillar">Key Functions of the <strong>Network &amp; Environment</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-applications-workloads-pillar">Key Functions of the <strong>Applications &amp; Workloads</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-data-pillar">Key Functions of the <strong>Data</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-visibility-analytics-pillar">Key Functions of the <strong>Visibility &amp; Analytics</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-automation-orchestration-pillar">Key Functions of the <strong>Automation &amp; Orchestration</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#foundational-components">Foundational components:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-key-challenges-in-implementing-a-zero-trust-model">The key challenges in implementing a Zero Trust model</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="zero-trust-architectureal-model">
+<h1><strong>Zero Trust Architectureal Model</strong><a class="headerlink" href="#zero-trust-architectureal-model" title="Link to this heading">#</a></h1>
+<section id="simplified-overview-of-zta">
+<h2>Simplified overview of ZTA<a class="headerlink" href="#simplified-overview-of-zta" title="Link to this heading">#</a></h2>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/ZTA.drawio.png?raw=true" alt="sup-learning.png" width="70%"></center>
+</section>
+<section id="core-zero-trust-logical-components">
+<h2>Core Zero Trust Logical Components<a class="headerlink" href="#core-zero-trust-logical-components" title="Link to this heading">#</a></h2>
+<center><img src="https://img.netwrix.com/best_practices/image_1715873626.png" alt="sup-learning.png" width="60%"></center>
+<ul class="simple">
+<li><p><strong>System:</strong> is untrusted by default and is only allowed access to
+trusted resources via the Policy Enforcement Point (PEP).</p></li>
+<li><p><strong>Policy Decision Point (PDP):</strong> The PE and PA working in conjunction with one another within the Control Plane.</p></li>
+</ul>
+<p>In the center of the figure are the policy components:</p>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/policies.jpg?raw=true" alt="sup-learning.png" width="50%"></center>
+<!-- - **Policy enforcement point (PEP):** This system is responsible for enabling, monitoring, and eventually terminating connections between a subject and an enterprise resource via communicating with the Policy Administrator (PA).
+
+- **Policy Administrator (PA):** The PA executes the Policy Engine’s decision to either approve or deny access by signaling the PEP to create or block a connection.
+
+- **Policy engine (PE):** responsible for the ultimate decision to grant access to a resource for a given subject. The PE uses enterprise policy as well as input from external sources as input to a trust algorithm to grant, deny, or revoke access to the resource. -->
+<p>On the left and right sides are the data sources that feed the PE:</p>
+<ul class="simple">
+<li><p><strong>Continuous Diagnostics and Mitigation (CDM) System:</strong> Collects and updates information on the current state and vulnerabilities of enterprise assets, helping policy engines make informed access decisions.</p></li>
+<li><p><strong>Industry Compliance System:</strong> Ensures the enterprise adheres to regulatory requirements by including necessary policy rules for compliance.</p></li>
+<li><p><strong>Threat Intelligence Feeds:</strong> Supplies the policy engine with data on new attacks, vulnerabilities, blacklists, and malware from various internal and external sources.</p></li>
+<li><p><strong>Data Access Policies:</strong> Defines and generates rules for accessing enterprise resources, tailored to organizational roles and needs.</p></li>
+<li><p><strong>Enterprise Public Key Infrastructure (PKI):</strong> Manages the creation and logging of certificates for enterprise resources, integrating with global and Federal PKI ecosystems.</p></li>
+<li><p><strong>Network and System Activity Logs:</strong> Aggregates logs, network traffic, and resource access actions to provide real-time (or near-real-time) feedback on the security posture of enterprise information systems.</p></li>
+<li><p><strong>Security Information and Event Management (SIEM) System:</strong> Collects and analyzes security-centric information to refine policies and warn of potential attacks on enterprise assets.</p></li>
+<li><p><strong>ID Management System:</strong> Manages and stores user accounts and identity records, integrating with other systems and possibly part of a larger federated community for broader collaboration.</p></li>
+</ul>
+</section>
+<section id="nist-zta-implementations">
+<h2>NIST ZTA Implementations<a class="headerlink" href="#nist-zta-implementations" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://airgap.io/modern-zero-trust-segmentation/">https://airgap.io/modern-zero-trust-segmentation/</a>  # it has autonomus stuff</p>
+<ul class="simple">
+<li><p><strong>Enhanced identity governance:</strong> Identity governance is the process of managing the identity lifecycle from the time you first grant a user or entity access to any resource until you terminate that access. Enhanced identity governance includes restricting network access according to the principle of least privilege and requiring multi-factor authentication (MFA).</p></li>
+<li><p><strong>Micro-segmentation:</strong> is the process of protecting resources, either in groups or individually, by placing them on a unique network segment using a switch, firewall, or another gateway device. Although this approach incorporates identity governance, it also relies on network devices to prevent unauthorized access. When using micro-segmentation to protect data, organizations need to ensure that the devices can respond to threats or changes in workflow.</p></li>
+<li><p><strong>Network infrastructure and software-defined perimeters (SDP):</strong> An SDP approach often uses technologies like Software-Defined Networks and Intent-based networking. Under this approach, the organization deploys a gateway at the application layer that establishes a secure channel between the user and resource without expose network access.</p></li>
+</ul>
+</section>
+</section>
+<section id="real-world-zta-solutions">
+<h1>Real World ZTA Solutions<a class="headerlink" href="#real-world-zta-solutions" title="Link to this heading">#</a></h1>
+<p><strong>The Netskope One Platform</strong>:</p>
+<p><a class="reference external" href="https://www.netskope.com/products/cloud-exchange">https://www.netskope.com/products/cloud-exchange</a></p>
+<center><img src="https://www.netskope.com/wp-content/uploads/2022/12/netskope-one-marketecture-630x430-1.svg" alt="sup-learning.png" width="50%"></center>
+<p><strong>Microsoft’s internal Zero Trust architecture</strong>:</p>
+<p><a class="reference external" href="https://www.microsoft.com/insidetrack/blog/implementing-a-zero-trust-security-model-at-microsoft/">https://www.microsoft.com/insidetrack/blog/implementing-a-zero-trust-security-model-at-microsoft/</a></p>
+<center><img src="https://www.microsoft.com/insidetrack/blog/uploads/prod/2023/01/8743-img-002.png" alt="sup-learning.png" width="50%"></center>
+</section>
+<section id="zero-trust-deployment-models">
+<h1>Zero Trust Deployment Models<a class="headerlink" href="#zero-trust-deployment-models" title="Link to this heading">#</a></h1>
+<section id="device-agent-gateway-based-deployment">
+<h2>Device Agent/Gateway-Based Deployment<a class="headerlink" href="#device-agent-gateway-based-deployment" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://www.securitymagazine.com/articles/96025-zero-trust-architecture-zta-modern-work-anywhere-architecture-without-vpn">https://www.securitymagazine.com/articles/96025-zero-trust-architecture-zta-modern-work-anywhere-architecture-without-vpn</a></p>
+<center><img src="https://www.securitymagazine.com/ext/resources/images/Capco3.png" alt="sup-learning.png" width="50%"></center>
+<p>This model entails device agent and gateway-based Policy Enforcement Point (PEP). To implement this model, integration is required with two major components: the user endpoint and the application the user is trying to access. This model is not much different from the API Gateway-based model; however, the key point of decision-making lies with the Policy Engine. The Policy Engine is a separate component that collects heuristics and access rules from diverse systems.</p>
+</section>
+<section id="resource-enclave-based-deployment">
+<h2>Resource Enclave-Based Deployment<a class="headerlink" href="#resource-enclave-based-deployment" title="Link to this heading">#</a></h2>
+<center><img src="https://www.securitymagazine.com/ext/resources/images/Capco2.png" width="50%"></center>
+<p>This model is similar to the Device Agent/Gateway-Based Deployment; however, the Policy Enforcement Point (PEP) is in front of a cluster or “enclave” of resources rather than a single resource.</p>
+</section>
+<section id="resource-based-deployment-model">
+<h2>Resource-Based Deployment Model<a class="headerlink" href="#resource-based-deployment-model" title="Link to this heading">#</a></h2>
+<center><img src="https://www.securitymagazine.com/ext/resources/images/Capco3.png" alt="sup-learning.png" width="50%"></center>
+<p>Like the other two models, a gateway is placed in front of the resources to control user access. The key difference is that the Policy Enforcement Point (PEP) is not integrated with the user endpoint nor the application the user is trying to access, which reduces control based on contextual information.</p>
+</section>
+</section>
+<section id="trust-algorithem">
+<h1>Trust Algorithem<a class="headerlink" href="#trust-algorithem" title="Link to this heading">#</a></h1>
+<p>The trust algorithm is the process used by the policy engine to grant or deny access to resources based on risk. The policy engine takes input from multiple sources (and policy database ) to compute a trust score and make authorization decisions. The policy database contains:</p>
+<ul class="simple">
+<li><p>Observable Information About Subjects.</p></li>
+<li><p>Subject Attributes and Roles.</p></li>
+<li><p>Historical Subject Behavior Patterns.</p></li>
+<li><p>Threat Intelligence Sources.</p></li>
+<li><p>Other Metadata Sources.</p></li>
+</ul>
+<p><a class="reference external" href="https://blog.gigamon.com/2023/07/25/zero-trust-architecture-data-normalization-is-key/">https://blog.gigamon.com/2023/07/25/zero-trust-architecture-data-normalization-is-key/</a></p>
+<center><img src="https://blog.gigamon.com/wp-content/uploads/2023/07/zero-trust-architecture-data-normalization-blog-diagram-071123-2.png" alt="sup-learning.png" width="50%"></center>
+<ul class="simple">
+<li><p><strong>Access Request:</strong> The actual request from the subject.</p></li>
+<li><p><strong>Subject Database:</strong> This database contains known subjects.</p></li>
+<li><p><strong>Asset Database:</strong> This database contains known assets, both enterprise-owned and BYOD.</p></li>
+<li><p><strong>Resource Policy Requirements:</strong> Requirements for allowing access to trusted resources, set forth by the organization.</p></li>
+<li><p><strong>Access Request:</strong> Information feeds about cyber threats, malware, and vulnerabilities.</p></li>
+</ul>
+</section>
+<section id="zero-trust-authorization">
+<h1>Zero Trust Authorization<a class="headerlink" href="#zero-trust-authorization" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Role Based:</strong> Uses roles in managing user permissions based on group.</p></li>
+<li><p><strong>Attribute Based:</strong> Access is based on several attributes and information from multiple data</p></li>
+</ul>
+<p>Role-based access control (RBAC) alone is not enough to enable Zero Trust Continuous Authentication. In addition, Attribute-Based Access Control (ABAC), Policy-Based Access Control (PBAC), and *BAC (Anything-based Access Control) are needed.</p>
+<p><a class="reference external" href="https://www.strongdm.com/rbac">https://www.strongdm.com/rbac</a></p>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/attributebased.png?raw=true" alt="sup-learning.png" width="50%"></center>
+</section>
+<section id="an-example-of-a-breach-response-in-zta">
+<h1>An Example of a Breach Response in ZTA<a class="headerlink" href="#an-example-of-a-breach-response-in-zta" title="Link to this heading">#</a></h1>
+<p>In the event that a breach does occur—for example, when an attacker obtains an employee’s credentials and tries to access sensitive data, the Zero Trust Architecture helps contain and respond to the threat.</p>
+<p>Here’s how it works:</p>
+<ul class="simple">
+<li><p><strong>Alert and Investigation:</strong></p>
+<ul>
+<li><p>The continuous monitoring system detects unusual activity, such as the attacker trying to access a restricted resource or logging in from an unexpected location.</p></li>
+<li><p>An alert is triggered, and the security team investigates. They can trace the activity back to a specific user or device.</p></li>
+</ul>
+</li>
+<li><p><strong>Containment and Isolation:</strong></p>
+<ul>
+<li><p>The security team uses network segmentation to contain the breach, isolating the compromised segment or user.</p></li>
+<li><p>They might cut off the attacker’s access by disabling the compromised user’s credentials and locking down the affected segment.</p></li>
+</ul>
+</li>
+<li><p><strong>Root Cause Analysis and Remediation:</strong></p>
+<ul>
+<li><p>After containing the breach, the security team conducts a root cause analysis to determine how it happened and what steps to take to prevent future
+incidents.</p></li>
+<li><p>They might implement additional security measures, like stronger MFA,
+enhanced monitoring, or stricter access controls.</p></li>
+</ul>
+</li>
+</ul>
+<p>This scenario illustrates how Zero Trust Architecture provides comprehensive security by verifying all access, imposing appropriate restrictions, and continuously monitoring for threats. By implementing these principles, organizations can better protect their data and systems from internal and external threats.</p>
+</section>
+<section id="securing-zero-trust-architectural-pillars">
+<h1>Securing Zero Trust Architectural Pillars<a class="headerlink" href="#securing-zero-trust-architectural-pillars" title="Link to this heading">#</a></h1>
+<center><img src="https://github.com/moaldeen/trustzone/blob/main/zero%20trust%20pillars.jpg?raw=true" alt="sup-learning.png" width="60%"></center>
+<section id="key-functions-of-the-users-pillar">
+<h2>Key Functions of the <strong>Users</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-users-pillar" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Multi-Factor Authentication (MFA):</strong> users are authenticated through multiple verification methods.</p></li>
+<li><p><strong>Privileged Access Management (PAM):</strong> Limit access to sensitive resources and ensure that privileged accounts are closely monitored and controlled.</p></li>
+<li><p><strong>Identity and Access Management (IAM):</strong> This identity is used to authenticate users and determine their access rights, ensuring that only authorized individuals can access specific resources.</p></li>
+<li><p><strong>Least Privileged Access:</strong>  users have access only to the resources they need to fulfill their job functions. Also, provide just-in-time (JIT) access, allowing users to gain temporary elevated privileges when necessary for specific tasks</p></li>
+</ul>
+</section>
+<section id="key-functions-of-the-devices-pillar">
+<h2>Key Functions of the <strong>Devices</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-devices-pillar" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>IT Asset Management Software (ITAM):</strong> manage and track IT assets, including devices, throughout their lifecycle. It helps in maintaining an accurate device inventory and ensuring compliance with security policies</p></li>
+<li><p><strong>Endpoint Detection and Response (EDR)</strong>: constantly monitor endpoint devices for suspicious activities, unusual behavior, and potential security threats.</p></li>
+<li><p><strong>Mobile Device Management (MDM)</strong>: Used to secure and enforce policies on smartphones and tablets. (to be changed)</p></li>
+</ul>
+</section>
+<section id="key-functions-of-the-network-environment-pillar">
+<h2>Key Functions of the <strong>Network &amp; Environment</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-network-environment-pillar" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Micro-Segmentation:</strong> This involves dividing the network into smaller, isolated segments to limit lateral movement by attackers. This can be achieved using Software Defined Networking (SDN) solutions, which allow for dynamic and granular network segmentation</p></li>
+<li><p><strong>Access Control:</strong> Implementing role-based and attribute-based access controls ensures that users and devices have access only to the resources necessary for their roles.</p></li>
+<li><p><strong>Encryption and Authentication:</strong>  Ensuring that all data in transit is encrypted and using strong authentication mechanisms, such as multifactor authentication, helps protect against unauthorized access and data breaches</p></li>
+</ul>
+</section>
+<section id="key-functions-of-the-applications-workloads-pillar">
+<h2>Key Functions of the <strong>Applications &amp; Workloads</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-applications-workloads-pillar" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Identity and Policy-Based Access:</strong> only authorized users can connect to authorized applications, eliminating lateral movement potential. This is achieved through app-specific authorization and outbound-only connections, which make applications invisible to unauthorized users.</p></li>
+<li><p><strong>Security in Development Processes:</strong> integrating security into software development and deployment practices. This includes using tools like GitHub Advanced Security and Microsoft Entra ID for secure access management and code remediation as part of the CI/CD and DevSecOps processes.</p></li>
+<li><p><strong>Continuous Monitoring and Threat Protection:</strong> Continuous application security monitoring and re-authorizing access to applications and services.</p></li>
+<li><p><strong>Application Segmentation:</strong> Segmentation of applications and services, including VMs and containers. (to be changed)</p></li>
+</ul>
+</section>
+<section id="key-functions-of-the-data-pillar">
+<h2>Key Functions of the <strong>Data</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-data-pillar" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://www.vastdata.com/blog/deploying-a-data-pillar-within-the-zero-trust-architecture-framework">https://www.vastdata.com/blog/deploying-a-data-pillar-within-the-zero-trust-architecture-framework</a></p>
+<ul class="simple">
+<li><p><strong>Data Categorization:</strong> Classifying and labeling data to determine its sensitivity and the security controls needed is the first step. This foundational function is crucial for applying Zero Trust principles effectively.</p></li>
+<li><p><strong>Data Protection:</strong> Implementing encryption and access controls to protect data at rest and in transit is vital. This function ensures that sensitive information is shielded from unauthorized access and potential exfiltration.</p></li>
+<li><p><strong>Data Encryption:</strong> Encrypting sensitive data in transit and at rest with FIPS-validated algorithms protects it from unauthorized interception or access.</p></li>
+<li><p><strong>Data Access Management:</strong> Controlling and monitoring data access is imperative. By implementing least privilege access controls, only necessary data is accessible to users and systems based on their roles.</p></li>
+</ul>
+</section>
+<section id="key-functions-of-the-visibility-analytics-pillar">
+<h2>Key Functions of the <strong>Visibility &amp; Analytics</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-visibility-analytics-pillar" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Continuous Monitoring:</strong> observing data characteristics and events to ensure that only authorized users and devices access sensitive resources.</p></li>
+<li><p><strong>Centralized Logging and Analysis:</strong> Capturing relevant activity logs from network devices, user devices, applications, authentication services, and data access points is crucial. These logs should be gathered into a central repository, such as a <strong>Security Information and Event Management (SIEM)</strong> system, for analysis to detect suspicious or malicious activities</p></li>
+</ul>
+</section>
+<section id="key-functions-of-the-automation-orchestration-pillar">
+<h2>Key Functions of the <strong>Automation &amp; Orchestration</strong> Pillar:<a class="headerlink" href="#key-functions-of-the-automation-orchestration-pillar" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Integration with AI and Machine Learning:</strong> The use of AI and machine learning enhances the pillar’s capabilities by automating analysis and providing actionable insights. These technologies help in detecting patterns and anomalies in large datasets, which are crucial for threat detection and response.</p></li>
+<li><p><strong>Security Orchestration, Automation, and Response (SOAR):</strong> automating repetitive tasks and orchestrating workflows, organizations can enhance the speed and accuracy of their security operations, and to streamline threat detection and response processes.</p></li>
+<li><p><strong>Policy Decision and Enforcement:</strong> Automation involves using software to control repetitive tasks, while orchestration coordinates IT processes to ensure efficient management. This is achieved through policy decision points (PDPs) and policy enforcement points (PEPs), which dynamically enforce security policies across the enterprise.</p></li>
+<li><p><strong>integration of Security Operations Centers (SOC) and Incident Response (IR).:</strong> This integration helps manage the influx of data and alerts, reducing response times and improving security outcomes.</p></li>
+</ul>
+</section>
+<section id="foundational-components">
+<h2>Foundational components:<a class="headerlink" href="#foundational-components" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section id="the-key-challenges-in-implementing-a-zero-trust-model">
+<h1>The key challenges in implementing a Zero Trust model<a class="headerlink" href="#the-key-challenges-in-implementing-a-zero-trust-model" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://www.netwrix.com/7-pillars-of-zero-trust.html">https://www.netwrix.com/7-pillars-of-zero-trust.html</a></p>
+<ul class="simple">
+<li><p><strong>Migrating from legacy systems:</strong> Most organizations cannot implement Zero Trust from the ground up; instead, they must gradually replace existing systems and processes with Zero Trust alternatives. Throughout the migration period, they need to maintain strong security by ensuring that old and new components work together smoothly.</p></li>
+<li><p><strong>Building robust data sources</strong>: Another implementation challenge lies in collecting sufficient data to feed to the PE to enable reliable authentication decisions. This requires detailed knowledge of enterprise assets, subjects and business processes.</p></li>
+<li><p><strong>Securing policy components</strong>: To prevent disruption to authentication processes and therefore business operations, organizations need to protect the PE, PA and PEP. They should be placed in a secure environment or replicated to several environments. In addition, they should be carefully monitored, with any configuration changes logged and audited.</p></li>
+<li><p><strong>Fostering user acceptance</strong>: Since Zero Trust requires minimizing permissions and requesting reauthentication for riskier access requests, users may experience frustration at the changes. To reduce security fatigue, be careful not to remove access rights that users actually need and require MFA only when it is warranted. More broadly, fostering a Zero Trust mindset by explaining the security benefits. It is also worth clearing up the misconception that “Zero Trust” means a lack of trust in employees as people; explain that it simply refers to not automatically trusting any device, system, user or other entity.</p></li>
+<li><p><strong>Managing the right level of permissions</strong>: Minimizing permissions is not equal to zero permissions, users will still have a set of permissions once they are authenticated but should not get all the permissions that are available. A Microsoft report from 2023 highlights a risky gap between permissions granted and permissions used in the cloud, as identities use just 1% of the permissions granted to them. To handle that, make sure that a user’s role(s) and the granted permissions for that role are well-managed and reduced to the minimum possible. In addition, having a process in place that allows for either just-in-time exceptions or an audited self-service way of assigning the needed right will make operations of zero trust easier.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_Introduction_to_Zero_trust.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Zero Trust</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>Zero Trust Architectureal Model</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simplified-overview-of-zta">Simplified overview of ZTA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-zero-trust-logical-components">Core Zero Trust Logical Components</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nist-zta-implementations">NIST ZTA Implementations</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-zta-solutions">Real World ZTA Solutions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-deployment-models">Zero Trust Deployment Models</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#device-agent-gateway-based-deployment">Device Agent/Gateway-Based Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resource-enclave-based-deployment">Resource Enclave-Based Deployment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resource-based-deployment-model">Resource-Based Deployment Model</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#trust-algorithem">Trust Algorithem</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-authorization">Zero Trust Authorization</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-a-breach-response-in-zta">An Example of a Breach Response in ZTA</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#securing-zero-trust-architectural-pillars">Securing Zero Trust Architectural Pillars</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-users-pillar">Key Functions of the <strong>Users</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-devices-pillar">Key Functions of the <strong>Devices</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-network-environment-pillar">Key Functions of the <strong>Network &amp; Environment</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-applications-workloads-pillar">Key Functions of the <strong>Applications &amp; Workloads</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-data-pillar">Key Functions of the <strong>Data</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-visibility-analytics-pillar">Key Functions of the <strong>Visibility &amp; Analytics</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-functions-of-the-automation-orchestration-pillar">Key Functions of the <strong>Automation &amp; Orchestration</strong> Pillar:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#foundational-components">Foundational components:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-key-challenges-in-implementing-a-zero-trust-model">The key challenges in implementing a Zero Trust model</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+AuthType shibboleth
+ShibRequireSession On
+require shib-attr primary-affiliation student
+require shib-user yongkaw 
+require shib-user lcheng2

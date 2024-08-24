@@ -1,0 +1,36 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+parts:
+  - caption: Lectures  
+    chapters:
+    - file: Lectures/01_Introduction_to_Zero_trust.ipynb
+    - file: Lectures/02_Zero Trust Architecture.ipynb
+    - file: Lectures/03_Designing a Zero Trust architecture.ipynb
+    - file: Lectures/04_autonomous vechilces.ipynb
+    - file: 05_preprocessing-pipelines
+    - file: 06_column-transformer-text-feats
+    - file: 07_linear-models
+    - file: 08_hyperparameter-optimization
+    - file: 09_classification-metrics
+    - file: 10_regression-metrics
+    - file: 11_ensembles
+    - file: 12_multiclass-neuralnetwork
+    - file: 14_unsupervised-learning-pca
+    - file: 15_clustering-kmeans
+    - file: 16_dbscan_hierarchical
+    - file: 17_recommender-systems
+    - file: 22_ethics
+    - file: 23_feat-importances-xai
+    - file: 30_course-review
+  - caption: Things you should know
+    chapters:
+    - file: a01_syllabus
+    - file: a02_final_project
+    - file: a03_setup
+  - caption: Attribution
+    chapters:
+    - file: b01_attribution
+    - file: b02_LICENSE

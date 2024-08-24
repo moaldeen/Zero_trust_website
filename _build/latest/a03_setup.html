@@ -1,0 +1,814 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Setup &#8212; ECE 4420/6420 - latest</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'a03_setup';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Attributions" href="b01_attribution.html" />
+    <link rel="prev" title="Project" href="a02_final_project.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_decision-trees.html">Machine learning concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_ml-fundamentals.html">Machine learning fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_kNNs.html">k-Nearest Neighbors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_preprocessing-pipelines.html">Preprocessing and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_column-transformer-text-feats.html"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> and text data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_linear-models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_hyperparameter-optimization.html">Hyperparameter optimization and optimization bias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_classification-metrics.html">Classification evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_regression-metrics.html">Regression evaluation metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_ensembles.html">Ensemble learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_multiclass-neuralnetwork.html">Multi-learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_unsupervised-learning-pca.html">Unsupervised learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="15_clustering-kmeans.html">Clustering and k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_dbscan_hierarchical.html">DBSCAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_recommender-systems.html">Recommender systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_ethics.html">Machine learning fairness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_feat-importances-xai.html">ML explainability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_course-review.html">Course review</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Things you should know</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="a01_syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a02_final_project.html">Project</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Attribution</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="b01_attribution.html">Attributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b02_LICENSE.html">LICENSE</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/a03_setup.ipynb" download="a03_setup.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Setup</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-palmetto-servers">Why Use Palmetto Servers?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-python-environment-at-palmetto">Create a Python environment at Palmetto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-jupyter-notebook-from-open-ondemand">Start Jupyter Notebook from Open OnDemand</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#start-an-jupyter-instance-via-palmetto-openondemand">Start an Jupyter instance via Palmetto OpenOnDemand</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-to-the-jypyternotebook">Connect to the JypyterNotebook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#play-with-jupyterlab">Play with JupyterLab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faqs">FAQs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modules-are-unknown">Modules are unknown</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#description">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-environment-already-exists">An environment already exists</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-directory-already-exists">A directory already exists</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-module-named-cmle">No module named ‘cmle`</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-in-a-local-computer-alternative">Setup in a local computer (alternative)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-miniconda">Install miniconda</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-conda-environment">Create a conda environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activate-the-environment-and-install-additional-packages">Activate the environment and install additional packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-installation">Test installation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Update: 2023</p></li>
+<li><p>Duration: 75 minutes</p></li>
+</ul>
+<hr><ol class="arabic simple">
+<li><p>This page illustrates how to create a Python environment on the <code class="docutils literal notranslate"><span class="pre">Palmetto</span></code> cluster and launch a <code class="docutils literal notranslate"><span class="pre">JupyterLab</span></code> on <a class="reference external" href="https://openod.palmetto.clemson.edu">OpenOnDemand</a>.</p></li>
+<li><p><strong>Please do not start your configuration before the in-class lecture.</strong></p></li>
+<li><p>Palmetto servers experience higher demand at the end of each semester so please plan your homework and project in advance!</p></li>
+</ol>
+<section id="why-use-palmetto-servers">
+<h2>Why Use Palmetto Servers?<a class="headerlink" href="#why-use-palmetto-servers" title="Permalink to this heading">#</a></h2>
+<p>There are three fundamental reasons we will be centralizing our work on the Palmetto servers:</p>
+<p><strong>Complex Dependencies</strong>: The scope of our course encompasses the use of over a hundred packages. This translates to intricate dependencies and potential conflicts. To ensure a seamless experience, the teaching team have worked diligently to devise a solution tailored to the Palmetto environment. While you might be inclined to replicate this setup on your personal computers, you are strongly advised against it. The intricacy can lead to numerous issues, and troubleshooting them might detract from the primary learning objectives.</p>
+<p><strong>Consistent Results &amp; Grading</strong>: The teaching team have tested the lectures and homework rigorously in the Palmetto environment. By working on this platform, you are guaranteed to achieve consistent results as your peers. More importantly, it ensures that your homework gets graded in an identical environment, substantially minimizing any technical hitches.</p>
+<p><strong>Collaboration Made Easier</strong>: Many of you will be collaborating with peers on your final projects. Centralizing our work on Palmetto ensures everyone is on the same page, technically speaking. It simplifies the collaboration process, making sharing, and integration a breeze.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You are strongly advised against replicating this setup on your personal computers.</p>
+</div>
+</section>
+<section id="create-a-python-environment-at-palmetto">
+<h2>Create a Python environment at Palmetto<a class="headerlink" href="#create-a-python-environment-at-palmetto" title="Permalink to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a one-time setup, unless in the rare circumstance you need to reinstall Python at a later date.</p>
+</div>
+<ol class="arabic simple">
+<li><p>Go to <a class="reference external" href="https://openod.palmetto.clemson.edu/">Palmetto OpenOnDemand</a> and sign in.</p></li>
+<li><p>Click on the <code class="docutils literal notranslate"><span class="pre">Clusters</span></code> tab on the left top and select <code class="docutils literal notranslate"><span class="pre">Palmetto</span> <span class="pre">Shell</span> <span class="pre">Access</span></code>.</p></li>
+</ol>
+<!-- ![palmetto_ondemand.png](img/palmetto_ondemand.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/palmetto_ondemand.png" alt="palmetto_ondemand.png"></center><!-- ![ssh-tab.png](img/ssh-tab.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ssh-tab.png" alt="ssh-tab.png"></center><!-- ![ssh-session.png](img/ssh-session.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/ssh-session.png" alt="ssh-session.png"></center><ol class="arabic" start="3">
+<li><p>In the SSH page, type the following command to request hardware resources interactively.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qsub -I -l <span class="k">select</span><span class="o">=</span><span class="m">1</span>:ncpus<span class="o">=</span><span class="m">2</span>:mem<span class="o">=</span>8gb:interconnect<span class="o">=</span>10ge,walltime<span class="o">=</span><span class="m">1</span>:00:00
+</pre></div>
+</div>
+</li>
+<li><p>Type the following command to load <code class="docutils literal notranslate"><span class="pre">Anaconda</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module load anaconda3/2022.10-gcc/9.5.0
+</pre></div>
+</div>
+</li>
+</ol>
+<ol class="arabic" start="5">
+<li><p>Type the following command to download the configuration file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -O ece4420.txt https://yongkaw.people.clemson.edu/ece4420/ece4420.txt
+</pre></div>
+</div>
+</li>
+<li><p>Type the following command to create a conda environment called <code class="docutils literal notranslate"><span class="pre">ece4420</span></code> at Palmetto.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CONDA_PKGS_DIRS</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span> conda create --name ece4420 --file ece4420.txt
+</pre></div>
+</div>
+</li>
+<li><p>Type the following command to activate the conda environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> activate ece4420
+</pre></div>
+</div>
+</li>
+<li><p>Type the following command to test the <code class="docutils literal notranslate"><span class="pre">cmle</span></code> environment installation in Python.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">show</span> <span class="n">cmle</span>
+</pre></div>
+</div>
+</li>
+<li><p>The screen shows a summary about <code class="docutils literal notranslate"><span class="pre">cmle</span></code> rather than <code class="docutils literal notranslate"><span class="pre">Warning:</span> <span class="pre">package(s)</span> <span class="pre">not</span> <span class="pre">found</span></code>.</p></li>
+</ol>
+<!-- ![pip-show.png](img/pip-show.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/pip-show.png" alt="pip-show.png"></center><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please ensure you complete the above steps correctly before move forward.</p>
+</div>
+</section>
+<section id="start-jupyter-notebook-from-open-ondemand">
+<h2>Start Jupyter Notebook from Open OnDemand<a class="headerlink" href="#start-jupyter-notebook-from-open-ondemand" title="Permalink to this heading">#</a></h2>
+<p>If you want to write code using JupyterLab, the browser-based notebook is a better choice.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Every time you use <code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code> or <code class="docutils literal notranslate"><span class="pre">JupyterLab</span></code>, you need to request hardware resources using the following template. Fortunately, the template will load your last setting and save your time. But sometimes the template will be reset. You can slightly adjust the template based on your demand.</p>
+</div>
+<section id="start-an-jupyter-instance-via-palmetto-openondemand">
+<h3>Start an Jupyter instance via Palmetto OpenOnDemand<a class="headerlink" href="#start-an-jupyter-instance-via-palmetto-openondemand" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Go to <a class="reference external" href="https://openod.palmetto.clemson.edu/">Palmetto OpenOnDemand</a> and sign in.</p></li>
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Interactive</span> <span class="pre">Apps</span></code> tab, select <code class="docutils literal notranslate"><span class="pre">Jupyter</span> <span class="pre">Notebook</span></code>.</p></li>
+<li><p>Make the following selections:</p>
+<ul>
+<li><p>Anaconda Version: <code class="docutils literal notranslate"><span class="pre">anaconda3/2022.05-gcc/9.5.0</span></code></p></li>
+<li><p>Path to Python virtual/conda environment: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">activate</span> <span class="pre">ece4420</span></code></p></li>
+</ul>
+</li>
+<li><p>Make the remaining selections according to how many resources you would need.</p>
+<ul>
+<li><p>Number of resource chunks: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>CPU cores per chunk: <code class="docutils literal notranslate"><span class="pre">8</span></code></p></li>
+<li><p>Amount of memory per chunk: <code class="docutils literal notranslate"><span class="pre">10gb</span></code></p></li>
+<li><p>Number of GPUs per chunk: <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p>GPU Model: <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p>Interconnect: <code class="docutils literal notranslate"><span class="pre">any</span></code></p></li>
+<li><p>Walltime: <code class="docutils literal notranslate"><span class="pre">02:00:00</span></code></p></li>
+</ul>
+</li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">Launch</span></code> when done.</p></li>
+</ul>
+<!-- ![palmetto_ondemand.png](img/palmetto_ondemand.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/palmetto_ondemand.png" alt="palmetto_ondemand.png"></center><!-- ![start_app.png](img/start_app.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/start_app.png" alt="start_app.png"></center><!-- ![jupyter_notebook.png](img/jupyter_notebook.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/jupyter_notebook.png" alt="jupyter_notebook.png"></center></section>
+<section id="connect-to-the-jypyternotebook">
+<h3>Connect to the JypyterNotebook<a class="headerlink" href="#connect-to-the-jypyternotebook" title="Permalink to this heading">#</a></h3>
+<p>Once the JupyterNotebook app has started successfully, you are redirected to a new page.
+Please wait for the <code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Jupyter</span></code> button.
+If it takes a long while and the button is not available, it might incur errors.</p>
+<!-- ![session-loading.png](img/session-loading.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/session-loading.png" alt="session-loading.png"></center><!-- ![session-ready.png](img/session-ready.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/session-ready.png" alt="session-ready.png"></center><p>As the Jupyter Server is launched directly out of the <code class="docutils literal notranslate"><span class="pre">JupyterLab</span></code> package
+installed in the conda environment, no special kernel is needed.</p>
+<!-- ![jupyterlab.png](img/jupyterlab.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/jupyterlab.png" alt="jupyterlab.png"></center></section>
+</section>
+<section id="play-with-jupyterlab">
+<h2>Play with JupyterLab<a class="headerlink" href="#play-with-jupyterlab" title="Permalink to this heading">#</a></h2>
+<p>Please refer to the official <a class="reference external" href="https://jupyterlab.readthedocs.io/en/latest/user/notebook.html">Notebooks — JupyterLab 4.1.0a1 documentation</a>.</p>
+<p>Cornell University Center for Advanced Computer made a wonderful <a class="reference external" href="https://www.youtube.com/watch?v=yjjE-MJD5TI">video tutorial for JupyterLab</a>. Just notice that the workshop run JupyterLab in a local computer while we start JupyterLab at Palmetto servers.</p>
+</section>
+<section id="faqs">
+<h2>FAQs<a class="headerlink" href="#faqs" title="Permalink to this heading">#</a></h2>
+<section id="modules-are-unknown">
+<h3>Modules are unknown<a class="headerlink" href="#modules-are-unknown" title="Permalink to this heading">#</a></h3>
+<section id="description">
+<h4>Description<a class="headerlink" href="#description" title="Permalink to this heading">#</a></h4>
+<p>When you attempt to load the <code class="docutils literal notranslate"><span class="pre">anaconda</span></code> module but receive a message saying <code class="docutils literal notranslate"><span class="pre">anaconda</span></code> is unknown.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ module load anaconda3/2022.10-gcc/9.5.0
+Lmod has detected the following error: The following module<span class="o">(</span>s<span class="o">)</span> are unknown: <span class="s2">&quot;anaconda3/2022.10-gcc/9.5.0&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="solution">
+<h4>Solution<a class="headerlink" href="#solution" title="Permalink to this heading">#</a></h4>
+<p>You cannot load the module as your account is locked.
+Please visit or call the CCIT Help Desk and they can assist you in unlocking your account. See <a class="reference external" href="https://ccit.clemson.edu/support/">https://ccit.clemson.edu/support/</a> for the helpdesk hours, location, and phone number.</p>
+</section>
+</section>
+<section id="an-environment-already-exists">
+<h3>An environment already exists<a class="headerlink" href="#an-environment-already-exists" title="Permalink to this heading">#</a></h3>
+<section id="id1">
+<h4>Description<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">CONDA_PKGS_DIRS</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span> conda create --name ece4420s --file ece4420.txt
+Retrieving notices: ...working... <span class="k">done</span>
+WARNING: A conda environment already exists at <span class="s1">&#39;/home/yongkaw/.conda/envs/ece4420&#39;</span>
+Remove existing environment <span class="o">(</span>y/<span class="o">[</span>n<span class="o">])</span>?
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>Solution<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<p>An environment already exists at the designated location. This could indicate a previous setup that might be incorrect.
+Stop the installation by press <code class="docutils literal notranslate"><span class="pre">n</span></code>. Then remove the existing environment using the following command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">remove</span> <span class="o">--</span><span class="n">name</span> <span class="n">ece4420</span> <span class="o">--</span><span class="nb">all</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="a-directory-already-exists">
+<h3>A directory already exists<a class="headerlink" href="#a-directory-already-exists" title="Permalink to this heading">#</a></h3>
+<section id="id3">
+<h4>Description<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">CONDA_PKGS_DIRS</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span> conda create --name ece4420s --file ece4420.txt
+WARNING: A directory already exists at the target location <span class="s1">&#39;/home/yongkaw/.conda/envs/ece4420&#39;</span>
+but it is not a conda environment.
+Continue creating environment <span class="o">(</span>y/<span class="o">[</span>n<span class="o">])</span>?
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h4>Solution<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<p>A directory already exists at the intended environment path. This can suggest an interrupted or incomplete setup.
+Stop the installation by press <code class="docutils literal notranslate"><span class="pre">n</span></code>. Then remove the existing directory using the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm -rf .conda/envs/ece4420
+</pre></div>
+</div>
+</section>
+</section>
+<section id="no-module-named-cmle">
+<h3>No module named ‘cmle`<a class="headerlink" href="#no-module-named-cmle" title="Permalink to this heading">#</a></h3>
+<section id="id5">
+<h4>Description<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
+<p>After successfully setting up the development environment, students have been utilizing it for their projects without any issues. However, unexpectedly, they encountered a system error indicating that no module named ‘cmle’.</p>
+<!-- ![nocmle.png](img/nocmle.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/nocmle.png" alt="nocmle.png" width="40%"></center>
+</section>
+<section id="id6">
+<h4>Solution<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h4>
+<p>The issue of the ‘cmle’ package becoming unavailable in the Palmetto Cluster may be due to system updates and routine clearing of history by system administrators.
+When history is cleared, all settings configured through Open OnDemand are lost.
+To resolve this, students are advised to revisit <a class="reference internal" href="#start-jupyter-notebook-from-open-ondemand"><span class="std std-doc">the setup instructions for Open OnDemand</span></a>.
+It is crucial to carefully follow these instructions and ensure all fields are correctly filled during the setup process.</p>
+</section>
+</section>
+</section>
+<section id="setup-in-a-local-computer-alternative">
+<h2>Setup in a local computer (alternative)<a class="headerlink" href="#setup-in-a-local-computer-alternative" title="Permalink to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The teaching team has carefully crafted the lectures and homework to be fully compatible with Clemson’s Palmetto Cluster, ensuring optimal performance and functionality.
+This meticulous design ensures that all course materials and code will operate as expected.
+As such, we strongly recommend that you utilize the Palmetto Cluster resources we’ve provided, as they are tailored specifically to our curriculum, ensuring the most reliable and efficient learning experience.</p>
+<p>For those students who are unable to access Palmetto Cluster, we do offer an alternative solution.
+However, it’s important to be aware that using this secondary option could result in various unforeseen issues, such as compatibility challenges, reduced performance, and potential security risks.
+Please be advised that the teaching team’s capacity to assist with problems encountered while using this alternative solution may be limited.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method has issues and doesn’t work any longer. - 2023.12</p>
+</div>
+<section id="install-miniconda">
+<h3>Install miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this heading">#</a></h3>
+<p>Please follow the <a class="reference external" href="https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html">instructions</a> to install miniconda in your computer.</p>
+<p>miniconda is a free minimal installer for conda.
+It is a small bootstrap version of Anaconda that includes only conda, Python, the packages they both depend on, and a small number of other useful packages (like pip, zlib, and a few others).</p>
+<p><strong>BTW: conda, minoconda, and anaconda</strong></p>
+<p>Conda is an excellent tool for organizing your Python programming environment.
+It efficiently manages packages and creates virtual environments for your projects, ensuring they do not interfere with one another.
+By using Conda, you can establish separate environments, each equipped with the necessary packages for a specific project, simplifying management and enhancing organization.</p>
+<p>Building upon the capabilities of Conda, there are two notable Python distributions: Miniconda and Anaconda.</p>
+<!-- ![conda.png](img/conda.png) -->
+<center><img src="https://yongkaw.people.clemson.edu/ece4420/img/conda.png" alt="conda.png" width="80%"></center></section>
+<section id="create-a-conda-environment">
+<h3>Create a conda environment<a class="headerlink" href="#create-a-conda-environment" title="Permalink to this heading">#</a></h3>
+<p>Please download an environment yaml file.
+(Should <code class="docutils literal notranslate"><span class="pre">wget</span></code> be unavailable, kindly download the file manually and save it with the filename <code class="docutils literal notranslate"><span class="pre">ece4420.yml</span></code>.)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -O ece4420.yml https://yongkaw.people.clemson.edu/ece4420/ece4420.yml
+</pre></div>
+</div>
+<p>Create the environment from the environment file</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda env create --name ece4420 --file ece4420.yml
+</pre></div>
+</div>
+</section>
+<section id="activate-the-environment-and-install-additional-packages">
+<h3>Activate the environment and install additional packages<a class="headerlink" href="#activate-the-environment-and-install-additional-packages" title="Permalink to this heading">#</a></h3>
+<p>Activate the conda environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>activate ece4420
+</pre></div>
+</div>
+<p>Type the following commands to install additional packages.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install https://yongkaw.people.clemson.edu/ece4420/packages/jupyter_latex_envs-1.4.6.1-py_0.tar.bz2
+conda install https://yongkaw.people.clemson.edu/ece4420/packages/rise-5.7.1.3-py_0.tar.bz2
+conda install https://yongkaw.people.clemson.edu/ece4420/packages/mglearn-0.2.1.1-py_0.tar.bz2
+conda install https://yongkaw.people.clemson.edu/ece4420/packages/cmle-2023.09-py_0.tar.bz2
+conda install https://yongkaw.people.clemson.edu/ece4420/packages/spacymoji-3.1.0-py_0.tar.bz2
+conda install https://yongkaw.people.clemson.edu/ece4420/packages/jupyter_contrib_nbextensions-0.7.0.1-py_0.tar.bz2
+</pre></div>
+</div>
+</section>
+<section id="test-installation">
+<h3>Test installation<a class="headerlink" href="#test-installation" title="Permalink to this heading">#</a></h3>
+<p>Type the following commands to test the <code class="docutils literal notranslate"><span class="pre">cmle</span></code> environment installation in Python.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip show cmle
+</pre></div>
+</div>
+<hr></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="a02_final_project.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Project</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="b01_attribution.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Attributions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-palmetto-servers">Why Use Palmetto Servers?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-python-environment-at-palmetto">Create a Python environment at Palmetto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-jupyter-notebook-from-open-ondemand">Start Jupyter Notebook from Open OnDemand</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#start-an-jupyter-instance-via-palmetto-openondemand">Start an Jupyter instance via Palmetto OpenOnDemand</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-to-the-jypyternotebook">Connect to the JypyterNotebook</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#play-with-jupyterlab">Play with JupyterLab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faqs">FAQs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modules-are-unknown">Modules are unknown</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#description">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-environment-already-exists">An environment already exists</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-directory-already-exists">A directory already exists</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-module-named-cmle">No module named ‘cmle`</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-in-a-local-computer-alternative">Setup in a local computer (alternative)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-miniconda">Install miniconda</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-conda-environment">Create a conda environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activate-the-environment-and-install-additional-packages">Activate the environment and install additional packages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-installation">Test installation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
