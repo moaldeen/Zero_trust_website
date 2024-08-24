@@ -1,0 +1,729 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Zero-Trust Security Model &#8212; ECE 4420/6420 - ${year}</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Lectures/02_intro2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linear models" href="03_linear-models.html" />
+    <link rel="prev" title="Introduction to Zero Trust" href="01_intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="ECE 4420/6420 - ${year} - Home"/>
+    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="ECE 4420/6420 - ${year} - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    ECE 4420/6420 Machine Learning in Engineering
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Introduction to Zero Trust</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Zero-Trust Security Model</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="03_linear-models.html">Linear models</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Lectures/02_intro2.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Zero-Trust Security Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Zero-Trust Security Model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history">History</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaps-in-the-perimeter">Gaps in the perimeter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tenets-of-zero-trust">Tenets of Zero-Trust</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pillars-of-zero-trust">Pillars of Zero-Trust</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-components-of-zero-trust-architecture">Logical Components of Zero Trust Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-architecture-approaches">Zero Trust Architecture Approaches</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#act-iac-zero-trust-usecases">ACT-IAC Zero-Trust Usecases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further reading</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendations">Recommendations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#books">Books</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#papers">Papers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posts">Posts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#product-vendor-videos">Product Vendor Videos</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="zero-trust-security-model">
+<h1>Zero-Trust Security Model<a class="headerlink" href="#zero-trust-security-model" title="Link to this heading">#</a></h1>
+<p><img alt="image" src="https://user-images.githubusercontent.com/68043327/121101807-8eeab600-c7ca-11eb-88c3-b9cb8b5648ea.png" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="#zero-trust-security-model">Zero-Trust Security Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="#history">History</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gaps-in-the-perimeter">Gaps in the perimeter</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#tenets-of-zero-trust">Tenets of  Zero-Trust</a></p></li>
+<li><p><a class="reference internal" href="#pillars-of-zero-trust">Pillars of  Zero-Trust</a></p></li>
+<li><p><a class="reference internal" href="#logical-components-of-zero-trust-architecture">Logical Components of Zero Trust Architecture</a></p></li>
+<li><p><a class="reference internal" href="#zero-trust-architecture-approaches">Zero Trust Architecture Approaches</a></p></li>
+<li><p><a class="reference internal" href="#act-iac-zero-trust-usecases">ACT-IAC Zero-Trust Usecases</a></p></li>
+<li><p><a class="reference internal" href="#further-reading">Further reading</a></p>
+<ul>
+<li><p><a class="reference internal" href="#recommendations">Recommendations</a></p></li>
+<li><p><a class="reference internal" href="#books">Books</a></p></li>
+<li><p><a class="reference internal" href="#papers">Papers</a></p></li>
+<li><p><a class="reference internal" href="#posts">Posts</a></p></li>
+<li><p><a class="reference internal" href="#videos">Videos</a></p></li>
+<li><p><a class="reference internal" href="#product-vendor-videos">Product Vendor Videos</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<section id="history">
+<h2>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h2>
+<p>For years, security has been synonymous with the perimeter security model. This model relies on the strength of its outer defenses. That is, your corporate network is safe so long as your perimeter is impenetrable. Perimeter security typically incorporates tools like firewalls, network segmentation, and VPNs. But perimeter security’s shortcomings have become apparent as:</p>
+<ul class="simple">
+<li><p>Software is shipped differently now. Organizations now deploy code outside their perimeter, in public and private clouds.</p></li>
+<li><p>Workforce habits are changing. A majority of the global workforce now works remotely at least one day a week.</p></li>
+<li><p>Remote workers want an equivalent user-experience. Traditional tools for internal access like VPNs are clunky and frustrating to use.</p></li>
+<li><p>There are now many perimeters to secure and boundaries of the perimeter have become ephemeral and nebulous.</p></li>
+</ul>
+<blockquote>
+<div><p>Most networks [have] big castle walls, hard crunchy outer shell, and soft gooey centers…</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Rob_Joyce">Rob Joyce</a> <a class="reference external" href="https://en.wikipedia.org/wiki/Tailored_Access_Operations">Chief of Tailored Access Operations</a>, <a class="reference external" href="https://www.youtube.com/watch?v=bDJb8WOJYdA&amp;amp;feature=youtu.be&amp;amp;t=1627">National Security Agency &#64; ENIGMA 2016</a></p>
+</div></blockquote>
+<p>Most importantly, the model is just not as secure as we thought. Recent high-profile breaches have demonstrated how difficult it is for even large companies with sophisticated security organizations to avoid a breach. To pick just two of many breaches, consider the Target and Google hacks. In Target’s case, hackers circumvented both the physical and network perimeter by <a class="reference external" href="https://krebsonsecurity.com/2014/02/target-hackers-broke-in-via-hvac-company/">hacking the HVAC system</a> which was connected to the internal corporate network from which hackers were then able to move laterally and exfiltrate customer credit card data. In Google’s case, they experienced a devastating attack at the hands of the Chinese military known as <a class="reference external" href="https://en.wikipedia.org/wiki/Operation_Aurora">Operation Aurora</a>. After which, Google did a bottom up review of their security posture. The resulting actions from that review would be released as a <a class="reference external" href="https://ai.google/research/pubs/pub43231">series of white papers</a> called “BeyondCorp” which have since become foundational documents in articulating how and why an organization could move beyond corporate perimeter (BeyondCorp…get it?) based security.</p>
+<blockquote>
+<div><p>In reality, there’s never one front door; there are many front doors…[and] … we’re not securing a single castle. We’re starting to think about securing many different interconnected castles.</p>
+<p><a class="reference external" href="https://www.hashicorp.com/resources/how-zero-trust-networking">Armon Dadgar, Cofounder of HashiCorp &#64; PagerDuty Nov 2018</a></p>
+</div></blockquote>
+<p>The other side of the security trade-off is operational agility. Perimeter based approaches tend to focus on network segmentation which entails creating virtual or physical boundaries around services that need to communicate. Making those boundaries is increasingly difficult to manage in a world of micro-services, and cloud computing where service communication requirements are constantly in flux.</p>
+<p>In theory, an organization could “micro/nano/pico-segment” each and every layer of an application stack to ensure appropriate access controls. However, in practice, operators are usually pulled in the direction of one of two extremes. That is, either a very precise boundary that is high-touch, time-consuming to manage, and error prone. Or that of a more lax boundary that may entail more risk but is less time consuming to update, manage and less prone to break.</p>
+<section id="gaps-in-the-perimeter">
+<h3>Gaps in the perimeter<a class="headerlink" href="#gaps-in-the-perimeter" title="Link to this heading">#</a></h3>
+<p>In summary, perimeter based security suffers from the following shortcomings:</p>
+<ul class="simple">
+<li><p>Perimeter security largely ignores the insider threat.</p></li>
+<li><p>The “impenetrable fortress” model fails in practice even for the most sophisticated of security organizations.</p></li>
+<li><p>Network segmentation is a time-consuming, and difficult to get exactly right mechanism for ensuring secure communication.</p></li>
+<li><p>Even just defining what the network perimeter is is an increasingly difficult proposition in a remote-work, BYOD, multi-cloud world. Most organizations are a heterogeneous mix of clouds, servers, devices, and organizational units.</p></li>
+<li><p>VPNs are often misused and exacerbate the issue by opening yet another door into your network organization.</p></li>
+</ul>
+<p>perimeter security is not defunct_, nor is zero-trust security a panacea or a single product. Many of the ideas and principles of perimeter security are still relevant and are part of a holistic, and wide-ranging security policy. After all, we still want our castles to have high walls.</p>
+</section>
+</section>
+<section id="tenets-of-zero-trust">
+<h2>Tenets of Zero-Trust<a class="headerlink" href="#tenets-of-zero-trust" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Assume a Hostile Environment</strong> - There are malicious personas both inside and outside the network. All users, devices, and networks/environments are treated as untrusted.</p></li>
+<li><p><strong>Presume Breach</strong> - There are hundreds of attempted cybersecurity attacks against any networks every day. Consciously operate and defend resources with the assumption that an adversary has presence within your environment. Enhanced scrutiny of access and authorization decisions to improve response outcomes.</p></li>
+<li><p><strong>Never Trust, Always Verify</strong> - Deny access by default. Every device, user, application/workload, and data flow are authenticated and explicitly authorized using least privilege, multiple attributes and dynamic cybersecurity policies.</p></li>
+<li><p><strong>Scrutinize Explicitly</strong> - All resources are consistently accessed in a secure manner using multiple attributes (dynamic and static) to derive confidence levels for contextual access to resources. Access to resources is conditional and access can dynamically change based on action and confidence levels resulting from those actions.</p></li>
+<li><p><strong>Apply Unified Analytics and Automation</strong> - Apply unified analytics for Data, Applications, Assets, Services (DAAS) to include behavioristics, and log each transaction.</p></li>
+</ul>
+</section>
+<section id="pillars-of-zero-trust">
+<h2>Pillars of Zero-Trust<a class="headerlink" href="#pillars-of-zero-trust" title="Link to this heading">#</a></h2>
+<p><img alt="image" src="https://user-images.githubusercontent.com/68043327/121213592-60152400-c84c-11eb-8f21-fe5f2a18212d.png" /></p>
+<ul class="simple">
+<li><p><strong>Identities</strong> - They can represent people, services, or IOT devices.</p></li>
+<li><p><strong>Devices</strong> - Having the ability to identify, authenticate, authorize, inventory, isolate, secure, remediate, and control all devices.</p></li>
+<li><p><strong>Network</strong> - Segment (both logically and physically), isolate, and control the network/environment (on-premises and off-premises) with granular access and policy restrictions.</p></li>
+<li><p><strong>Data</strong> - Data discovery, governance, classification, and tagging.</p></li>
+<li><p><strong>Applications/Workloads</strong> - Includes tasks on systems or services on-premises, as well as applications or services running in a cloud environment.</p></li>
+<li><p><strong>Analytics/Automation</strong> - Detection of events, incidents, anomalous behavior, performance and activity baseline. Automated policiy based decisons and SOAR capabilities.</p></li>
+</ul>
+</section>
+<section id="logical-components-of-zero-trust-architecture">
+<h2>Logical Components of Zero Trust Architecture<a class="headerlink" href="#logical-components-of-zero-trust-architecture" title="Link to this heading">#</a></h2>
+<p><img alt="image" src="https://user-images.githubusercontent.com/68043327/121351031-539ad500-c8f9-11eb-973c-123a8e801fe4.png" /></p>
+<ul class="simple">
+<li><p><strong>Policy engine (PE)</strong>: This component is responsible for the ultimate decision to grant access to a resource for a given subject.</p></li>
+<li><p><strong>Policy administrator (PA)</strong>: This component is responsible for establishing and/or shutting down the communication path between a subject and a resource (via commands to relevant PEPs).</p></li>
+<li><p><strong>Policy enforcement point (PEP)</strong>: This system is responsible for enabling, monitoring, and eventually terminating connections between a subject and an enterprise resource.</p></li>
+</ul>
+</section>
+<section id="zero-trust-architecture-approaches">
+<h2>Zero Trust Architecture Approaches<a class="headerlink" href="#zero-trust-architecture-approaches" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>Enhanced Identity Governance</strong> - Enterprise resource access policies are based on identity and assigned attributes. The primary requirement for resource access is based on the access privileges granted to the given subject. Other factors such as device used, asset status, and environmental factors may alter the final confidence level calculation (and ultimate access authorization) or tailor the result in some way, such as granting only partial access to a given data source based on network location.</p>
+<p><img alt="image" src="https://user-images.githubusercontent.com/68043327/121345101-74136100-c8f2-11eb-8caf-a6f6a7c88758.png" /></p>
+</li>
+<li><p><strong>Logical micro-segmentation</strong> - In this approach, the enterprise places infrastructure devices such as intelligent switches (or routers) or next generation firewalls (NGFWs) or special purpose gateway devices to act as PEPs protecting each resource or small group of related resources. Alternatively (or additionally), the enterprise may choose to implement host-based micro-segmentation using software agents.</p>
+<p><img alt="image" src="https://user-images.githubusercontent.com/68043327/121345018-5cd47380-c8f2-11eb-95c4-eec873b29177.png" /></p>
+</li>
+<li><p><strong>Software Defined Perimeters</strong> - This can be achieved by using an overlay network (i.e., layer 7 but also could be set up lower of the OSI network stack). These approaches are sometimes referred to as software defined perimeter (SDP) approaches and frequently include concepts from Software Defined Networks (SDN).</p>
+<p><img alt="image" src="https://user-images.githubusercontent.com/68043327/121345208-92795c80-c8f2-11eb-8269-7dab41088109.png" /></p>
+</li>
+</ul>
+</section>
+<section id="act-iac-zero-trust-usecases">
+<h2>ACT-IAC Zero-Trust Usecases<a class="headerlink" href="#act-iac-zero-trust-usecases" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.actiac.org/zero-trust-use-case/use-case-1-remote-application-access">Use Case 1 - Remote Application Access</a></p></li>
+<li><p><a class="reference external" href="https://www.actiac.org/zero-trust-use-case/use-case-2-digital-worker-access">Use Case 2 - Digital Worker Access</a></p></li>
+<li><p><a class="reference external" href="https://www.actiac.org/zero-trust-use-case/use-case-3-soc-improvement">Use Case 3 - SOC Improvement</a></p></li>
+<li><p><a class="reference external" href="https://www.actiac.org/zero-trust-use-case/use-case-4-container-isolation-access">Use Case 4 - Container Isolation / Access</a></p></li>
+<li><p><a class="reference external" href="https://www.actiac.org/zero-trust-use-case/use-case-5-machine-machine-application-access">Use Case 5 - Machine-To-Machine Application Access</a></p></li>
+<li><p><a class="reference external" href="https://www.actiac.org/zero-trust-use-case/use-case-6-secure-operational-technology-and-internet-things-devices">Use Case 6 - Secure Operational Technology And Internet Of Things Devices</a></p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>The zero-trust security model was first articulated by <a class="reference external" href="http://www.virtualstarmedia.com/downloads/Forrester_zero_trust_DNA.pdf">John Kindervag</a> in 2010, and by Google in 2011 as a result of the <a class="reference external" href="https://en.wikipedia.org/wiki/Operation_Aurora">Operation Aurora</a> breach. What follows is a curated list of resources that covers the topic in more depth.</p>
+<section id="recommendations">
+<h3>Recommendations<a class="headerlink" href="#recommendations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Jericho Forum™ Commandments - <a class="reference external" href="https://static.spiceworks.com/attachments/post/0016/4842/commandments_v1.2.pdf">Jericho Forum™ Commandments</a> - May 2007</p></li>
+<li><p>NCCoE <a class="reference external" href="https://www.nccoe.nist.gov/sites/default/files/library/project-descriptions/zta-project-description-final.pdf">IMPLEMENTING A ZERO TRUST ARCHITECTURE</a> - Oct 2020</p></li>
+<li><p>UK National Cyber Security Centre <a class="reference external" href="https://github.com/ukncsc/zero-trust-architecture/">Zero trust architecture design principles</a> - 2020</p></li>
+<li><p>NIST SP 800-207 <a class="reference external" href="https://doi.org/10.6028/NIST.SP.800-207">Zero Trust Architecture</a> - August 2020</p></li>
+<li><p>Department of Defense (DOD) <a class="reference external" href="https://dodcio.defense.gov/Portals/0/Documents/Cyber/DoD_Enterprise_ICAM_Reference_Design.pdf">Enterprise Identity, Credential, and Access Management (ICAM) Reference Design</a> Aug 2020</p></li>
+<li><p>Department of Defense (DOD) <a class="reference external" href="https://dodcio.defense.gov/Portals/0/Documents/Library/(U)ZT_RA_v1.1(U)_Mar21.pdf">Zero Trust Reference Architecture</a> - February 2021</p></li>
+<li><p>ACT-IAC <a class="reference external" href="https://www.actiac.org/document/zero-trust-project-briefing">Zero Trust Project Briefing</a> - May 2021</p></li>
+<li><p>ACT-IAC <a class="reference external" href="https://www.actiac.org/document/zero-trust-report-lessons-learned-vendor-and-partner-research">ZERO TRUST REPORT: LESSONS LEARNED FROM VENDOR AND PARTNER RESEARCH</a> - May 2021</p></li>
+</ul>
+</section>
+<section id="books">
+<h3>Books<a class="headerlink" href="#books" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://shop.oreilly.com/product/0636920052265.do">Zero Trust Networks</a> by Gilman and Barth</p></li>
+<li><p><a class="reference external" href="https://www.apress.com/us/book/9781484267011">Zero Trust Security</a> by Garbis and Chapman</p></li>
+</ul>
+</section>
+<section id="papers">
+<h3>Papers<a class="headerlink" href="#papers" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Forrester <a class="reference external" href="http://www.virtualstarmedia.com/downloads/Forrester_zero_trust_DNA.pdf">Build Security Into Your Network’s DNA: The Zero Trust Network Architecture</a></p></li>
+<li><p>Google BeyondCorp 1 <a class="reference external" href="https://research.google.com/pubs/pub43231.html">An overview: “A New Approach to Enterprise Security”</a></p></li>
+<li><p>Google BeyondCorp 2 <a class="reference external" href="https://research.google.com/pubs/pub44860.html">How Google did it: “Design to Deployment at Google”</a></p></li>
+<li><p>Google BeyondCorp 3 <a class="reference external" href="https://research.google.com/pubs/pub45728.html">Google’s front-end infrastructure: “The Access Proxy”</a></p></li>
+<li><p>Google BeyondCorp 4 <a class="reference external" href="https://research.google.com/pubs/pub46134.html">Migrating to BeyondCorp: Maintaining Productivity While Improving Security</a></p></li>
+<li><p>Google BeyondCorp 5 <a class="reference external" href="https://research.google.com/pubs/pub46366.html">The human element: “The User Experience”</a></p></li>
+<li><p>Google BeyondCorp 6 <a class="reference external" href="https://ai.google/research/pubs/pub47356">Secure your endpoints: “Building a Healthy Fleet”</a></p></li>
+<li><p>ACT-IAC <a class="reference external" href="https://www.actiac.org/system/files/ACT-IAC%20Zero%20Trust%20Project%20Report%2004182019.pdf">Zero Trust Cybersecurity Current Trends 2019</a></p></li>
+<li><p>Microsoft <a class="reference external" href="https://go.microsoft.com/fwlink/p/?LinkID=2109181&amp;amp;clcid=0x409&amp;amp;culture=en">Zero Trust Maturity Model</a></p></li>
+<li><p>Microsoft <a class="reference external" href="https://www.microsoft.com/en-us/itshowcase/implementing-a-zero-trust-security-model-at-microsoft#printpdf">Implementing a Zero Trust security model at Microsoft</a></p></li>
+<li><p>Palo Alto <a class="reference external" href="https://www.paloaltonetworks.com/apps/pan/public/downloadResource?pagePath=/content/pan/en_US/resources/use-case/zero-trust-deployment-at-palo-alto-networks">Zero Trust Deployment at Palo Alto Networks</a></p></li>
+<li><p>Okta <a class="reference external" href="https://www.okta.com/sites/default/files/2021-02/WPR_Getting-Started-With-Zero-Trust.pdf">Getting Started with Zero Trust</a></p></li>
+<li><p>Duo <a class="reference external" href="https://duo.com/assets/ebooks/zero-trust-going-beyond-the-perimeter.pdf">Zero Trust: Going Beyond the Perimeter</a></p></li>
+</ul>
+</section>
+<section id="posts">
+<h3>Posts<a class="headerlink" href="#posts" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Google <a class="reference external" href="https://security.googleblog.com/2019/06/how-google-adopted-beyondcorp.html">How Google adopted BeyondCorp</a></p></li>
+<li><p>Wall Street Journal <a class="reference external" href="https://blogs.wsj.com/cio/2015/05/11/google-moves-its-corporate-applications-to-the-internet/">Google Moves Its Corporate Applications to the Internet</a></p></li>
+<li><p>Gitlab’s <a class="reference external" href="https://about.gitlab.com/blog/tags.html#zero-trust">Blog series</a> and their <a class="reference external" href="https://www.reddit.com/r/netsec/comments/d71p1d/were_a_100_remote_cloudnative_company_and_were/">reddit AMA</a></p></li>
+<li><p>Microsoft Azure <a class="reference external" href="https://devblogs.microsoft.com/azuregov/implementing-zero-trust-with-microsoft-azure-identity-and-access-management-1-of-6/">Implementing zero trust with microsoft azure identity and access management 1 of 6</a></p></li>
+<li><p>Microsoft Azure <a class="reference external" href="https://devblogs.microsoft.com/azuregov/protecting-cloud-workloads-for-zero-trust-with-azure-security-center-2-of-6/">Protecting cloud workloads for zero trust with azure security 2 of 6</a></p></li>
+<li><p>Microsoft Azure <a class="reference external" href="https://devblogs.microsoft.com/azuregov/monitoring-cloud-security-for-zero-trust-with-azure-sentinel-3-of-6/">Monitoring cloud security for zero trust with azure sentinel 3 of 6</a></p></li>
+<li><p>Microsoft Azure <a class="reference external" href="https://devblogs.microsoft.com/azuregov/enforcing-policy-for-zero-trust-with-azure-policy-4-of-6/">Enforcing policy for zero trust with azure policy 4 of 6</a></p></li>
+<li><p>Microsoft Azure <a class="reference external" href="https://devblogs.microsoft.com/azuregov/insider-threat-monitoring-for-zero-trust-with-microsoft-azure-5-of-6/">Implementing Zero Trust with Microsoft Azure 5 of 6</a></p></li>
+<li><p>Microsoft Azure <a class="reference external" href="https://devblogs.microsoft.com/azuregov/supply-chain-risk-management-for-zero-trust-with-microsoft-azure-6-of-6/">Implementing Zero Trust with Microsoft Azure 6 of 6</a></p></li>
+<li><p>NCCoE <a class="reference external" href="https://www.nccoe.nist.gov/events/zero-trust-architecture-technical-exchange-meeting">Zero Trust Architecture Technical Exchange Meeting</a></p></li>
+<li><p><a class="reference external" href="https://ldapwiki.com/wiki/Zero%20Trust">Zero-trust ldap wiki</a></p></li>
+<li><p><a class="reference external" href="https://techcommunity.microsoft.com/t5/microsoft-mechanics-blog/adopt-a-zero-trust-approach-for-security-essentials-series/ba-p/2348890">Adopt a Zero Trust approach for security — Essentials Series — Episode 1</a></p></li>
+</ul>
+</section>
+<section id="videos">
+<h3>Videos<a class="headerlink" href="#videos" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://youtu.be/bDJb8WOJYdA?list=PLKb9-P1fRHxhSmCy5OaYZ5spcY8v3Pbaf">USENIX Enigma 2016 - NSA TAO Chief on Disrupting Nation State Hackers</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/eDVHIfVSdIo?list=PLKb9-P1fRHxhSmCy5OaYZ5spcY8v3Pbaf">What, Why, and How of Zero Trust Networking</a> by Armon Dadgar, Hashicorp</p></li>
+<li><p><a class="reference external" href="https://youtu.be/oAvDASLehpY?list=PLKb9-P1fRHxhSmCy5OaYZ5spcY8v3Pbaf">O’Reilly Security 2017 NYC Beyondcorp: Beyond Fortress Security</a> by Neal Muller, Google</p></li>
+<li><p><a class="reference external" href="https://youtu.be/d90Ov6QM1jE">How Google Protects Its Corporate Security Perimeter without Firewalls</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/Gi0oedg_UrM">LISA17 - Clarifying Zero Trust: The Model, the Philosophy, the Ethos</a></p></li>
+<li><p><a class="reference external" href="https://youtu.be/5UiWAlwok1s?list=PLKb9-P1fRHxhSmCy5OaYZ5spcY8v3Pbaf">Be Ready for BeyondCorp: enterprise identity, perimeters and your application</a> by Jason Kent</p></li>
+<li><p><a class="reference external" href="https://youtu.be/Q6yFqLmlcGo">SANS Webcast - Trust No One: Introducing SEC530: Defensible Security Architecture</a> - 2018</p></li>
+<li><p><a class="reference external" href="https://youtu.be/34VTSI_vgI0">Google on BeyondCorp: Empowering Employees with Security for the Cloud Era</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=EF_0dr8WkX8">Zero-Trust Networks: The Future Is Here</a> - SANS Blue Team Summit 2019</p></li>
+<li><p>Microsoft <a class="reference external" href="https://www.youtube.com/watch?v=pyyd_OXHucI">No More Firewalls! How Zero-Trust Networks Are Reshaping Cybersecurity</a> - RSA Conference 2019</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=tFrbt9s4Fns">The Fallacy of the “Zero-Trust Network”</a> - RSA Conference 2019</p></li>
+<li><p><a class="reference external" href="https://youtu.be/ooAPzzYkyaE">Zero-Trust Cybersecurity: Trust No One?</a></p></li>
+<li><p>SANS Could Security - Gigamon <a class="reference external" href="https://youtu.be/iZ-9lbaFwqI">Zero Trust What You Need to Know to Secure Your Data and Networks</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=A32ZwFjXyWU">A Simplified and Practical Approach to Pursuing a Zero Trust Architecture</a> - RSA Conference 2020</p></li>
+<li><p><a class="reference external" href="https://youtu.be/WXoG9ETfJnk">Using SABSA to Architect Zero Trust Networks - COSAC Connect #1</a></p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=XIxeXMqT23M">ACT-IAC Zero Trust Briefing</a> - May 2021</p></li>
+</ul>
+</section>
+<section id="product-vendor-videos">
+<h3>Product Vendor Videos<a class="headerlink" href="#product-vendor-videos" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Cisco 2020 <a class="reference external" href="https://www.youtube.com/watch?v=6q6c0Ld0qx0">How to approach a Zero Trust security model Cisco</a></p></li>
+<li><p>Microsoft 2020 <a class="reference external" href="https://youtu.be/8Hx6aSJjpco">Modern Security w/ End-to-End Zero Trust Strategy</a></p></li>
+<li><p>Palo Alto Networks 2020 <a class="reference external" href="https://www.youtube.com/watch?v=MxiuCXNCzFI">Zero Trust: The Strategic Approach to Stop Data Breaches</a></p></li>
+<li><p>Palo Alto - John Kindervag 2020 <a class="reference external" href="https://www.youtube.com/watch?v=-ld2lfz6ytU">Implementing Best Practices for Zero Trust</a></p></li>
+<li><p>Microsoft’s approach to Zero Trust 2020 <a class="reference external" href="https://www.youtube.com/watch?v=bZCH4nkNP34">How Microsoft does Zero Trust</a></p></li>
+<li><p>Okta 2021 <a class="reference external" href="https://www.youtube.com/watch?v=YCScMCRM8Io">Moving the Zero Trust Maturity Needle -  University of Newcastle</a></p></li>
+<li><p>Microsoft Mechanics Playlist 2021 <a class="reference external" href="https://youtube.com/playlist?list=PLXtHYVsvn_b_P09Jqw65XvV0zp6HP2liu">Zero Trust Essentials</a></p></li>
+<li><p>Security Architect Podcast <a class="reference external" href="https://youtube.com/playlist?list=PL3fwn2_OBVs39WMmTsVfSzobZ2P9JBLwz">SASE ZeroTrust - Remote Access</a></p></li>
+<li><p>Security Architect Podcast <a class="reference external" href="https://youtube.com/playlist?list=PL3fwn2_OBVs1FbmVCy7YZRZcBI5eyi0Av">SASE Secure Web Gateway - Outbound browsing</a></p></li>
+<li><p>VMware 2021 <a class="reference external" href="https://www.youtube.com/watch?v=h6zhm9UskSU">Trusting Zero-Trust: How VMware IT Reimagined Security and Resiliency</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Zero Trust</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_linear-models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Linear models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Zero-Trust Security Model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history">History</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaps-in-the-perimeter">Gaps in the perimeter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tenets-of-zero-trust">Tenets of Zero-Trust</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pillars-of-zero-trust">Pillars of Zero-Trust</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-components-of-zero-trust-architecture">Logical Components of Zero Trust Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-trust-architecture-approaches">Zero Trust Architecture Approaches</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#act-iac-zero-trust-usecases">ACT-IAC Zero-Trust Usecases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further reading</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendations">Recommendations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#books">Books</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#papers">Papers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posts">Posts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#videos">Videos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#product-vendor-videos">Product Vendor Videos</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
