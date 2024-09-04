@@ -1,0 +1,189 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      h1, h2 {
+        color: #2c3e50;
+      }
+      .question {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+      }
+      .option {
+        margin: 5px 0;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      #result {
+        font-weight: bold;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .correct {
+        background-color: #2ecc71;
+        color: white;
+      }
+      .incorrect {
+        background-color: #e74c3c;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz 4: Zero-Trust Cybersecurity for Vehicles</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Answers</button>
+    <div id="result"></div>
+  
+    <script>
+      const quizData = [
+      {
+  question: "Which of the following describes a major challenge in applying Zero-Trust Architecture (ZTA) to vehicles?",
+  options: [
+      "Traditional firewall approaches are sufficient for vehicles due to their isolated network design.",
+      "Continuous authentication and authorization across all sensors and ECUs are required.",
+      "ZTA eliminates the need for encryption in vehicle communication.",
+      "Vehicles do not require Zero-Trust policies for internal communication as they operate autonomously."
+  ],
+  correct: 1
+},
+{
+  question: "Which of the following is NOT a core tenet of Zero-Trust Architecture (ZTA) as applied to Connected Autonomous Vehicles (CAVs)?",
+  options: [
+      "All data sources and computing services are considered resources.",
+      "Continuous monitoring and validation of security posture.",
+      "Access to resources is determined by dynamic policies.",
+      "Access to resources is based on the vehicle's physical location."
+
+  ],
+  correct: 3
+},
+{
+  question: "In a segmented CAN bus system using the hub-and-spoke model, which of the following best describes the role of the Zero-Trust (ZT) controller?",
+  options: [
+  "It manages communication between the central hub and spokes, enforcing security policies.",
+ "It acts as a firewall to block external attacks on the CAN bus.",
+      "It authenticates all internal devices without communication oversight.",
+      "It directly encrypts all CAN bus messages without requiring verification."
+  ],
+  correct: 0
+},
+{
+  question: "Which of the following best describes 'device fingerprinting' in the context of Zero-Trust Architecture for CAVs?",
+  options: [
+      
+      "Encrypting data flows between different ECUs in the vehicle.",
+      "Monitoring and authenticating devices through manual review.",
+      "Verifying a device based on pre-registered characteristics and traffic patterns.",
+      "Isolating compromised devices from the network without authentication."
+  ],
+  correct: 2
+},
+{
+  question: "In the context of Zero Trust for CAVs, what is the primary function of a Policy Enforcement Point (PEP)?",
+  options: [
+    "To encrypt all communications between the vehicle's components in real-time.",
+    "To monitor and control access to resources by enforcing real-time security decisions.",
+    "To log all communications within the vehicle's network for security auditing.",
+    "To act as a secondary channel for secure communications when the primary network is compromised."
+  ],
+  correct: 1
+},
+{
+question: "In Zero Trust Architecture (ZTA) for CAVs, access to resources is granted based on static policies that are set during vehicle manufacturing.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1
+},
+{
+  question: "True or False: In Zero Trust for CAVs, the CAN bus's broadcast nature enhances security by allowing every node to monitor all traffic.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1
+}
+
+      ];
+  
+      const quizContainer = document.getElementById('quiz');
+      const resultContainer = document.getElementById('result');
+      const submitButton = document.getElementById('submit');
+      let userAnswers = [];
+  
+      function buildQuiz() {
+        quizData.forEach((questionData, index) => {
+          const questionDiv = document.createElement('div');
+          questionDiv.classList.add('question');
+          questionDiv.innerHTML = `
+            <h2>Question ${index + 1}</h2>
+            <p>${questionData.question}</p>
+            <div class="options">
+              ${questionData.options.map((option, optionIndex) => `
+                <label class="option">
+                  <input type="radio" name="question${index}" value="${optionIndex}">
+                  ${option}
+                </label>
+              `).join('')}
+            </div>
+          `;
+          quizContainer.appendChild(questionDiv);
+        });
+      }
+  
+      function getResults() {
+        const answerContainers = quizContainer.querySelectorAll('.question');
+        let score = 0;
+  
+        answerContainers.forEach((questionDiv, index) => {
+          const userAnswer = (questionDiv.querySelector(`input[name=question${index}]:checked`) || {}).value;
+          userAnswers[index] = userAnswer;
+  
+          if (userAnswer == quizData[index].correct) {
+            score++;
+            answerContainers[index].style.color = 'green';
+          } else {
+            answerContainers[index].style.color = 'red';
+          }
+        });
+  
+        resultContainer.innerHTML = `You got ${score} out of ${quizData.length} questions correct.`;
+        resultContainer.classList.add(score > quizData.length / 2 ? 'correct' : 'incorrect');
+      }
+  
+      buildQuiz();
+  
+      submitButton.addEventListener('click', getResults);
+    </script>
+  </body></html>

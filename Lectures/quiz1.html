@@ -1,0 +1,192 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      h1, h2 {
+        color: #2c3e50;
+      }
+      .question {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+      }
+      .option {
+        margin: 5px 0;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      #result {
+        font-weight: bold;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .correct {
+        background-color: #2ecc71;
+        color: white;
+      }
+      .incorrect {
+        background-color: #e74c3c;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz 1: Introduction to Zero trust</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Answers</button>
+    <div id="result"></div>
+  
+    <script>
+      const quizData = [
+        {
+          question: "Which of the following best describes the primary difference between traditional security models and Zero Trust?",
+          options: [
+          "Traditional models are based on network perimeters, whereas Zero Trust assumes no inherent trust regardless of location.",
+          "Traditional models require no authentication, while Zero Trust requires multiple passwords.",
+            
+            "Traditional models use firewalls, and Zero Trust does not use any firewalls.",
+            "Zero Trust only applies to cloud-based environments, while traditional models apply to on-premises networks."
+          ],
+          correct: 0
+        },
+        {
+          question: "In the context of Zero Trust, what does the principle \"Use Least-Privilege Access\" imply?",
+          options: [
+            "All users should have full access to all resources.",
+            "Users should have access to only the resources necessary for their role, with permissions reviewed and adjusted regularly.",
+            "Users are granted access based on their level of trust within the organization.",
+            "Access permissions should be removed after a security breach."
+          ],
+          correct: 1
+        },
+        {
+          question: "What does the Zero Trust model emphasize over traditional perimeter-based security?",
+          options: [
+            "Implicit trust in internal network segments.",
+            "Increased use of physical security measures.",
+            "Continuous verification of every access request.",
+            "Use of firewalls to segment networks."
+          ],
+          correct: 2
+        },
+        {
+          question: "According to NIST's Zero Trust principles, how should access to enterprise resources be granted?",
+          options: [
+            "Based on the user's department and job title",
+            "By granting permanent access after the first successful login",
+            "Based on the physical location of the user",
+            "On a per-session basis, determined dynamically"
+          ],
+          correct: 3
+        },
+        {
+          question: "Zero Trust is a single technology that can be purchased and implemented as a complete package.",
+          options: ["True", "False"],
+          correct: 1
+        },
+        {
+          question: "Zero Trust architecture primarily relies on external firewalls to secure network boundaries.",
+          options: ["True", "False"],
+          correct: 1
+        },
+
+        {
+          question: "The principle of 'Assume Breach' in Zero Trust implies that organizations should operate as if they have already been compromised.",
+          options: ["True", "False"],
+          correct: 0
+        },
+        {
+          question: "In Zero Trust architecture, once a device or user is authenticated, they have unrestricted access to the network.",
+          options: ["True", "False"],
+          correct: 1
+        },
+        {
+          question: "The adoption of Zero Trust principles is only relevant for large organizations with complex networks.",
+          options: ["True", "False"],
+          correct: 1
+        },
+        {
+          question: "In a Zero Trust model, collecting extensive information about the state of assets and network infrastructure is encouraged to improve security posture.",
+          options: ["True", "False"],
+          correct: 0
+        }
+      ];
+  
+      const quizContainer = document.getElementById('quiz');
+      const resultContainer = document.getElementById('result');
+      const submitButton = document.getElementById('submit');
+      let userAnswers = [];
+  
+      function buildQuiz() {
+        quizData.forEach((questionData, index) => {
+          const questionDiv = document.createElement('div');
+          questionDiv.classList.add('question');
+          questionDiv.innerHTML = `
+            <h2>Question ${index + 1}</h2>
+            <p>${questionData.question}</p>
+            <div class="options">
+              ${questionData.options.map((option, optionIndex) => `
+                <label class="option">
+                  <input type="radio" name="question${index}" value="${optionIndex}">
+                  ${option}
+                </label>
+              `).join('')}
+            </div>
+          `;
+          quizContainer.appendChild(questionDiv);
+        });
+      }
+  
+      function getResults() {
+        const answerContainers = quizContainer.querySelectorAll('.question');
+        let score = 0;
+  
+        answerContainers.forEach((questionDiv, index) => {
+          const userAnswer = (questionDiv.querySelector(`input[name=question${index}]:checked`) || {}).value;
+          userAnswers[index] = userAnswer;
+  
+          if (userAnswer == quizData[index].correct) {
+            score++;
+            answerContainers[index].style.color = 'green';
+          } else {
+            answerContainers[index].style.color = 'red';
+          }
+        });
+  
+        resultContainer.innerHTML = `You got ${score} out of ${quizData.length} questions correct.`;
+        resultContainer.classList.add(score > quizData.length / 2 ? 'correct' : 'incorrect');
+      }
+  
+      buildQuiz();
+  
+      submitButton.addEventListener('click', getResults);
+    </script>
+  </body></html>
