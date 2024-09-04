@@ -1,0 +1,212 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      h1, h2 {
+        color: #2c3e50;
+      }
+      .question {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+      }
+      .option {
+        margin: 5px 0;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      #result {
+        font-weight: bold;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .correct {
+        background-color: #2ecc71;
+        color: white;
+      }
+      .incorrect {
+        background-color: #e74c3c;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz 3: Designing a Zero Trust Architecture</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Answers</button>
+    <div id="result"></div>
+  
+    <script>
+      const quizData = [
+        {
+  question: "What is the primary reason for identifying a 'protect surface' in a Zero Trust Architecture?",
+  options: [
+    "To create a secure perimeter around all network devices.",
+    "To determine which areas of the network should be monitored for performance.",
+    "To identify and focus security measures on the most critical assets and data.",
+    "To implement encryption on all network traffic."
+  ],
+  correct: 2
+},
+{
+  question: "Which of the following best describes the process of monitoring traffic across the protect surface in Zero Trust Architecture?",
+  options: [
+  "Tracking every packet that crosses the protect surface to understand and close security gaps.",
+    "Monitoring only external threats that attempt to access the network.",
+    "Focusing on user login attempts and password management.",
+    
+    "Using a single firewall to block all untrusted connections."
+  ],
+  correct: 0
+},
+{
+  question: "Which strategy is NOT recommended as part of the Zero Trust implementation strategy?",
+  options: [
+    "Customizing the Zero Trust model to fit the specific needs of the organization.",
+    "Allowing implicit trust for on-site users to ease access management.",
+    "Using detailed rules, controls, and firewall policies to protect data.",
+    "Continuously monitoring and iterating on the Zero Trust Architecture."
+  ],
+  correct: 1
+},
+{
+  question: "In Zero Trust Design, which factor is NOT typically considered in the dynamic and contextual process of authentication and authorization?",
+  options: [
+    "Device health",
+    "Time of access",
+    
+    "Location of the user",
+    "User's personal interests"
+  ],
+  correct: 3
+},
+{
+  question: "In a Zero Trust model, what is the primary difference between on-site and remote users' access to network resources?",
+  options: [
+    "On-site users have unlimited access, while remote users are restricted.",
+    "On-site users are implicitly trusted, whereas all users must be authenticated regardless of location.",
+    "Remote users use VPNs, while on-site users do not.",
+    "There is no difference; both follow the same stringent access controls."
+  ],
+  correct: 3
+},
+{
+  question: "In a Zero Trust environment, identity governance is primarily concerned with managing permissions and ensuring users have the appropriate level of access to resources.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0
+},
+{
+  question: "Identity governance in Zero Trust Architecture focuses solely on ensuring users are authenticated through passwords and two-factor authentication.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1
+},
+{
+    question: "Geolocation data can be used as a factor in the access decision process in Zero Trust Architecture.",
+    options: [
+        "True",
+        "False"
+    ],
+    correct: 0
+},
+{
+  question: "'Who' can access resources is determined solely by the User ID Auth Type.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 0
+},
+{
+  question: "'When' access is allowed in ZTA is defined by Time Restrictions and Device ID.",
+  options: [
+    "True",
+    "False"
+  ],
+  correct: 1
+}
+      ];
+  
+      const quizContainer = document.getElementById('quiz');
+      const resultContainer = document.getElementById('result');
+      const submitButton = document.getElementById('submit');
+      let userAnswers = [];
+  
+      function buildQuiz() {
+        quizData.forEach((questionData, index) => {
+          const questionDiv = document.createElement('div');
+          questionDiv.classList.add('question');
+          questionDiv.innerHTML = `
+            <h2>Question ${index + 1}</h2>
+            <p>${questionData.question}</p>
+            <div class="options">
+              ${questionData.options.map((option, optionIndex) => `
+                <label class="option">
+                  <input type="radio" name="question${index}" value="${optionIndex}">
+                  ${option}
+                </label>
+              `).join('')}
+            </div>
+          `;
+          quizContainer.appendChild(questionDiv);
+        });
+      }
+  
+      function getResults() {
+        const answerContainers = quizContainer.querySelectorAll('.question');
+        let score = 0;
+  
+        answerContainers.forEach((questionDiv, index) => {
+          const userAnswer = (questionDiv.querySelector(`input[name=question${index}]:checked`) || {}).value;
+          userAnswers[index] = userAnswer;
+  
+          if (userAnswer == quizData[index].correct) {
+            score++;
+            answerContainers[index].style.color = 'green';
+          } else {
+            answerContainers[index].style.color = 'red';
+          }
+        });
+  
+        resultContainer.innerHTML = `You got ${score} out of ${quizData.length} questions correct.`;
+        resultContainer.classList.add(score > quizData.length / 2 ? 'correct' : 'incorrect');
+      }
+  
+      buildQuiz();
+  
+      submitButton.addEventListener('click', getResults);
+    </script>
+  </body></html>

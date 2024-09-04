@@ -1,0 +1,216 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 1</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      h1, h2 {
+        color: #2c3e50;
+      }
+      .question {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+      }
+      .option {
+        margin: 5px 0;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      #result {
+        font-weight: bold;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .correct {
+        background-color: #2ecc71;
+        color: white;
+      }
+      .incorrect {
+        background-color: #e74c3c;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz 2: Zero Trust Architectureal Model</h1>
+    <div id="quiz"></div>
+    <button id="submit">Submit Answers</button>
+    <div id="result"></div>
+  
+    <script>
+      const quizData = [
+      {
+          question: "Which component is responsible for enforcing access control decisions in the Zero Trust Architecture (ZTA)?",
+          options: [
+              "Policy Decision Point (PDP)",
+              "Policy Enforcement Point (PEP)",
+              "Security Information and Event Management (SIEM) System",
+              "Continuous Diagnostics and Mitigation (CDM) System"
+          ],
+          correct: 1
+        },
+        {
+    question: "What is the primary role of the Continuous Diagnostics and Mitigation (CDM) system in a ZTA?",
+    options: [
+        "To store user identities and roles",
+        "To manage encryption keys for enterprise resources",
+        "To provide internet connectivity to internal systems",
+        "To collect and update information on the current state and vulnerabilities of enterprise assets",
+    ],
+          correct: 3
+        },
+        {
+    question: "What is the primary advantage of using micro-segmentation in a Zero Trust Architecture?",
+    options: [
+        "It reduces the cost of network infrastructure",
+        "It simplifies network configuration",
+        "It limits lateral movement by attackers within the network",
+        "It eliminates the need for encryption"
+    ],
+    correct: 2
+        },
+        {
+          
+    question: "Which of the following is not a function of the Data Pillar in the ZTA?",
+    options: [
+        "Data Categorization",
+        "Continuous Monitoring",
+        "Data Protection",
+        "Data Access Management"
+    ],
+          correct: 1
+        },
+        {
+          question: "How does the Trust Algorithm in ZTA make authorization decisions?",
+    options: [
+        
+        "By computing a trust score using inputs from multiple sources",
+        "By verifying user credentials against a single database",
+        "By ensuring all data is encrypted",
+        "By analyzing network traffic patterns alone"
+    ],
+
+          correct: 0
+        },
+        {
+
+          question: "What is a significant challenge when implementing Zero Trust in an organization?",
+    options: [
+        "Ensuring that all devices are connected to the internet",
+        "Increasing user access rights for convenience",
+        "Using a single firewall to protect all network traffic",
+        "Migrating from legacy systems while maintaining strong security"
+    ],
+          correct: 3
+        },
+        {
+          question: "In a Device Agent/Gateway-Based Deployment, the Policy Enforcement Point (PEP) integrates with the user endpoint and the application the user is trying to access.",
+          options: ["True", "False"],
+          correct: 0
+        },
+        {
+          question: "A key function of the Network & Environment Pillar in ZTA is the encryption of all data in transit.",
+          options: ["True", "False"],
+          correct: 0
+        },
+
+        {
+          question: "The Trust Algorithm used in ZTA relies mainly on threat intelligence feeds to make access decisions.",
+          options: ["True", "False"],
+          correct: 1
+        },
+        
+        {
+          question: "The main function of the Security Information and Event Management (SIEM) system is to ensure the enterprise adheres to regulatory requirements.",
+          options: ["True", "False"],
+          correct: 1
+        },
+        {
+          question: " Enhanced Identity Governance restricts access based on the principle of least privilege and often involves multi-factor authentication.",
+          options: ["True", "False"],
+          correct: 0
+        },
+        {
+          question: " The Security Operations Center (SOC) is responsible for implementing security policies in a Zero Trust Architecture.",
+          options: ["True", "False"],
+          correct: 1
+        }
+      ];
+  
+      const quizContainer = document.getElementById('quiz');
+      const resultContainer = document.getElementById('result');
+      const submitButton = document.getElementById('submit');
+      let userAnswers = [];
+  
+      function buildQuiz() {
+        quizData.forEach((questionData, index) => {
+          const questionDiv = document.createElement('div');
+          questionDiv.classList.add('question');
+          questionDiv.innerHTML = `
+            <h2>Question ${index + 1}</h2>
+            <p>${questionData.question}</p>
+            <div class="options">
+              ${questionData.options.map((option, optionIndex) => `
+                <label class="option">
+                  <input type="radio" name="question${index}" value="${optionIndex}">
+                  ${option}
+                </label>
+              `).join('')}
+            </div>
+          `;
+          quizContainer.appendChild(questionDiv);
+        });
+      }
+  
+      function getResults() {
+        const answerContainers = quizContainer.querySelectorAll('.question');
+        let score = 0;
+  
+        answerContainers.forEach((questionDiv, index) => {
+          const userAnswer = (questionDiv.querySelector(`input[name=question${index}]:checked`) || {}).value;
+          userAnswers[index] = userAnswer;
+  
+          if (userAnswer == quizData[index].correct) {
+            score++;
+            answerContainers[index].style.color = 'green';
+          } else {
+            answerContainers[index].style.color = 'red';
+          }
+        });
+  
+        resultContainer.innerHTML = `You got ${score} out of ${quizData.length} questions correct.`;
+        resultContainer.classList.add(score > quizData.length / 2 ? 'correct' : 'incorrect');
+      }
+  
+      buildQuiz();
+  
+      submitButton.addEventListener('click', getResults);
+    </script>
+  </body></html>
